@@ -21,3 +21,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/.devenv
+/.direnv
+/.devenv.flake.nix
+
