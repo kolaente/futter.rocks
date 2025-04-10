@@ -16,7 +16,7 @@ class View extends Component
 
     public function render()
     {
-        return view('livewire.event-view')
+        return view('livewire.events.view')
             ->title($this->event->title);
     }
 }

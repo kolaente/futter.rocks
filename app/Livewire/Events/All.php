@@ -18,12 +18,6 @@ class All extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
-    public function render()
-    {
-        return view('livewire.event-list')
-            ->title(__('Events'));
-    }
-
     public function table(Table $table): Table
     {
         return $table
@@ -44,5 +38,11 @@ class All extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('date_to')
                     ->label(__('End Date')),
             ]);
+    }
+
+    public function render()
+    {
+        return view('livewire.events.all')
+            ->title(__('Events'));
     }
 }
