@@ -3,7 +3,6 @@
 namespace App\Livewire\Events;
 
 use App\Models\Event;
-use App\Models\ShoppingTour;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
@@ -14,7 +13,6 @@ use Filament\Forms;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
 
 class ListShoppingTours extends Component implements HasForms, HasTable
 {
