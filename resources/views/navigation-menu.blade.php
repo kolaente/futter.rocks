@@ -15,6 +15,15 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('events.list') }}" :active="request()->routeIs('events.*')">
+                        {{ __('Events') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('recipes.list') }}" :active="request()->routeIs('recipes.*')">
+                        {{ __('Recipes') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('participant-groups.list') }}" :active="request()->routeIs('participant-groups.*')">
+                        {{ __('Groups') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -141,6 +150,18 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('events.list') }}" :active="request()->routeIs('events.*')">
+                {{ __('Events') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('recipes.list') }}" :active="request()->routeIs('recipes.*')">
+                {{ __('Recipes') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('participant-groups.list') }}" :active="request()->routeIs('participant-groups.*')">
+                {{ __('Groups') }}
             </x-responsive-nav-link>
         </div>
 
