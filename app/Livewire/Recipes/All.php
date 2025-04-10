@@ -9,11 +9,8 @@ use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
 
 class All extends Component implements HasForms, HasTable
 {

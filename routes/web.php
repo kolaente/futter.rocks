@@ -17,6 +17,7 @@ Route::middleware([
     Route::get('/events/{event}', \App\Livewire\Events\View::class)->name('events.view');
 
     Route::get('/recipes', \App\Livewire\Recipes\All::class)->name('recipes.list');
-    Route::get('/recipes/create', \App\Livewire\Recipes\Create::class)->name('recipes.create');
+    Route::get('/recipes/create', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.create');
     Route::get('/recipes/{recipe}', \App\Livewire\Recipes\View::class)->name('recipes.view');
+    Route::get('/recipes/{recipe}/edit', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.edit');
 });
