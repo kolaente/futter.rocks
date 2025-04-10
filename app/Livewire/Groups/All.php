@@ -40,11 +40,7 @@ class All extends Component implements HasForms, HasTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->actions([
-                Tables\Actions\Action::make('edit')
-                    ->label(__('Edit Group'))
-                    ->url(fn(ParticipantGroup $record) => route('participant-groups.edit', ['group' => $record])),
-            ]);
+            ->recordUrl(fn(ParticipantGroup $record) => route('participant-groups.edit', ['group' => $record]));
     }
 
     public function render(): View

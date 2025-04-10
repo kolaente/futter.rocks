@@ -23,11 +23,7 @@ class All extends Component implements HasForms, HasTable
         return $table
             ->query(Event::query())
             ->defaultSort('title')
-            ->actions([
-                Tables\Actions\Action::make('view')
-                    ->label(__('View Event'))
-                    ->url(fn(Event $record) => route('events.view', ['event' => $record])),
-            ])
+            ->recordUrl(fn(Event $record) => route('events.view', ['event' => $record]))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->sortable()

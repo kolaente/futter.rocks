@@ -22,16 +22,12 @@ class All extends Component implements HasForms, HasTable
         return $table
             ->query(Recipe::query())
             ->defaultSort('title')
+            ->recordUrl(fn(Recipe $recipe) => route('recipes.view', ['recipe' => $recipe]))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->sortable()
                     ->searchable()
                     ->label(__('Title')),
-            ])
-            ->actions([
-                Tables\Actions\Action::make('view')
-                    ->label(__('View'))
-                    ->url(fn(Recipe $recipe) => route('recipes.view', ['recipe' => $recipe])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
