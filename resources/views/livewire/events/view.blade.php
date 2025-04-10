@@ -12,7 +12,9 @@
                 <x-button href="{{ route('event.shopping-list-view', ['event' => $event]) }}">
                     {{ __('Shopping list') }}
                 </x-button>
-                // share
+                <x-button href="{{ route('shared.event.meal-plan', ['event' => $event]) }}">
+                    {{ __('Share') }}
+                </x-button>
             </div>
 
             @if($event->description)

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\SharedEventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,3 +33,5 @@ Route::middleware([
     Route::get('/events/{event}/shopping-list/download', [EventController::class, 'generateShoppingList'])->name('event.shopping-list-download');
     Route::get('/events/{event}/shopping-list', [EventController::class, 'viewShoppingList'])->name('event.shopping-list-view');
 });
+
+Route::get('/shared/events/{event:share_id}/meal-plan', [SharedEventController::class, 'mealPlan'])->name('shared.event.meal-plan');
