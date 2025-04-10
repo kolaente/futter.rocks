@@ -150,7 +150,7 @@ class CreateEdit extends Component implements HasForms
 
     public function render(): View
     {
-        return view('livewire.recipes.create')
+        return view('livewire.recipes.create-edit')
             ->title($this->recipe === null
                 ? __('Create Recipe')
                 : __('Edit :recipe', ['recipe' => $this->recipe->title]));
