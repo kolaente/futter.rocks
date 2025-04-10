@@ -28,6 +28,7 @@ class All extends Component implements HasForms, HasTable
     {
         return $table
             ->query(Event::query())
+            ->defaultSort('title')
             ->actions([
                 Tables\Actions\Action::make('view')
                     ->label(__('View Event'))
@@ -35,8 +36,10 @@ class All extends Component implements HasForms, HasTable
             ])
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->sortable()
                     ->label(__('Title')),
                 Tables\Columns\TextColumn::make('date_from')
+                    ->sortable()
                     ->label(__('Start Date')),
                 Tables\Columns\TextColumn::make('date_to')
                     ->label(__('End Date')),

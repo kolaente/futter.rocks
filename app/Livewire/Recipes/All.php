@@ -21,6 +21,7 @@ class All extends Component implements HasForms, HasTable
     {
         return $table
             ->query(Recipe::query())
+            ->defaultSort('title')
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->sortable()

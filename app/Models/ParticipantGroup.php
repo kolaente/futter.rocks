@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\CurrentTeam;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+#[ScopedBy(CurrentTeam::class)]
 class ParticipantGroup extends Model
 {
     use HasFactory;

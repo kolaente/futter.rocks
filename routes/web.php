@@ -20,4 +20,9 @@ Route::middleware([
     Route::get('/recipes/create', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.create');
     Route::get('/recipes/{recipe}', \App\Livewire\Recipes\View::class)->name('recipes.view');
     Route::get('/recipes/{recipe}/edit', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.edit');
+
+
+    Route::get('/participant-groups', \App\Livewire\Groups\All::class)->name('participant-groups.list');
+    Route::get('/participant-groups/create', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.create');
+    Route::get('/participant-groups/{group}/edit', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.edit');
 });
