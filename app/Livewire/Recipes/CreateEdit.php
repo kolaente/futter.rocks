@@ -108,9 +108,9 @@ class CreateEdit extends Component implements HasForms
         DB::transaction(function () {
             if ($this->recipe === null) {
                 $this->recipe = new Recipe;
+                $this->recipe->team_id = Auth::user()->currentTeam->id;
             }
             $this->recipe->title = $this->form->getState()['title'];
-            $this->recipe->team_id = Auth::user()->currentTeam->id;
             $this->recipe->save();
 
             $this->recipe->ingredients()->detach();

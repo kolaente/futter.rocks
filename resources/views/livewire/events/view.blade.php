@@ -3,7 +3,7 @@
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
 
             <div class="flex justify-end p-4">
-                <x-button href="{{ route('events.create') }}">
+                <x-button href="{{ route('events.edit', ['event' => $event]) }}">
                     {{ __('Edit') }}
                 </x-button>
                 // einkaufsliste

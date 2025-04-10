@@ -13,14 +13,14 @@ Route::middleware([
 ])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/events', \App\Livewire\Events\All::class)->name('events.list');
-    Route::get('/events/create', \App\Livewire\Events\Create::class)->name('events.create');
+    Route::get('/events/create', \App\Livewire\Events\CreateEdit::class)->name('events.create');
+    Route::get('/events/{event}/edit', \App\Livewire\Events\CreateEdit::class)->name('events.edit');
     Route::get('/events/{event}', \App\Livewire\Events\View::class)->name('events.view');
 
     Route::get('/recipes', \App\Livewire\Recipes\All::class)->name('recipes.list');
     Route::get('/recipes/create', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.create');
     Route::get('/recipes/{recipe}', \App\Livewire\Recipes\View::class)->name('recipes.view');
     Route::get('/recipes/{recipe}/edit', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.edit');
-
 
     Route::get('/participant-groups', \App\Livewire\Groups\All::class)->name('participant-groups.list');
     Route::get('/participant-groups/create', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.create');
