@@ -9,10 +9,11 @@ use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class EventList extends Component implements HasForms, HasTable
+class All extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -26,9 +27,8 @@ class EventList extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(function () {
-                return Auth::user()->currentTeam->events();
-            })
+            ->relationship(fn (): HasMany => Auth::user()->currentTeam->events())
+            ->inverseRelationship('team')
             ->actions([
                 Tables\Actions\Action::make('view')
                     ->label(__('View Event'))
