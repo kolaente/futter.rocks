@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->double('food_factor')->default(1);
-            $table->foreignId('team')->constrained();
+            $table->foreignId('team_id')->constrained();
             $table->timestamps();
         });
         Schema::create('event_participant_group', function (Blueprint $table) {
