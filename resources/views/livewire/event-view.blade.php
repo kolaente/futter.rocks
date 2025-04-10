@@ -21,7 +21,7 @@
                 {{ __('Meals') }}
             </h2>
 
-            {{ $event->meals }}
+            <livewire:events.list-meals :$event/>
 
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Shopping Tours') }}
