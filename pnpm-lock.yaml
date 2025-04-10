@@ -6,16 +6,16 @@ settings:
 
 devDependencies:
   '@tailwindcss/forms':
-    specifier: ^0.5.7
+    specifier: ^0.5.10
     version: 0.5.10(tailwindcss@3.4.17)
   '@tailwindcss/typography':
-    specifier: ^0.5.10
+    specifier: ^0.5.16
     version: 0.5.16(tailwindcss@3.4.17)
   '@tailwindcss/vite':
     specifier: ^4.0.0
     version: 4.1.3(vite@6.2.6)
   autoprefixer:
-    specifier: ^10.4.16
+    specifier: ^10.4.21
     version: 10.4.21(postcss@8.5.3)
   axios:
     specifier: ^1.8.2
@@ -27,10 +27,13 @@ devDependencies:
     specifier: ^1.2.0
     version: 1.2.0(vite@6.2.6)
   postcss:
-    specifier: ^8.4.32
+    specifier: ^8.5.3
     version: 8.5.3
+  postcss-nesting:
+    specifier: ^13.0.1
+    version: 13.0.1(postcss@8.5.3)
   tailwindcss:
-    specifier: ^3.4.0
+    specifier: ^3.4.17
     version: 3.4.17
   vite:
     specifier: ^6.2.4
@@ -41,6 +44,24 @@ packages:
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+    dev: true
+
+  /@csstools/selector-resolve-nested@3.0.0(postcss-selector-parser@7.1.0):
+    resolution: {integrity: sha512-ZoK24Yku6VJU1gS79a5PFmC8yn3wIapiKmPgun0hZgEI5AOqgH2kiPRsPz1qkGv4HL+wuDLH83yQyk6inMYrJQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      postcss-selector-parser: ^7.0.0
+    dependencies:
+      postcss-selector-parser: 7.1.0
+    dev: true
+
+  /@csstools/selector-specificity@5.0.0(postcss-selector-parser@7.1.0):
+    resolution: {integrity: sha512-PCqQV3c4CoVm3kdPhyeZ07VmBRdH2EpMFA/pd9OASpOEC3aXNGoqPDAZ80D0cLpMBxnmk0+yNhGsEx31hq7Gtw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      postcss-selector-parser: ^7.0.0
+    dependencies:
+      postcss-selector-parser: 7.1.0
     dev: true
 
   /@esbuild/aix-ppc64@0.25.2:
@@ -1514,6 +1535,18 @@ packages:
       postcss-selector-parser: 6.1.2
     dev: true
 
+  /postcss-nesting@13.0.1(postcss@8.5.3):
+    resolution: {integrity: sha512-VbqqHkOBOt4Uu3G8Dm8n6lU5+9cJFxiuty9+4rcoyRPO9zZS1JIs6td49VIoix3qYqELHlJIn46Oih9SAKo+yQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      postcss: ^8.4
+    dependencies:
+      '@csstools/selector-resolve-nested': 3.0.0(postcss-selector-parser@7.1.0)
+      '@csstools/selector-specificity': 5.0.0(postcss-selector-parser@7.1.0)
+      postcss: 8.5.3
+      postcss-selector-parser: 7.1.0
+    dev: true
+
   /postcss-selector-parser@6.0.10:
     resolution: {integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==}
     engines: {node: '>=4'}
@@ -1524,6 +1557,14 @@ packages:
 
   /postcss-selector-parser@6.1.2:
     resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
+    engines: {node: '>=4'}
+    dependencies:
+      cssesc: 3.0.0
+      util-deprecate: 1.0.2
+    dev: true
+
+  /postcss-selector-parser@7.1.0:
+    resolution: {integrity: sha512-8sLjZwK0R+JlxlYcTuVnyT2v+htpdrjDOKuMcOVdYjt52Lh8hWRYpxBPoKx/Zg+bcjc3wx6fmQevMmUztS/ccA==}
     engines: {node: '>=4'}
     dependencies:
       cssesc: 3.0.0
