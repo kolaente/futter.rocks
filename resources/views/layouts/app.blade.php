@@ -1,3 +1,4 @@
+@props(['title'])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -5,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ $title.' | '. config('app.name') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -25,10 +26,16 @@
             @livewire('navigation-menu')
 
             <!-- Page Heading -->
-            @if (isset($header))
+            @if (isset($header) || isset($title))
                 <header class="bg-white dark:bg-gray-800 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                        @if(isset($title))
+                            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                                {{ $title }}
+                            </h2>
+                        @else
+                            {{ $header }}
+                        @endif
                     </div>
                 </header>
             @endif
