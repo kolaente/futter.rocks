@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Events;
 
 use App\Models\Event;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -10,7 +10,7 @@ use Filament\Forms;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class EventCreate extends Component implements HasForms
+class Create extends Component implements HasForms
 {
     use InteractsWithForms;
 

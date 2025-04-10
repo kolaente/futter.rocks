@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Events;
 
 use App\Models\Event;
 use Filament\Forms\Concerns\InteractsWithForms;

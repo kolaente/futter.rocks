@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Events;
 
 use App\Models\Event;
 use Livewire\Component;
 
-class EventView extends Component
+class View extends Component
 {
     public Event $event;
 
