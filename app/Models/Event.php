@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\CurrentTeam;
 use App\Utils\RoundIngredients;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
+#[ScopedBy(CurrentTeam::class)]
 class Event extends Model
 {
     use HasFactory;
