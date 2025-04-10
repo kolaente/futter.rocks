@@ -3,26 +3,27 @@
 namespace App\Models;
 
 use App\Models\Enums\Unit;
+use App\Models\Scopes\CurrentTeam;
 use App\Services\RecipeParser;
 use App\Utils\RoundIngredients;
 use Filament\Facades\Filament;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use function Psy\debug;
 
+#[ScopedBy(CurrentTeam::class)]
 class Recipe extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'title',
-        'company_id',
         'imported_from_url',
-        'grouping_id',
+        'team_id',
     ];
 
     protected static function booted(): void

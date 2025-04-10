@@ -27,8 +27,7 @@ class All extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->relationship(fn (): HasMany => Auth::user()->currentTeam->events())
-            ->inverseRelationship('team')
+            ->query(Event::query())
             ->actions([
                 Tables\Actions\Action::make('view')
                     ->label(__('View Event'))

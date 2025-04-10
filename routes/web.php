@@ -1,8 +1,5 @@
 <?php
 
-use App\Livewire\Events\EventList;
-use App\Livewire\Events\View;
-use App\Livewire\Events\Create;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,7 +12,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::get('/events', EventList::class)->name('events.list');
-    Route::get('/events/create', Create::class)->name('events.create');
-    Route::get('/events/{event}', View::class)->name('events.view');
+    Route::get('/events', \App\Livewire\Events\All::class)->name('events.list');
+    Route::get('/events/create', \App\Livewire\Events\Create::class)->name('events.create');
+    Route::get('/events/{event}', \App\Livewire\Events\View::class)->name('events.view');
+
+    Route::get('/recipes', \App\Livewire\Recipes\All::class)->name('recipes.list');
+    Route::get('/recipes/create', \App\Livewire\Recipes\Create::class)->name('recipes.create');
+    Route::get('/recipes/{recipe}', \App\Livewire\Recipes\View::class)->name('recipes.view');
 });
