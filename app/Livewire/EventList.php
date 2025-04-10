@@ -2,13 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Models\Event;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -30,8 +30,9 @@ class EventList extends Component implements HasForms, HasTable
                 return Auth::user()->currentTeam->events();
             })
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('view')
+                    ->label(__('View Event'))
+                    ->url(fn(Event $record) => route('events.view', ['event' => $record])),
             ])
             ->columns([
                 Tables\Columns\TextColumn::make('title')

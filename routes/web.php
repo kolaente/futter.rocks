@@ -2,6 +2,7 @@
 
 use App\Livewire\EventCreate;
 use App\Livewire\EventList;
+use App\Livewire\EventView;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,4 +17,5 @@ Route::middleware([
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/events', EventList::class)->name('events.list');
     Route::get('/events/create', EventCreate::class)->name('events.create');
+    Route::get('/events/{event}', EventView::class)->name('events.view');
 });
