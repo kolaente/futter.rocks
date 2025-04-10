@@ -6,13 +6,11 @@ use App\Models\Enums\Unit;
 use App\Models\Scopes\CurrentTeam;
 use App\Services\RecipeParser;
 use App\Utils\RoundIngredients;
-use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 #[ScopedBy(CurrentTeam::class)]
@@ -51,7 +49,7 @@ class Recipe extends Model
         return $this->belongsToMany(Meal::class);
     }
 
-    public static function importFromUrl(string $url, int $groupingId): self
+    public static function importFromUrl(string $url, int $teamId): self
     {
         $parsed = RecipeParser::fetchRecipeFromUrl($url);
 
@@ -60,7 +58,7 @@ class Recipe extends Model
         $recipe = self::create([
             'title' => $parsed['name'],
             'imported_from_url' => $url,
-            'grouping_id' => $groupingId,
+            'team_id' => $teamId,
         ]);
 
         foreach ($parsed['recipeIngredient'] as $ing) {
