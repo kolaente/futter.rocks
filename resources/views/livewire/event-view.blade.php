@@ -27,8 +27,7 @@
                 {{ __('Shopping Tours') }}
             </h2>
 
-            {{ $event->shoppingTours }}
-
+            <livewire:events.list-shopping-tours :$event/>
         </div>
     </div>
 </div>
