@@ -22,7 +22,7 @@ class Event extends Model
         'date_from',
         'date_to',
         'created_by_id',
-        'grouping_id',
+        'team_id',
     ];
 
     protected static function booted()
