@@ -2,12 +2,16 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
 
-            <div class="flex justify-end p-4">
+            <div class="flex justify-end p-4 space-x-2">
                 <x-button href="{{ route('events.edit', ['event' => $event]) }}">
                     {{ __('Edit') }}
                 </x-button>
-                // einkaufsliste
-                // essensplan
+                <x-button href="{{ route('event.meal-plan-view', ['event' => $event]) }}">
+                    {{ __('Meal Plan') }}
+                </x-button>
+                <x-button href="{{ route('event.shopping-list-view', ['event' => $event]) }}">
+                    {{ __('Shopping list') }}
+                </x-button>
                 // share
             </div>
 

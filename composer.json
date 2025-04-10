@@ -9,6 +9,8 @@
         "php": "^8.2",
         "ext-dom": "*",
         "ext-libxml": "*",
+        "ext-intl": "*",
+        "barryvdh/laravel-dompdf": "^3.1",
         "filament/actions": "^3.3",
         "filament/forms": "^3.3",
         "filament/tables": "^3.3",

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,4 +26,9 @@ Route::middleware([
     Route::get('/participant-groups', \App\Livewire\Groups\All::class)->name('participant-groups.list');
     Route::get('/participant-groups/create', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.create');
     Route::get('/participant-groups/{group}/edit', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.edit');
+
+    Route::get('/events/{event}/meal-plan/download', [EventController::class, 'generateMealPlan'])->name('event.meal-plan-download');
+    Route::get('/events/{event}/meal-plan', [EventController::class, 'viewMealPlan'])->name('event.meal-plan-view');
+    Route::get('/events/{event}/shopping-list/download', [EventController::class, 'generateShoppingList'])->name('event.shopping-list-download');
+    Route::get('/events/{event}/shopping-list', [EventController::class, 'viewShoppingList'])->name('event.shopping-list-view');
 });
