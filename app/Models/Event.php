@@ -76,8 +76,8 @@ class Event extends Model
     {
         return Attribute::make(
             get: fn() => __('From :from to :to, :days.', [
-                'from' => $this->date_from->translatedFormat('j F Y'),
-                'to' => $this->date_to->translatedFormat('j F Y'),
+                'from' => $this->date_from->translatedFormat(__('j F Y')),
+                'to' => $this->date_to->translatedFormat(__('j F Y')),
                 'days' => trans_choice(':count day|:count days', $this->duration_days),
             ]),
         );

@@ -30,8 +30,10 @@ class All extends Component implements HasForms, HasTable
                     ->label(__('Title')),
                 Tables\Columns\TextColumn::make('date_from')
                     ->sortable()
+                    ->formatStateUsing(fn($record) => $record->date_from->translatedFormat(__('j F Y')))
                     ->label(__('Start Date')),
                 Tables\Columns\TextColumn::make('date_to')
+                    ->formatStateUsing(fn($record) => $record->date_to->translatedFormat(__('j F Y')))
                     ->label(__('End Date')),
             ]);
     }
