@@ -21,7 +21,7 @@ class Import extends Component implements HasForms, HasActions
     public function importAction(): Action
     {
         return Action::make('import')
-                ->label(__('Import Recipe'))
+                ->label(__('Import'))
                 ->color('gray')
                 ->form([
                     TextInput::make('url')
