@@ -4,6 +4,14 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  '@fontsource-variable/arima':
+    specifier: ^5.2.5
+    version: 5.2.5
+  '@fontsource-variable/open-sans':
+    specifier: ^5.2.5
+    version: 5.2.5
+
 devDependencies:
   '@tailwindcss/forms':
     specifier: ^0.5.10
@@ -288,6 +296,14 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@fontsource-variable/arima@5.2.5:
+    resolution: {integrity: sha512-BdmvDhYp9baElJF3Ms0cOw1t7AKzuxcksfWsyNytTqGoZdW26P8UP9Kd+tcZxY9UWGOhX5Vgy6jxXvGripbR6w==}
+    dev: false
+
+  /@fontsource-variable/open-sans@5.2.5:
+    resolution: {integrity: sha512-++xRfkZAxNP4e1Spm5W11iVcoYfXcNVTV5MDit60t7grRk10hy9C7XQd/jv+0TDFIfHbK9EzyBp3M3CHPesroA==}
+    dev: false
 
   /@isaacs/cliui@8.0.2:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}

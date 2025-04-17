@@ -27,19 +27,19 @@
                 {{ $event->duration_string }}
             </p>
 
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-display font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Groups') }}
             </h2>
 
             <livewire:events.list-groups :$event/>
 
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-display font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Meals') }}
             </h2>
 
             <livewire:events.list-meals :$event/>
 
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-display font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Shopping Tours') }}
             </h2>
 

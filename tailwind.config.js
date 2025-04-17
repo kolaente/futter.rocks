@@ -19,7 +19,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['"Open Sans Variable"', ...defaultTheme.fontFamily.sans],
+                display: ['"Arima Variable"', ...defaultTheme.fontFamily.serif],
             },
         },
     },
