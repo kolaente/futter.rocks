@@ -69,4 +69,15 @@ class UserFactory extends Factory
             'ownedTeams'
         );
     }
+
+    public function withCurrentTeam(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $team = Team::factory()->create([
+                'user_id' => $user->id,
+            ]);
+
+            $user->current_team_id = $team->id;
+        });
+    }
 }

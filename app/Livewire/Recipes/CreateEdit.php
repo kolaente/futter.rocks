@@ -105,11 +105,13 @@ class CreateEdit extends Component implements HasForms
 
     public function store()
     {
-        DB::transaction(function () {
+        try {
+            DB::beginTransaction();
             if ($this->recipe === null) {
                 $this->recipe = new Recipe;
                 $this->recipe->team_id = Auth::user()->currentTeam->id;
             }
+
             $this->recipe->title = $this->form->getState()['title'];
             $this->recipe->save();
 
@@ -126,10 +128,18 @@ class CreateEdit extends Component implements HasForms
 
                 $this->recipe->ingredients()->attach($ingredient->id, [
                     'quantity' => $ig['quantity'],
-                    'unit' => Unit::tryFrom($ig['unit']),
+                    'unit' => $ig['unit'],
                 ]);
             }
-        });
+
+
+            DB::commit();
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            throw $e;
+        }
 
         return to_route('recipes.view', ['recipe' => $this->recipe]);
     }
