@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Recipes;
 
+use App\Models\Event;
 use App\Models\Recipe;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -22,9 +23,9 @@ class All extends Component implements HasForms, HasTable
         return $table
             ->query(Recipe::query())
             ->defaultSort('title')
-            ->recordUrl(fn(Recipe $record) => route('recipes.view', ['recipe' => $record]))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->action(fn(Recipe $record) => $this->redirect(route('recipes.view', ['recipe' => $record]), true))
                     ->sortable()
                     ->searchable()
                     ->label(__('Title')),
