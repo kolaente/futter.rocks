@@ -23,16 +23,16 @@
             @endif
 
             <h2 class="font-display font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
-                {{ __('Groups') }}
-            </h2>
-
-            <livewire:events.list-groups :$event class="mb-6"/>
-
-            <h2 class="font-display font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
                 {{ __('Meals') }}
             </h2>
 
             <livewire:events.list-meals :$event/>
+
+            <h2 class="font-display font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
+                {{ __('Groups') }}
+            </h2>
+
+            <livewire:events.list-groups :$event class="mb-6"/>
 
             <h2 class="font-display font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
                 {{ __('Shopping Tours') }}
