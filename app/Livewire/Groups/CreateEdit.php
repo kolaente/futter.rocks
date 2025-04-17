@@ -76,7 +76,7 @@ class CreateEdit extends Component implements HasForms
         $this->group->team_id = Auth::user()->currentTeam->id;
         $this->group->save();
 
-        return to_route('participant-groups.list');
+        $this->redirect(route('participant-groups.list'), true);
     }
 
     public function render(): View

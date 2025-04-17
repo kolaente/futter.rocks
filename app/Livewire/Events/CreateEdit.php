@@ -76,7 +76,7 @@ class CreateEdit extends Component implements HasForms
 
         $this->event->save();
 
-        return to_route('events.view', ['event' => $this->event]);
+        $this->redirect(route('events.view', ['event' => $this->event]), true);
     }
 
     public function render()
