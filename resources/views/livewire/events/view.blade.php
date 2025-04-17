@@ -1,4 +1,4 @@
-<x-main-content :title="$event->title">
+<x-main-content :title="$event->title . ' - ' . $event->duration_string">
     <x-slot:actions>
         <x-button href="{{ route('events.edit', ['event' => $event]) }}">
             {{ __('Edit') }}
@@ -22,10 +22,6 @@
                 {{ $event->description }}
             </p>
         @endif
-
-        <p class="p-4 mb-2">
-            {{ $event->duration_string }}
-        </p>
 
         <h2 class="font-display font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Groups') }}
