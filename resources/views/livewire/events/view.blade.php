@@ -14,31 +14,31 @@
         </x-button>
     </x-slot:actions>
 
-    <x-floating-content>
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if($event->description)
+                <p class="p-4 mb-2 bg-white overflow-hidden ring-1 ring-gray-950/5 sm:rounded-xl mb-8">
+                    {{ $event->description }}
+                </p>
+            @endif
 
+            <h2 class="font-display font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
+                {{ __('Groups') }}
+            </h2>
 
-        @if($event->description)
-            <p class="p-4 mb-2">
-                {{ $event->description }}
-            </p>
-        @endif
+            <livewire:events.list-groups :$event class="mb-6"/>
 
-        <h2 class="font-display font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Groups') }}
-        </h2>
+            <h2 class="font-display font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
+                {{ __('Meals') }}
+            </h2>
 
-        <livewire:events.list-groups :$event/>
+            <livewire:events.list-meals :$event/>
 
-        <h2 class="font-display font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Meals') }}
-        </h2>
+            <h2 class="font-display font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
+                {{ __('Shopping Tours') }}
+            </h2>
 
-        <livewire:events.list-meals :$event/>
-
-        <h2 class="font-display font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Shopping Tours') }}
-        </h2>
-
-        <livewire:events.list-shopping-tours :$event/>
-    </x-floating-content>
+            <livewire:events.list-shopping-tours :$event/>
+        </div>
+    </div>
 </x-main-content>
