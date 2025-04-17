@@ -112,10 +112,12 @@ class Recipe extends Model
             $title = str_replace(['/', '(', ')'], '', $title);
             $ingredient = Ingredient::firstOrCreate([
                 'title' => trim($title),
-                'unit' => $unit,
             ]);
 
-            $recipe->ingredients()->attach($ingredient, ['quantity' => $quantity / $servings]);
+            $recipe->ingredients()->attach($ingredient, [
+                'quantity' => $quantity / $servings,
+                'unit' => $unit,
+            ]);
         }
 
         return $recipe;
