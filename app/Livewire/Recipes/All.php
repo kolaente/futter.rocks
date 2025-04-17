@@ -22,7 +22,7 @@ class All extends Component implements HasForms, HasTable
         return $table
             ->query(Recipe::query())
             ->defaultSort('title')
-            ->recordUrl(fn(Recipe $recipe) => route('recipes.view', ['recipe' => $recipe]))
+            ->recordUrl(fn(Recipe $record) => route('recipes.view', ['recipe' => $record]))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->sortable()

@@ -11,7 +11,10 @@ class View extends Component
 
     public function mount(Recipe $recipe)
     {
-        $this->recipe = $recipe->with('ingredients')->first();
+        $this->recipe = $recipe
+            ->where('id', $recipe->id)
+            ->with('ingredients')
+            ->first();
     }
 
     public function render()
