@@ -84,6 +84,6 @@ class CreateEdit extends Component implements HasForms
         return view('livewire.groups.create-edit')
             ->title($this->group === null
                 ? __('Create Group')
-                : __('Edit :group', ['group' => $this->group->title]));
+                : __('Edit :item', ['item' => $this->group->title]));
     }
 }

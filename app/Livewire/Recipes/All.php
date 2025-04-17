@@ -39,7 +39,7 @@ class All extends Component implements HasForms, HasTable
 
     public function render(): View
     {
-        return view('livewire.recipes.list')
+        return view('livewire.recipes.all')
             ->title(__('Recipes'));
     }
 }

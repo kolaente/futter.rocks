@@ -84,6 +84,6 @@ class CreateEdit extends Component implements HasForms
         return view('livewire.events.create-edit')
             ->title($this->event === null
                 ? __('Create Event')
-                : __('Edit :event', ['event' => $this->event->title]));
+                : __('Edit :item', ['item' => $this->event->title]));
     }
 }

@@ -1,8 +1,10 @@
-<x-main-content :title="__('Events')">
+<x-main-content :title="__('Recipes')">
     <x-slot:actions>
-        <x-button href="{{ route('events.create') }}">
+        <x-button href="{{ route('recipes.create') }}">
             {{ __('Create') }}
         </x-button>
+
+        <livewire:recipes.import/>
     </x-slot:actions>
 
     <x-floating-content>

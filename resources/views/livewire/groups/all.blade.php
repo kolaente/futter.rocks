@@ -1,12 +1,11 @@
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+<x-main-content :title="__('Groups')">
+    <x-slot:actions>
+        <x-button href="{{ route('participant-groups.create') }}">
+            {{ __('Create') }}
+        </x-button>
+    </x-slot:actions>
 
-            <x-button href="{{ route('participant-groups.create') }}">
-                {{ __('Create Group') }}
-            </x-button>
-
-            {{ $this->table }}
-        </div>
-    </div>
-</div>
+    <x-floating-content>
+        {{ $this->table }}
+    </x-floating-content>
+</x-main-content>
