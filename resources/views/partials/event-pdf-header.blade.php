@@ -5,5 +5,5 @@
     @endif
 </h1>
 <p>
-    {{ $event->date_from }} bis {{ $event->date_to }}
+    {{ $event->duration_string }}
 </p>

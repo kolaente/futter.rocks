@@ -72,6 +72,17 @@ class Event extends Model
         );
     }
 
+    public function durationString(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => __('From :from to :to, :days.', [
+                'from' => $this->date_from->translatedFormat('j F Y'),
+                'to' => $this->date_to->translatedFormat('j F Y'),
+                'days' => trans_choice(':count day|:count days', $this->duration_days),
+            ]),
+        );
+    }
+
     public function getMealsByDate(): EloquentCollection|Collection|array
     {
         return $this->meals()

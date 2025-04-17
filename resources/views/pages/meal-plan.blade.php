@@ -3,7 +3,7 @@
         {{ $event->title }} - {{ __('Meal Plan') }}
     </h1>
     <p class="text-center text-gray-700 mb-4">
-        {{ $event->date_from }} bis {{ $event->date_to }}
+        {{ $event->duration_string }}
     </p>
 
     @foreach($mealsByDate as $date => $meals)
