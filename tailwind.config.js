@@ -1,6 +1,6 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
-import typography from '@tailwindcss/typography';
+import defaultTheme from 'tailwindcss/defaultTheme'
+import forms from '@tailwindcss/forms'
+import typography from '@tailwindcss/typography'
 import preset from './vendor/filament/support/tailwind.config.preset'
 
 /** @type {import('tailwindcss').Config} */
@@ -22,8 +22,15 @@ export default {
                 sans: ['"Open Sans Variable"', ...defaultTheme.fontFamily.sans],
                 display: ['"Arima Variable"', ...defaultTheme.fontFamily.serif],
             },
+            colors: {
+                primary: {
+                    light: '#507088',
+                    DEFAULT: '#3D5467',
+                    dark: '#273744',
+                },
+            },
         },
     },
 
     plugins: [forms, typography],
-};
+}
