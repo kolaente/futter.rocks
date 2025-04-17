@@ -24,7 +24,11 @@
             @endif
 
             <p class="p-4 mb-2">
-                {{ __('From :from to :to', ['from' => $event->date_from, 'to' => $event->date_to]) }}
+                {{ __('From :from to :to, :days.', [
+                    'from' => $event->date_from->translatedFormat('j F Y'),
+                    'to' => $event->date_to->translatedFormat('j F Y'),
+                    'days' => trans_choice(':count day|:count days', $event->duration_days),
+                ]) }}
             </p>
 
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">

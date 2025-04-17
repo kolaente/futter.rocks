@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Scopes\CurrentTeam;
 use App\Utils\RoundIngredients;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,6 +36,14 @@ class Event extends Model
         });
     }
 
+    protected function casts(): array
+    {
+        return [
+            'date_to' => 'date',
+            'date_from' => 'date',
+        ];
+    }
+
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
@@ -54,6 +63,13 @@ class Event extends Model
     public function shoppingTours()
     {
         return $this->hasMany(ShoppingTour::class);
+    }
+
+    public function durationDays(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->date_from->diffInDays($this->date_to) + 1,
+        );
     }
 
     public function getMealsByDate(): EloquentCollection|Collection|array
