@@ -17,7 +17,7 @@
                 @foreach($recipe->ingredients as $ingredient)
                     <tr>
                         <td class="text-right py-1">{{ $ingredient->pivot->quantity }}</td>
-                        <td class="text-left py-1">{{ $ingredient->unit }}</td>
+                        <td class="text-left py-1">{{ $ingredient->pivot->unit->getShortLabel() }}</td>
                         <td class="text-left p-1">{{ $ingredient->title }}</td>
                     </tr>
                 @endforeach

@@ -9,7 +9,7 @@ class View extends Component
 {
     public Recipe $recipe;
 
-    public function moun(Recipe $recipe)
+    public function mount(Recipe $recipe)
     {
         $this->recipe = $recipe->with('ingredients')->first();
     }

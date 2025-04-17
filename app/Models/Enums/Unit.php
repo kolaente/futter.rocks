@@ -2,13 +2,13 @@
 
 namespace App\Models\Enums;
 
-enum Unit: string
+enum Unit: int
 {
-    case Grams = 'gr';
-    case Kilos = 'kg';
-    case Milliliters = 'ml';
-    case Liters = 'l';
-    case Pieces = 'pcs';
+    case Grams = 1;
+    case Kilos = 2;
+    case Milliliters = 3;
+    case Liters = 4;
+    case Pieces = 5;
 
     public function getLabel(): ?string
     {

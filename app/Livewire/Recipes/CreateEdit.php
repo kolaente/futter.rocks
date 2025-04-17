@@ -120,27 +120,13 @@ class CreateEdit extends Component implements HasForms
                 if (is_numeric($ig['ingredient'])) {
                     $ingredient = Ingredient::where('id', $ig['ingredient'])
                         ->first();
-
-                    if ($ingredient->unit->value !== $ig['unit']) {
-                        $ingredient = $ingredient->replicate(['unit']);
-                        $ingredient->unit = $ig['unit'];
-                        $ingredient->save();
-                    }
                 } else {
-                    $ingredient = Ingredient::where('title', $ig['ingredient'])
-                        ->where('unit', $ig['unit'])
-                        ->first();
-
-                    if ($ingredient === null) {
-                        $ingredient = Ingredient::create([
-                            'title' => $ig['ingredient'],
-                            'unit' => $ig['unit'],
-                        ]);
-                    }
+                    $ingredient = Ingredient::firstOrCreate(['title' => $ig['ingredient']]);
                 }
 
                 $this->recipe->ingredients()->attach($ingredient->id, [
                     'quantity' => $ig['quantity'],
+                    'unit' => Unit::tryFrom($ig['unit']),
                 ]);
             }
         });
