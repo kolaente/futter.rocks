@@ -32,6 +32,23 @@ class ListMeals extends Component implements HasForms, HasTable
 
     public function table(Table $table): Table
     {
+        $form = [
+            Forms\Components\TextInput::make('title')
+                ->label(__('Title'))
+                ->required()
+                ->maxLength(255),
+            Forms\Components\DatePicker::make('date')
+                ->label(__('Date'))
+                ->minDate(fn() => $this->event->date_from)
+                ->maxDate(fn() => $this->event->date_to)
+                ->required(),
+            Forms\Components\Select::make('recipes')
+                ->label(__('Recipes'))
+                ->required()
+                ->multiple()
+                ->relationship(name: 'recipes', titleAttribute: 'title'),
+        ];
+
         return $table
             ->relationship(fn(): HasMany => $this->event->meals())
             ->inverseRelationship('event')
@@ -48,25 +65,10 @@ class ListMeals extends Component implements HasForms, HasTable
             ->defaultSort('date')
             ->headerActions([
                 Tables\Actions\CreateAction::make()
-                    ->form([
-                        Forms\Components\TextInput::make('title')
-                            ->label(__('Title'))
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\DatePicker::make('date')
-                            ->label(__('Date'))
-                            ->minDate(fn() => $this->event->date_from)
-                            ->maxDate(fn() => $this->event->date_to)
-                            ->required(),
-                        Forms\Components\Select::make('recipes')
-                            ->label(__('Recipes'))
-                            ->required()
-                            ->multiple()
-                            ->relationship(name: 'recipes', titleAttribute: 'title'),
-                    ]),
+                    ->form($form),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->form($form),
                 Tables\Actions\DeleteAction::make(),
             ]);
     }
