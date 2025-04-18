@@ -27,9 +27,8 @@ class Recipe extends Model
     protected static function booted(): void
     {
         static::deleting(function (Recipe $recipe) {
-            DB::table('ingredient_recipe')
-                ->where('recipe_id', $recipe->id)
-                ->delete();
+            $recipe->ingredients()->detach();
+            $recipe->meals()->detach();
         });
     }
 

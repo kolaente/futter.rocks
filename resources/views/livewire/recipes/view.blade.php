@@ -3,7 +3,10 @@
         <x-button href="{{ route('recipes.edit', ['recipe' => $recipe]) }}">
             {{ __('Edit') }}
         </x-button>
+        {{ $this->deleteAction }}
     </x-slot:actions>
+
+    <x-filament-actions::modals />
 
     <x-floating-content class="p-2">
         <table>

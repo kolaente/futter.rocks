@@ -11,6 +11,7 @@
         </x-button>
         {{ $this->deleteAction }}
     </x-slot:actions>
+
     <x-filament-actions::modals />
 
     <div class="py-6">
