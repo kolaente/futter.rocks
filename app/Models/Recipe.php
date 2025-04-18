@@ -127,15 +127,19 @@ class Recipe extends Model
     {
         $list = [];
         foreach ($this->ingredients as $ingredient) {
+
+            $key = $ingredient->id . '_'.$ingredient->pivot->unit->value;
+
             if (!isset($list[$ingredient->id])) {
-                $list[$ingredient->id] = [
+                $list[$key] = [
                     'ingredient' => $ingredient,
                     'quantity' => 0,
+                    'unit' => $ingredient->pivot->unit,
                 ];
             }
 
             foreach ($event->participantGroups as $group) {
-                $list[$ingredient->id]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
+                $list[$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
             }
         }
 

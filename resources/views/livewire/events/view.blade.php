@@ -3,10 +3,10 @@
         <x-button href="{{ route('events.edit', ['event' => $event]) }}">
             {{ __('Edit') }}
         </x-button>
-        <x-button href="{{ route('event.meal-plan-view', ['event' => $event]) }}">
+        <x-button href="{{ route('events.meal-plan', ['event' => $event]) }}">
             {{ __('Meal Plan') }}
         </x-button>
-        <x-button href="{{ route('event.shopping-list-view', ['event' => $event]) }}">
+        <x-button href="{{ route('events.shopping-list', ['event' => $event]) }}">
             {{ __('Shopping list') }}
         </x-button>
         <x-button href="{{ route('shared.event.meal-plan', ['event' => $event]) }}">

@@ -18,6 +18,9 @@ Route::middleware([
     Route::get('/events/create', \App\Livewire\Events\CreateEdit::class)->name('events.create');
     Route::get('/events/{event}/edit', \App\Livewire\Events\CreateEdit::class)->name('events.edit');
     Route::get('/events/{event}', \App\Livewire\Events\View::class)->name('events.view');
+    Route::get('/events/{event}/meal-plan', \App\Livewire\Events\MealPlan::class)->name('events.meal-plan');
+    Route::get('/events/{event}/shopping-list/download', [EventController::class, 'generateShoppingList'])->name('events.shopping-list-download');
+    Route::get('/events/{event}/shopping-list', [EventController::class, 'viewShoppingList'])->name('events.shopping-list');
 
     Route::get('/recipes', \App\Livewire\Recipes\All::class)->name('recipes.list');
     Route::get('/recipes/create', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.create');
@@ -28,10 +31,6 @@ Route::middleware([
     Route::get('/participant-groups/create', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.create');
     Route::get('/participant-groups/{group}/edit', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.edit');
 
-    Route::get('/events/{event}/meal-plan/download', [EventController::class, 'generateMealPlan'])->name('event.meal-plan-download');
-    Route::get('/events/{event}/meal-plan', [EventController::class, 'viewMealPlan'])->name('event.meal-plan-view');
-    Route::get('/events/{event}/shopping-list/download', [EventController::class, 'generateShoppingList'])->name('event.shopping-list-download');
-    Route::get('/events/{event}/shopping-list', [EventController::class, 'viewShoppingList'])->name('event.shopping-list-view');
 });
 
 Route::get('/shared/events/{event:share_id}/meal-plan', [SharedEventController::class, 'mealPlan'])->name('shared.event.meal-plan');

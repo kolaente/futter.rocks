@@ -42,70 +42,12 @@
     thead th {
         border-bottom: 1px solid #ccc;
     }
-
-    p {
-        margin: .5rem 0 .5rem;
-    }
-
-    .meal-title {
-        padding-bottom: .5rem;
-        display: block;
-        font-weight: bold;
-    }
-
-    .meal-ingredients {
-        margin-top: 0;
-        margin-bottom: .25rem;
-        padding-left: 1.5rem;
-    }
 </style>
-
-@php
-    $fmt = new NumberFormatter('de_DE', NumberFormatter::DECIMAL);
-@endphp
 
 <div>
     <div class="header">
         @include('partials.event-pdf-header', ['event' => $event, 'subtitle' => __('Meal Plan')])
     </div>
 
-    @php
-        $i = 1;
-        $paginated = $mealsByDate->forPage($i, 4);
-    @endphp
-
-    @while($paginated->count() > 0)
-        @php
-            $paginated = $mealsByDate->forPage($i, 4);
-            $i++;
-        @endphp
-        <table>
-            <thead>
-            <tr>
-                @foreach($paginated as $date => $meal)
-                    <th>
-                        {{ $date }}
-                    </th>
-                @endforeach
-            </tr>
-            </thead>
-            <tr>
-                @foreach($paginated as $meals)
-                    <td>
-                        @foreach($meals as $meal)
-                            <span class="meal-title">{{ $meal->title }}:</span>
-                            @foreach($meal->recipes as $recipe)
-                                <em>{{ $recipe->title }}:</em>
-                                <ul class="meal-ingredients">
-                                    @foreach($recipe->getCalculatedIngredientsForEvent($event) as $item)
-                                        <li>{{ $fmt->format($item['quantity']) }} {{ $item['ingredient']->unit->getShortLabel() }} {{ $item['ingredient']->title }}</li>
-                                    @endforeach
-                                </ul>
-                            @endforeach
-                        @endforeach
-                    </td>
-                @endforeach
-            </tr>
-        </table>
-    @endwhile
+    @include('partials.meal-plan', ['mealsByDate' => $mealsByDate])
 </div>
