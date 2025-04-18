@@ -19,7 +19,7 @@
     <ul>
         @foreach($tourList as $item)
             <li>
-                <span class="check inline-block w-3 h-3 border border-black"></span>
+                <span class="check inline-block w-3 h-3 border border-gray-500"></span>
                 {{ $fmt->format($item['quantity']) }} {{ $item['unit']->getShortLabel() }} {{ $item['ingredient']->title }}
             </li>
         @endforeach
