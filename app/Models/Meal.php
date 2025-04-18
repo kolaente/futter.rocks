@@ -16,6 +16,13 @@ class Meal extends Model
         'date',
     ];
 
+    protected static function booted(): void
+    {
+        static::deleting(function (self $meal) {
+            $meal->recipes()->detach();
+        });
+    }
+
     public function recipes(): BelongsToMany
     {
         return $this->belongsToMany(Recipe::class);
