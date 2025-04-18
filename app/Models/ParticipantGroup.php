@@ -20,6 +20,13 @@ class ParticipantGroup extends Model
         'grouping_id',
     ];
 
+    protected static function booted(): void
+    {
+        static::deleting(function (self $participantGroup) {
+            $participantGroup->events()->detach();
+        });
+    }
+
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);

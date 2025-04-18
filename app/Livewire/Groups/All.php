@@ -41,6 +41,9 @@ class All extends Component implements HasForms, HasTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->actions([
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
 
