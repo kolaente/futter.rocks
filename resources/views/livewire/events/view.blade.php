@@ -9,9 +9,6 @@
         <x-button href="{{ route('events.shopping-list', ['event' => $event]) }}">
             {{ __('Shopping list') }}
         </x-button>
-        <x-button href="{{ route('shared.event.meal-plan', ['event' => $event]) }}">
-            {{ __('Share') }}
-        </x-button>
     </x-slot:actions>
 
     <div class="py-6">

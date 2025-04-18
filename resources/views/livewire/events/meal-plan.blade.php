@@ -14,6 +14,9 @@
         <x-button wire:click="download" target="download">
             {{ __('Download') }}
         </x-button>
+        <x-button href="{{ route('shared.event.meal-plan', ['event' => $event]) }}">
+            {{ __('Share') }}
+        </x-button>
     </x-slot:actions>
 
     <x-floating-content class="p-4">
