@@ -43,7 +43,7 @@ class MealPlan extends Component
             'orientation' => 'portrait',
         ]);
 
-        $pdf = Pdf::loadView('helper.meal-plan', [
+        $pdf = Pdf::loadView('pdf.meal-plan', [
             'event' => $this->event,
             'mealsByDate' => $this->mealsByDate,
         ])->setPaper('a4', 'landscape');

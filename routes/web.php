@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\SharedEventController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +28,6 @@ Route::middleware([
     Route::get('/participant-groups', \App\Livewire\Groups\All::class)->name('participant-groups.list');
     Route::get('/participant-groups/create', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.create');
     Route::get('/participant-groups/{group}/edit', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.edit');
-
 });
 
 Route::get('/shared/events/{event:share_id}/meal-plan', [SharedEventController::class, 'mealPlan'])->name('shared.event.meal-plan');

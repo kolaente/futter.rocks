@@ -23,7 +23,7 @@ class ShoppingList extends Component
             'orientation' => 'portrait',
         ]);
 
-        $pdf = Pdf::loadView('helper.shopping-list', [
+        $pdf = Pdf::loadView('pdf.shopping-list', [
             'event' => $this->event,
         ])->setPaper('a4', 'portrait');
 
