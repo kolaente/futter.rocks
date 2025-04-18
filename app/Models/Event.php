@@ -146,6 +146,8 @@ class Event extends Model
             foreach ($tourList as $id => $item) {
                 $list[$shoppingTourId][$id] = RoundIngredients::round($item);
             }
+
+            uasort($list[$shoppingTourId], fn($a, $b) => strnatcasecmp($a['ingredient']->title, $b['ingredient']->title));
         }
 
         return $list;
