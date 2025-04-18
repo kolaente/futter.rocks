@@ -34,6 +34,7 @@ class ListShoppingTours extends Component implements HasForms, HasTable
             ->inverseRelationship('event')
             ->columns([
                 Tables\Columns\TextColumn::make('date')
+                    ->label(__('Date'))
                     ->date()
                     ->sortable(),
             ])

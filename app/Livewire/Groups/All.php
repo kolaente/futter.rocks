@@ -26,18 +26,22 @@ class All extends Component implements HasForms, HasTable
             ->defaultSort('title')
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->label(__('Title'))
                     ->action(fn(ParticipantGroup $record) => $this->redirect(route('participant-groups.edit', ['group' => $record]), true))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('food_factor')
+                    ->label(__('Food Factor'))
                     ->action(fn(ParticipantGroup $record) => $this->redirect(route('participant-groups.edit', ['group' => $record]), true))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label(__('Updated At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
