@@ -13,21 +13,43 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::get('/events', \App\Livewire\Events\All::class)->name('events.list');
-    Route::get('/events/create', \App\Livewire\Events\CreateEdit::class)->name('events.create');
-    Route::get('/events/{event}/edit', \App\Livewire\Events\CreateEdit::class)->name('events.edit');
-    Route::get('/events/{event}', \App\Livewire\Events\View::class)->name('events.view');
-    Route::get('/events/{event}/meal-plan', \App\Livewire\Events\MealPlan::class)->name('events.meal-plan');
-    Route::get('/events/{event}/shopping-list', \App\Livewire\Events\ShoppingList::class)->name('events.shopping-list');
 
-    Route::get('/recipes', \App\Livewire\Recipes\All::class)->name('recipes.list');
-    Route::get('/recipes/create', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.create');
-    Route::get('/recipes/{recipe}', \App\Livewire\Recipes\View::class)->name('recipes.view');
-    Route::get('/recipes/{recipe}/edit', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.edit');
+    Route::prefix('events')->name('events.')->group(function () {
+        Route::get('/', \App\Livewire\Events\All::class)->name('list');
+        Route::get('/create', \App\Livewire\Events\CreateEdit::class)->name('create');
 
-    Route::get('/participant-groups', \App\Livewire\Groups\All::class)->name('participant-groups.list');
-    Route::get('/participant-groups/create', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.create');
-    Route::get('/participant-groups/{group}/edit', \App\Livewire\Groups\CreateEdit::class)->name('participant-groups.edit');
+        Route::middleware('can:view,event')->group(function () {
+            Route::get('/{event}', \App\Livewire\Events\View::class)->name('view');
+            Route::get('/{event}/meal-plan', \App\Livewire\Events\MealPlan::class)->name('meal-plan');
+            Route::get('/{event}/shopping-list', \App\Livewire\Events\ShoppingList::class)->name('shopping-list');
+        });
+
+        Route::get('/{event}/edit', \App\Livewire\Events\CreateEdit::class)
+            ->middleware('can:update,event')
+            ->name('edit');
+    });
+
+    Route::prefix('recipes')->name('recipes.')->group(function () {
+        Route::get('/', \App\Livewire\Recipes\All::class)->name('list');
+        Route::get('/create', \App\Livewire\Recipes\CreateEdit::class)->name('create');
+
+        Route::get('/{recipe}', \App\Livewire\Recipes\View::class)
+            ->middleware('can:view,recipe')
+            ->name('view');
+
+        Route::get('/{recipe}/edit', \App\Livewire\Recipes\CreateEdit::class)
+            ->middleware('can:update,recipe')
+            ->name('edit');
+    });
+
+    Route::prefix('participant-groups')->name('participant-groups.')->group(function () {
+        Route::get('/', \App\Livewire\Groups\All::class)->name('list');
+        Route::get('/create', \App\Livewire\Groups\CreateEdit::class)->name('create');
+
+        Route::get('/{group}/edit', \App\Livewire\Groups\CreateEdit::class)
+            ->middleware('can:update,group')
+            ->name('edit');
+    });
 });
 
 Route::get('/shared/events/{event:share_id}/meal-plan', [SharedEventController::class, 'mealPlan'])->name('shared.event.meal-plan');
