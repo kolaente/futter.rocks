@@ -9,7 +9,9 @@
         <x-button href="{{ route('events.shopping-list', ['event' => $event]) }}">
             {{ __('Shopping list') }}
         </x-button>
+        {{ $this->deleteAction }}
     </x-slot:actions>
+    <x-filament-actions::modals />
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

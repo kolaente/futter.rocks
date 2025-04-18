@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 #[ScopedBy(CurrentTeam::class)]
@@ -33,6 +34,14 @@ class Event extends Model
     {
         static::creating(function (Event $event) {
             $event->share_id = Str::uuid();
+        });
+        static::deleting(function (Event $event) {
+            DB::table('meal_recipe')
+                ->whereIn('meal_id', $event->meals->pluck('id'))
+                ->delete();
+            $event->meals()->delete();
+            $event->shoppingTours()->delete();
+            $event->participantGroups()->detach();
         });
     }
 
