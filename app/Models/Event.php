@@ -124,15 +124,19 @@ class Event extends Model
             }
             foreach ($meal->recipes as $recipe) {
                 foreach ($recipe->ingredients as $ingredient) {
-                    if (!isset($list[$currentShoppingTour->id][$ingredient->id])) {
-                        $list[$currentShoppingTour->id][$ingredient->id] = [
+
+                    $key = $ingredient->id.'_'.$ingredient->pivot->unit->value;
+
+                    if (!isset($list[$currentShoppingTour->id][$key])) {
+                        $list[$currentShoppingTour->id][$key] = [
                             'ingredient' => $ingredient,
                             'quantity' => 0,
+                            'unit' => $ingredient->pivot->unit,
                         ];
                     }
 
                     foreach ($this->participantGroups as $group) {
-                        $list[$currentShoppingTour->id][$ingredient->id]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
+                        $list[$currentShoppingTour->id][$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
                     }
                 }
             }

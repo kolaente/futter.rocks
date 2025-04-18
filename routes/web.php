@@ -19,8 +19,7 @@ Route::middleware([
     Route::get('/events/{event}/edit', \App\Livewire\Events\CreateEdit::class)->name('events.edit');
     Route::get('/events/{event}', \App\Livewire\Events\View::class)->name('events.view');
     Route::get('/events/{event}/meal-plan', \App\Livewire\Events\MealPlan::class)->name('events.meal-plan');
-    Route::get('/events/{event}/shopping-list/download', [EventController::class, 'generateShoppingList'])->name('events.shopping-list-download');
-    Route::get('/events/{event}/shopping-list', [EventController::class, 'viewShoppingList'])->name('events.shopping-list');
+    Route::get('/events/{event}/shopping-list', \App\Livewire\Events\ShoppingList::class)->name('events.shopping-list');
 
     Route::get('/recipes', \App\Livewire\Recipes\All::class)->name('recipes.list');
     Route::get('/recipes/create', \App\Livewire\Recipes\CreateEdit::class)->name('recipes.create');

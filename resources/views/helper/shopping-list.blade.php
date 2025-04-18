@@ -33,32 +33,8 @@
     }
 </style>
 
-@php
-    $fmt = new NumberFormatter('de_DE', NumberFormatter::DECIMAL);
-@endphp
-
 <div>
     @include('partials.event-pdf-header', ['event' => $event, 'subtitle' => __('Shopping List')])
 
-    @foreach($list as $shoppingTourId => $tourList)
-
-        @if(count($list) > 1)
-            <p class="shopping-tour-list">
-                @if($shoppingTourId === 0)
-                    Vor der Veranstaltung:
-                @else
-                    Am {{ $shoppingToursById->get($shoppingTourId)->date }}:
-                @endif
-            </p>
-        @endif
-
-        <ul>
-            @foreach($tourList as $item)
-                <li>
-                    <span class="check"></span>
-                    {{ $fmt->format($item['quantity']) }} {{ $item['ingredient']->unit->getShortLabel() }} {{ $item['ingredient']->title }}
-                </li>
-            @endforeach
-        </ul>
-    @endforeach
+    @include('partials.shopping-list', ['event' => $event])
 </div>
