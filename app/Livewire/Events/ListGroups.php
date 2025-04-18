@@ -33,6 +33,7 @@ class ListGroups extends Component implements HasForms, HasTable
     {
         return $table
             ->relationship(fn (): BelongsToMany => $this->event->participantGroups())
+            ->recordTitleAttribute('title')
             ->inverseRelationship('events')
             ->columns([
                 Tables\Columns\TextColumn::make('title')
