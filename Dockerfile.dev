@@ -12,4 +12,4 @@ RUN mkdir -p /etc/apt/keyrings && \
    apt-get update && apt-get install nodejs -y && \
    npm -g install chokidar
 
-CMD php -d variables_order=EGPCS /app/artisan octane:frankenphp --workers=1 --port 80 --host 0.0.0.0
+CMD php -d variables_order=EGPCS /app/artisan octane:frankenphp --watch --workers=1 --port 80 --host 0.0.0.0
