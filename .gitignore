@@ -25,3 +25,7 @@ yarn-error.log
 /.direnv
 /.devenv.flake.nix
 
+
+**/caddy
+frankenphp
+frankenphp-worker.php
