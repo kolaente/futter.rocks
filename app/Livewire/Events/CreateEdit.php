@@ -3,10 +3,10 @@
 namespace App\Livewire\Events;
 
 use App\Models\Event;
+use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Forms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -34,6 +34,7 @@ class CreateEdit extends Component implements HasForms
     {
         if ($this->event === null) {
             $this->form->fill();
+
             return;
         }
 

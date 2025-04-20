@@ -3,16 +3,16 @@
 namespace App\Livewire\Events;
 
 use App\Models\Event;
+use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Filament\Forms;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Livewire\Component;
-use Illuminate\Contracts\View\View;
 
 class ListShoppingTours extends Component implements HasForms, HasTable
 {
@@ -26,16 +26,15 @@ class ListShoppingTours extends Component implements HasForms, HasTable
         $this->event = $event;
     }
 
-
     public function table(Table $table): Table
     {
         return $table
-            ->relationship(fn(): HasMany => $this->event->shoppingTours())
+            ->relationship(fn (): HasMany => $this->event->shoppingTours())
             ->inverseRelationship('event')
             ->columns([
                 Tables\Columns\TextColumn::make('date')
                     ->label(__('Date'))
-                    ->formatStateUsing(fn($state) => $state->translatedFormat(__('j F Y')))
+                    ->formatStateUsing(fn ($state) => $state->translatedFormat(__('j F Y')))
                     ->sortable(),
             ])
             ->headerActions([
@@ -43,8 +42,8 @@ class ListShoppingTours extends Component implements HasForms, HasTable
                     ->form([
                         Forms\Components\DatePicker::make('date')
                             ->label(__('Date'))
-                            ->minDate(fn() => $this->event->date_from)
-                            ->maxDate(fn() => $this->event->date_to)
+                            ->minDate(fn () => $this->event->date_from)
+                            ->maxDate(fn () => $this->event->date_to)
                             ->required(),
                     ]),
             ])

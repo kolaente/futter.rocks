@@ -22,13 +22,13 @@ class RoundIngredients
                 if ($item['ingredient']->unit === Unit::Milliliters) {
                     $item['ingredient']->unit = Unit::Liters;
                 }
-            } else if ($item['quantity'] > 100) {
+            } elseif ($item['quantity'] > 100) {
                 $item['quantity'] = round($item['quantity'], -1);
             }
         }
 
         if ($item['ingredient']->unit === Unit::Pieces) {
-            if($item['quantity'] > 5) {
+            if ($item['quantity'] > 5) {
                 $item['quantity'] = ceil($item['quantity'] * 2) / 2;
             } else {
                 $item['quantity'] = round($item['quantity'], 1);

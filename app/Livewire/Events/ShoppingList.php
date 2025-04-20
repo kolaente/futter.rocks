@@ -29,7 +29,7 @@ class ShoppingList extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output();
-        }, $this->event->title . ' ' . __('Shopping list') . '.pdf');
+        }, $this->event->title.' '.__('Shopping list').'.pdf');
     }
 
     public function render()

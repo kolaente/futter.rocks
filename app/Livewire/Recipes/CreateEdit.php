@@ -3,19 +3,18 @@
 namespace App\Livewire\Recipes;
 
 use App\Models\Enums\Unit;
-use App\Models\Event;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\In;
 use Livewire\Component;
-use Illuminate\Contracts\View\View;
 
 class CreateEdit extends Component implements HasForms
 {
@@ -40,6 +39,7 @@ class CreateEdit extends Component implements HasForms
     {
         if ($this->recipe === null) {
             $this->form->fill();
+
             return;
         }
 
@@ -73,14 +73,14 @@ class CreateEdit extends Component implements HasForms
                             ->searchable()
                             ->required()
                             ->getSearchResultsUsing(function (string $search) {
-                                $results = Ingredient::where('title', 'like', '%' . $search . '%')->get();
+                                $results = Ingredient::where('title', 'like', '%'.$search.'%')->get();
 
                                 $res = $results
                                     ->pluck('title', 'id')
                                     ->toArray();
 
-                                $exactMatch = $results->first(fn($option) => $option->title === $search);
-                                if (!$exactMatch) {
+                                $exactMatch = $results->first(fn ($option) => $option->title === $search);
+                                if (! $exactMatch) {
                                     $res[$search] = $search;
                                 }
 

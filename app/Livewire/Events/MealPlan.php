@@ -24,11 +24,11 @@ class MealPlan extends Component
             ->with('recipes')
             ->get()
             ->groupBy('date')
-            ->map(fn($meals) => $meals->sortBy(function ($item) {
+            ->map(fn ($meals) => $meals->sortBy(function ($item) {
                 $order = [
                     'Frühstück' => 1,
                     'Mittag' => 2,
-                    'Abendessen' => 3
+                    'Abendessen' => 3,
                 ];
 
                 return $order[$item->title] ?? 4;
@@ -50,7 +50,7 @@ class MealPlan extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output();
-        }, $this->event->title . ' ' . __('Meal Plan') . '.pdf');
+        }, $this->event->title.' '.__('Meal Plan').'.pdf');
     }
 
     public function render()

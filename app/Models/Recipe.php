@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\DB;
 
 #[ScopedBy(CurrentTeam::class)]
 class Recipe extends Model
@@ -104,7 +103,7 @@ class Recipe extends Model
             }
 
             if ($unit === null) {
-                $title = trim($parts[1]) . ' ' . $title;
+                $title = trim($parts[1]).' '.$title;
                 $unit = Unit::Pieces;
             }
 
@@ -127,9 +126,9 @@ class Recipe extends Model
         $list = [];
         foreach ($this->ingredients as $ingredient) {
 
-            $key = $ingredient->id . '_'.$ingredient->pivot->unit->value;
+            $key = $ingredient->id.'_'.$ingredient->pivot->unit->value;
 
-            if (!isset($list[$ingredient->id])) {
+            if (! isset($list[$ingredient->id])) {
                 $list[$key] = [
                     'ingredient' => $ingredient,
                     'quantity' => 0,

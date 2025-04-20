@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Access\Response;
 
 abstract class BasePolicy
 {

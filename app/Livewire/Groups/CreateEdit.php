@@ -7,10 +7,10 @@ use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Illuminate\Contracts\View\View;
 
 class CreateEdit extends Component implements HasForms
 {
@@ -35,6 +35,7 @@ class CreateEdit extends Component implements HasForms
     {
         if ($this->group === null) {
             $this->form->fill();
+
             return;
         }
 

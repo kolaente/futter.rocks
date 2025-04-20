@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ShoppingTour extends Model
@@ -14,7 +13,7 @@ class ShoppingTour extends Model
     protected function casts(): array
     {
         return [
-            'date' => 'date'
+            'date' => 'date',
         ];
     }
 

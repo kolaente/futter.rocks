@@ -2,12 +2,12 @@
 
 use App\Livewire\Recipes\CreateEdit;
 use App\Models\Enums\Unit;
-use App\Models\Grouping;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
@@ -42,7 +42,7 @@ describe('Create', function () {
                         'unit' => Unit::Grams,
                         'quantity' => 10,
                     ],
-                ]
+                ],
             ])
             ->call('store');
 
@@ -82,7 +82,7 @@ describe('Create', function () {
                         'unit' => Unit::Grams,
                         'quantity' => 10,
                     ],
-                ]
+                ],
             ])
             ->call('store');
 
@@ -125,7 +125,7 @@ describe('Create', function () {
                         'unit' => Unit::Grams,
                         'quantity' => 10,
                     ],
-                ]
+                ],
             ])
             ->call('store');
 
@@ -163,7 +163,7 @@ describe('Create', function () {
                         'unit' => Unit::Grams,
                         'quantity' => 10,
                     ],
-                ]
+                ],
             ])
             ->call('store')
             ->assertRedirect(route('recipes.view', [

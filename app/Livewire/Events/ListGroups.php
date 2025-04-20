@@ -3,19 +3,19 @@
 namespace App\Livewire\Events;
 
 use App\Models\Event;
+use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms;
 use Filament\Tables;
 use Filament\Tables\Actions\AttachAction;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Illuminate\Contracts\View\View;
 
 class ListGroups extends Component implements HasForms, HasTable
 {
@@ -46,7 +46,7 @@ class ListGroups extends Component implements HasForms, HasTable
                 Tables\Actions\AttachAction::make()
                     ->preloadRecordSelect()
                     ->recordSelectOptionsQuery(fn (Builder $query) => $query->where('team_id', Auth::user()->currentTeam->id))
-                    ->form(fn(AttachAction $action): array => [
+                    ->form(fn (AttachAction $action): array => [
                         $action->getRecordSelect(),
                         Forms\Components\TextInput::make('quantity')
                             ->numeric()

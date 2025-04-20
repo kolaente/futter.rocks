@@ -27,8 +27,7 @@ class View extends Component implements HasActions, HasForms
         return DeleteAction::make('delete')
             ->requiresConfirmation()
             ->record($this->event)
-            ->successRedirectUrl(route('events.list'))
-            ;
+            ->successRedirectUrl(route('events.list'));
     }
 
     public function render()

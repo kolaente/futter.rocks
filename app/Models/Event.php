@@ -77,14 +77,14 @@ class Event extends Model
     public function durationDays(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->date_from->diffInDays($this->date_to) + 1,
+            get: fn () => $this->date_from->diffInDays($this->date_to) + 1,
         );
     }
 
     public function durationString(): Attribute
     {
         return Attribute::make(
-            get: fn() => __(':from to :to, :days', [
+            get: fn () => __(':from to :to, :days', [
                 'from' => $this->date_from->translatedFormat(__('j F Y')),
                 'to' => $this->date_to->translatedFormat(__('j F Y')),
                 'days' => trans_choice(':count day|:count days', $this->duration_days),
@@ -120,7 +120,7 @@ class Event extends Model
 
         $list = [];
 
-        $currentShoppingTour = new ShoppingTour();
+        $currentShoppingTour = new ShoppingTour;
         $currentShoppingTour->id = 0;
         $currentShoppingTour->date = $this->date_from;
 
@@ -136,7 +136,7 @@ class Event extends Model
 
                     $key = $ingredient->id.'_'.$ingredient->pivot->unit->value;
 
-                    if (!isset($list[$currentShoppingTour->id][$key])) {
+                    if (! isset($list[$currentShoppingTour->id][$key])) {
                         $list[$currentShoppingTour->id][$key] = [
                             'ingredient' => $ingredient,
                             'quantity' => 0,
@@ -156,7 +156,7 @@ class Event extends Model
                 $list[$shoppingTourId][$id] = RoundIngredients::round($item);
             }
 
-            uasort($list[$shoppingTourId], fn($a, $b) => strnatcasecmp($a['ingredient']->title, $b['ingredient']->title));
+            uasort($list[$shoppingTourId], fn ($a, $b) => strnatcasecmp($a['ingredient']->title, $b['ingredient']->title));
         }
 
         return $list;

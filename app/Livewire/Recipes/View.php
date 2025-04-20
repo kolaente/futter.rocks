@@ -33,7 +33,6 @@ class View extends Component implements HasActions, HasForms
             ->successRedirectUrl(route('recipes.list'));
     }
 
-
     public function render()
     {
         return view('livewire.recipes.view')
