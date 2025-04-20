@@ -14,6 +14,11 @@
 
   dotenv.disableHint = true;
 
+  packages = with pkgs; [
+    git-cliff
+    actionlint
+  ];
+
   languages = {
     php = {
       enable = true;
