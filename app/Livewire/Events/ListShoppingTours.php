@@ -55,7 +55,7 @@ class ListShoppingTours extends Component implements HasForms, HasTable
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->emptyStateHeading(__('No shopping tours yet.'))
+            ->emptyStateHeading(__('No shopping tours yet'))
             ->emptyStateDescription(__('By default, you have one shopping tour, assumed to be before the event.'));
     }
 

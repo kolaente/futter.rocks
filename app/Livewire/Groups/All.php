@@ -22,6 +22,7 @@ class All extends Component implements HasForms, HasTable
         return $table
             ->query(ParticipantGroup::query())
             ->defaultSort('title')
+            ->emptyStateHeading(__('No groups yet'))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('Title'))

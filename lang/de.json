@@ -20,7 +20,7 @@
     "Date": "Datum",
     "Recipes": "Rezepte",
     "Meals": "Mahlzeiten",
-    "No shopping tours yet.": "Noch keine Einkaufstouren.",
+    "No shopping tours yet": "Noch keine Einkaufstouren",
     "By default, you have one shopping tour, assumed to be before the event.": "Standardmäßig hast du eine Einkaufstour, die vor der Veranstaltung stattfinden soll.",
     "Start Date": "Startdatum",
     "End Date": "Enddatum",
@@ -186,5 +186,12 @@
     "Before the event": "Vor der Veranstaltung",
     "At :date": "Am :date",
     "Shopping List": "Einkaufsliste",
+    "No events yet": "Noch keine Veranstaltungen",
+    "No groups yet": "Noch keine Gruppen",
+    "No recipes yet": "Noch keine Rezepte",
+    "No meals yet": "Noch keine Mahlzeiten",
+    "Create a meal on the top right.": "Erstelle eine Mahlzeit oben rechts.",
+    "Add a group on the top right.": "Füge eine Gruppen oben rechts hinzu.",
+    ":count day|:count days": ":count Tag|:count Tage",
     "__": "__"
 }

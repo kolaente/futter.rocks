@@ -50,6 +50,8 @@ class ListMeals extends Component implements HasForms, HasTable
             ->inverseRelationship('event')
             ->recordTitleAttribute('title')
             ->heading(fn () => __('Meals'))
+            ->emptyStateHeading(__('No meals yet'))
+            ->emptyStateDescription(__('Create a meal on the top right.'))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('Title')),

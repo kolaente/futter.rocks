@@ -21,6 +21,7 @@ class All extends Component implements HasForms, HasTable
         return $table
             ->query(Event::query())
             ->defaultSort('title')
+            ->emptyStateHeading(__('No events yet'))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->sortable()

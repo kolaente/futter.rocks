@@ -22,6 +22,7 @@ class All extends Component implements HasForms, HasTable
         return $table
             ->query(Recipe::query())
             ->defaultSort('title')
+            ->emptyStateHeading(__('No recipes yet'))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->action(fn (Recipe $record) => $this->redirect(route('recipes.view', ['recipe' => $record]), true))

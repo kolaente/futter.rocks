@@ -35,6 +35,8 @@ class ListGroups extends Component implements HasForms, HasTable
             ->relationship(fn (): BelongsToMany => $this->event->participantGroups())
             ->recordTitleAttribute('title')
             ->inverseRelationship('events')
+            ->emptyStateHeading(__('No groups yet'))
+            ->emptyStateDescription(__('Add a group on the top right.'))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('Title')),
