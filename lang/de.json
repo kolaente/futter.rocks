@@ -193,5 +193,18 @@
     "Create a meal on the top right.": "Erstelle eine Mahlzeit oben rechts.",
     "Add a group on the top right.": "Füge eine Gruppen oben rechts hinzu.",
     ":count day|:count days": ":count Tag|:count Tage",
+    "Other": "Sonstiges",
+    "Fruits & Vegetables": "Obst & Gemüse",
+    "Meat & Seafood": "Fleisch & Meeresfrüchte",
+    "Dairy & Eggs": "Milchprodukte & Eier",
+    "Bakery": "Backwaren",
+    "Frozen Foods": "Tiefkühlkost",
+    "Beverages": "Getränke",
+    "Snacks": "Snacks",
+    "Condiments": "Gewürze & Saucen",
+    "Spices & Herbs": "Kräuter & Gewürze",
+    "Baking Supplies": "Backzutaten",
+    "Canned Goods": "Konserven",
+    "International Foods": "Internationale Lebensmittel",
     "__": "__"
 }

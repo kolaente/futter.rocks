@@ -1,0 +1,9 @@
+{
+    "exclude": [
+        ".dbdata",
+        ".devenv",
+        ".direnv",
+        ".idea",
+        ".vscode"
+    ]
+}
