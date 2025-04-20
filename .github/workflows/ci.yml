@@ -1,7 +1,12 @@
 name: CI
 
 on:
-  - push
+  pull_request:
+  push:
+    tags:
+      - v*
+    branches:
+      - main
 
 jobs:
   test:
