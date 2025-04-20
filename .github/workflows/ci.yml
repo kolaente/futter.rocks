@@ -25,3 +25,15 @@ jobs:
         run: php artisan key:generate
       - name: Run tests
         run: php artisan test
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare The Environment
+        run: cp .env.example .env
+      - name: Install Composer Dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Generate Application Key
+        run: php artisan key:generate
+      - name: Check lint
+        run: composer lint
