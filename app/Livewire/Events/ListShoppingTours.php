@@ -35,7 +35,7 @@ class ListShoppingTours extends Component implements HasForms, HasTable
             ->columns([
                 Tables\Columns\TextColumn::make('date')
                     ->label(__('Date'))
-                    ->date()
+                    ->formatStateUsing(fn($state) => $state->translatedFormat(__('j F Y')))
                     ->sortable(),
             ])
             ->headerActions([

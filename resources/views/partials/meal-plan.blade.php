@@ -1,7 +1,7 @@
 @php
     $i = 1;
     $paginated = $mealsByDate->forPage($i, 4);
-    $fmt = new NumberFormatter('de_DE', NumberFormatter::DECIMAL);
+    $fmt = new \App\Formatter();
 @endphp
 
 @while($paginated->count() > 0)

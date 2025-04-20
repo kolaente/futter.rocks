@@ -58,6 +58,7 @@ class ListMeals extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('Title')),
                 Tables\Columns\TextColumn::make('date')
+                    ->formatStateUsing(fn($state) => $state->translatedFormat(__('j F Y')))
                     ->label(__('Date')),
                 Tables\Columns\TextColumn::make('recipes.title')
                     ->label(__('Recipes')),

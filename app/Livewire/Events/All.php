@@ -31,11 +31,11 @@ class All extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('date_from')
                     ->sortable()
                     ->action(fn(Event $record) => $this->redirect(route('events.view', ['event' => $record]), true))
-                    ->formatStateUsing(fn($record) => $record->date_from->translatedFormat(__('j F Y')))
+                    ->formatStateUsing(fn($state) => $state->translatedFormat(__('j F Y')))
                     ->label(__('Start Date')),
                 Tables\Columns\TextColumn::make('date_to')
                     ->action(fn(Event $record) => $this->redirect(route('events.view', ['event' => $record]), true))
-                    ->formatStateUsing(fn($record) => $record->date_to->translatedFormat(__('j F Y')))
+                    ->formatStateUsing(fn($state) => $state->translatedFormat(__('j F Y')))
                     ->label(__('End Date')),
             ]);
     }

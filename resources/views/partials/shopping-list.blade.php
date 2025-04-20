@@ -1,5 +1,5 @@
 @php
-    $fmt = new NumberFormatter('de_DE', NumberFormatter::DECIMAL);
+    $fmt = new \App\Formatter();
     $list = $event->getShoppingList();
     $shoppingToursById = $event->shoppingTours->keyBy('id');
 @endphp

@@ -1,3 +1,5 @@
+@php($fmt = new \App\Formatter())
+
 <x-main-content :title="$recipe->title">
     <x-slot:actions>
         <x-button href="{{ route('recipes.edit', ['recipe' => $recipe]) }}">
@@ -19,7 +21,7 @@
             <tbody>
             @foreach($recipe->ingredients as $ingredient)
                 <tr>
-                    <td class="text-right py-1">{{ $ingredient->pivot->quantity }}</td>
+                    <td class="text-right py-1">{{ $fmt->format($ingredient->pivot->quantity) }}</td>
                     <td class="text-left py-1">{{ $ingredient->pivot->unit->getShortLabel() }}</td>
                     <td class="text-left p-1">{{ $ingredient->title }}</td>
                 </tr>

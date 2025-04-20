@@ -16,6 +16,13 @@ class Meal extends Model
         'date',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'date' => 'date',
+        ];
+    }
+
     protected static function booted(): void
     {
         static::deleting(function (self $meal) {
