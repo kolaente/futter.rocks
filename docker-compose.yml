@@ -1,0 +1,39 @@
+services:
+    web:
+        image: futter.rocks:dev
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        depends_on:
+            - db
+        environment:
+            - UID=1000
+        ports:
+            - 127.0.0.1:8000:80
+        volumes:
+            - .:/app
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        tty: true
+
+    db:
+        image: postgres:17
+        volumes:
+            - .dbdata:/var/lib/postgresql/data
+        ports:
+            - 127.0.0.1:5432:5432
+        environment:
+            - POSTGRES_PASSWORD=futter_rocks
+            - POSTGRES_USER=futter_rocks
+            - POSTGRES_DB=futter_rocks
+
+    redis:
+        image: redis
+
+    mailpit:
+        image: axllent/mailpit
+        ports:
+            - 127.0.0.1:8025:8025
+            - 127.0.0.1:1025:1025
+        environment:
+            - TZ=Europe/Berlin

@@ -6,9 +6,8 @@
   scripts.atf.exec = "aa test --filter $@";
 
   processes = {
-    #containers.exec = "docker compose up";
-    serve.exec = "a serve";
-    #queues.exec = "sleep 5s && aa queue:listen --tries=1";
+    containers.exec = "docker compose up";
+    queues.exec = "sleep 5s && aa queue:listen --tries=1";
     frontend.exec = "pnpm dev";
   };
 
