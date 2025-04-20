@@ -6,6 +6,7 @@ use App\Models\Ingredient;
 use App\Services\IngredientCategoryService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Queue\Middleware\RateLimited;
 
 class AddIngredientCategory implements ShouldQueue
 {
@@ -14,6 +15,11 @@ class AddIngredientCategory implements ShouldQueue
     public function __construct(
         private readonly Ingredient $ingredient,
     ) {}
+
+    public function middleware(): array
+    {
+        return [new RateLimited('ingredients-categorizer')];
+    }
 
     public function handle(): void
     {
