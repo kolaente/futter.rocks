@@ -7,17 +7,17 @@
 @foreach($list as $shoppingTourId => $tourListByCategories)
 
     @if(count($list) > 1)
-        <h2 class="shopping-tour-list font-display font-semibold text-xl mb-2 mt-4">
+        <h2 class="shopping-tour-list font-display font-semibold text-2xl mb-2 mt-6">
             @if($shoppingTourId === 0)
                 {{ __('Before the event') }}:
             @else
-                {{ __('At :date', ['date' => $shoppingToursById->get($shoppingTourId)->date]) }}:
+                {{ __('At :date', ['date' => $shoppingToursById->get($shoppingTourId)->date->translatedFormat(__('j F Y'))]) }}:
             @endif
         </h2>
     @endif
 
     @foreach($tourListByCategories as $category => $tourList)
-        <h3 class="shopping-tour-list font-display font-semibold text-lg mb-2 mt-4">
+        <h3 class="shopping-tour-list font-display font-semibold text-lg mb-0 mt-4">
             {{ \App\Models\Enums\IngredientCategory::from($category)->getLabel() }}
         </h3>
 
