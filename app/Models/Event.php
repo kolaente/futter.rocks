@@ -157,6 +157,7 @@ class Event extends Model
             }
 
             uasort($list[$shoppingTourId], fn ($a, $b) => strnatcasecmp($a['ingredient']->title, $b['ingredient']->title));
+            $list[$shoppingTourId] = collect($list[$shoppingTourId])->groupBy('ingredient.category')->toArray();
         }
 
         return $list;
