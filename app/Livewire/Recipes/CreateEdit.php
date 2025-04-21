@@ -13,7 +13,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rules\In;
 use Livewire\Component;
 
 class CreateEdit extends Component implements HasForms
@@ -69,33 +68,34 @@ class CreateEdit extends Component implements HasForms
                 Forms\Components\Repeater::make('ingredients')
                     ->label(__('Ingredients'))
                     ->schema([
-                        Forms\Components\Select::make('ingredient')
-                            ->searchable()
-                            ->required()
-                            ->getSearchResultsUsing(function (string $search) {
-                                $results = Ingredient::where('title', 'like', '%'.$search.'%')->get();
+                        Forms\Components\Grid::make(3)->schema([
+                            Forms\Components\Select::make('ingredient')
+                                ->searchable()
+                                ->required()
+                                ->getSearchResultsUsing(function (string $search) {
+                                    $results = Ingredient::where('title', 'like', '%'.$search.'%')->get();
 
-                                $res = $results
-                                    ->pluck('title', 'id')
-                                    ->toArray();
+                                    $res = $results
+                                        ->pluck('title', 'id')
+                                        ->toArray();
 
-                                $exactMatch = $results->first(fn ($option) => $option->title === $search);
-                                if (! $exactMatch) {
-                                    $res[$search] = $search;
-                                }
+                                    $exactMatch = $results->first(fn ($option) => $option->title === $search);
+                                    if (! $exactMatch) {
+                                        $res[$search] = $search;
+                                    }
 
-                                return $res;
-                            }),
-                        // FIXME: should show unit in search result title
-                        Forms\Components\Select::make('unit')
-                            ->label(__('Unit'))
-                            ->options(Unit::class)
-                            ->required(),
-                        Forms\Components\TextInput::make('quantity')
-                            ->label(__('Quantity'))
-                            ->numeric()
-                            ->minValue(0.0001)
-                            ->required(),
+                                    return $res;
+                                }),
+                            Forms\Components\Select::make('unit')
+                                ->label(__('Unit'))
+                                ->options(Unit::class)
+                                ->required(),
+                            Forms\Components\TextInput::make('quantity')
+                                ->label(__('Quantity'))
+                                ->numeric()
+                                ->minValue(0.0001)
+                                ->required(),
+                        ]),
                     ])
                     ->required(),
             ])
