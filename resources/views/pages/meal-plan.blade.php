@@ -1,5 +1,5 @@
 <x-guest-layout title="{{ __('Meal Plan') }}">
-    <h1 class="text-center text-4xl mt-4 mb-8 font-semibold">
+    <h1 class="font-display text-center text-4xl mt-4 mb-8 font-semibold">
         {{ $event->title }} - {{ __('Meal Plan') }}
     </h1>
     <p class="text-center text-gray-700 mb-4">
@@ -8,8 +8,8 @@
 
     @foreach($mealsByDate as $date => $meals)
         <section class="p-4 whitespace-nowrap text-gray-800 @if(!$loop->last) border-b border-gray-200 @endif">
-            <div class="uppercase font-bold text-lg pb-2 text-gray-600">
-                {{ $date }}
+            <div class="font-display font-bold text-lg pb-2 text-gray-600">
+                {{ \Illuminate\Support\Carbon::parse($date)->translatedFormat(__('l, j F Y')) }}
             </div>
 
             @foreach($meals as $meal)
