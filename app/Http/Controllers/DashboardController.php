@@ -43,7 +43,7 @@ class DashboardController extends Controller
             'currentEvent' => $currentEvent,
             'participantCount' => $participantCount,
             'recentRecipes' => $recentRecipes,
-            'recipeCount' => $recipeCount,
+            'recipeCount' => $recipeCount ?? 0,
         ]);
     }
 }
