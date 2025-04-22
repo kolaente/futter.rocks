@@ -9,7 +9,7 @@
         $paginated = $mealsByDate->forPage($i, 4);
         $i++;
     @endphp
-    <table class="border table-fixed w-full">
+    <table class="border {{ $i > 1 ? 'mt-4' : '' }} table-fixed w-full">
         <thead>
         <tr>
             @foreach($paginated as $date => $meal)
