@@ -11,7 +11,7 @@ class IngredientCategoryService
     {
         $categoriesList = '';
         foreach (IngredientCategory::cases() as $case) {
-            $categoriesList .= $case->name.' = '.$case->value.";\n";
+            $categoriesList .= $case->name.' ('.$case->getLabel().') = '.$case->value."\n";
         }
 
         $systemPrompt = <<<EOT
