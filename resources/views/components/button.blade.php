@@ -1,4 +1,4 @@
-@props(['target' => null])
+@props(['target' => null, 'variant' => 'primary'])
 
 @php
     $tag = 'button';
@@ -6,10 +6,18 @@
         $tag = 'a';
     }
 
-    $classes = 'inline-flex items-center px-4 py-2 bg-primary border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-primary-dark focus:bg-gray-700 dark:focus:bg-white active:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-light focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150';
+    $classes = 'inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150';
 
     if ($tag === 'button') {
         $classes .= ' relative';
+    }
+
+    if ($variant === 'primary') {
+        $classes .= ' bg-primary text-white hover:bg-primary-dark focus:bg-gray-700 active:bg-primary-dark focus:ring-primary-light';
+    }
+
+    if ($variant === 'secondary') {
+        $classes .= ' bg-white !border-gray-300 hover:bg-gray-50 focus:ring-primary';
     }
 @endphp
 

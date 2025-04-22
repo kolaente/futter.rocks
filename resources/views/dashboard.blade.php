@@ -53,19 +53,19 @@
                     <div class="p-6">
                         <h3 class="text-lg font-display font-semibold text-gray-800 dark:text-gray-200 mb-4">{{ __('Quick Actions') }}</h3>
                         <div class="space-y-3 flex flex-col">
-                            <x-secondary-button href="{{ route('recipes.create') }}" wire:navigate>
+                            <x-button variant="secondary" href="{{ route('recipes.create') }}">
                                 {{ __('Create Recipe') }}
-                            </x-secondary-button>
+                            </x-button>
                             @if(isset($currentEvent))
-                                <x-secondary-button href="{{ route('events.view', $currentEvent) }}" wire:navigate>
+                                <x-button variant="secondary" href="{{ route('events.view', $currentEvent) }}">
                                     {{ __('View Event') }}
-                                </x-secondary-button>
-                                <x-secondary-button href="{{ route('events.meal-plan', $currentEvent) }}" wire:navigate>
+                                </x-button>
+                                <x-button variant="secondary" href="{{ route('events.meal-plan', $currentEvent) }}">
                                     {{ __('View Meal Plan') }}
-                                </x-secondary-button>
-                                <x-secondary-button href="{{ route('events.shopping-list', $currentEvent) }}" wire:navigate>
+                                </x-button>
+                                <x-button variant="secondary" href="{{ route('events.shopping-list', $currentEvent) }}">
                                     {{ __('View Shopping List') }}
-                                </x-secondary-button>
+                                </x-button>
                              @endif
                         </div>
                     </div>
