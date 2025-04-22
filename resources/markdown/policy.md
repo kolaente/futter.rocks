@@ -84,11 +84,11 @@ aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte i
 
 Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
 
-Konrad Langenberg Software
-Mengstraße 9-11
+Konrad Langenberg Software<br/>
+Mengstraße 9-11<br/>
 23552 Lübeck
 
-Telefon: +49 451-62068099
+Telefon: +49 451-62068099<br/>
 E-Mail: hallo@futter.rocks
 
 Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke
