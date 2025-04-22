@@ -135,4 +135,6 @@ return [
 
     'groq_api_key' => env('GROQ_API_KEY'),
 
+    'google_api_key' => env('GOOGLE_API_KEY'),
+
 ];

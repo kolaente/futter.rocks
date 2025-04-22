@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Enums\IngredientCategory;
+use Exception;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class IngredientCategoryService
 {
@@ -58,31 +60,46 @@ Only reply with the single category you're most sure of. Do not reply with multi
 Remember, if you're not entirely sure about the categorization, it's better to respond with "0" rather than making an uncertain guess.
 EOT;
 
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '.config('app.groq_api_key'),
-        ])
-            ->throw()
-            ->post('https://api.groq.com/openai/v1/chat/completions', [
-                'messages' => [
-                    [
-                        'role' => 'system',
-                        'content' => $systemPrompt,
-                    ],
-                    [
-                        'role' => 'user',
-                        'content' => $ingredient,
-                    ],
-                ],
-                'model' => 'meta-llama/llama-4-maverick-17b-128e-instruct',
-                'temperature' => 1,
-                'max_completion_tokens' => 1024,
-                'top_p' => 1,
-                'stream' => false,
-                'stop' => null,
-            ]);
+        $model = 'gemini-2.5-flash-preview-04-17';
+        $apiKey = config('app.google_api_key');
 
-        $result = $response->json('choices.0.message.content');
+        if (empty($apiKey)) {
+            throw new Exception('Google API key is not configured.');
+        }
+
+        $payload = [
+            'contents' => [
+                ['role' => 'user', 'parts' => [['text' => $ingredient]]],
+            ],
+            'systemInstruction' => ['parts' => [['text' => $systemPrompt]]],
+            'generationConfig' => [
+                'thinkingConfig' => [
+                    'thinkingBudget' => 0,
+                ],
+                'responseMimeType' => 'text/plain',
+            ],
+        ];
+
+        try {
+            $response = Http::withOptions(['timeout' => 60])
+                ->post('https://generativelanguage.googleapis.com/v1beta/models/'.$model.':generateContent?key='.$apiKey, $payload)
+                ->throw();
+        } catch (\Exception $e) {
+            Log::error('Google AI API request failed', [
+                'error' => $e->getMessage(),
+                'model' => $model,
+                'ingredient' => $ingredient,
+            ]);
+            throw $e;
+        }
+
+        $result = $response->json('candidates.0.content.parts.0.text');
+
+        if (empty($result)) {
+            Log::error('Google AI response format error or empty content.', ['response' => $response->body()]);
+
+            return IngredientCategory::OTHER;
+        }
 
         $category = $this->extractContentFromTags($result, 'category');
 
