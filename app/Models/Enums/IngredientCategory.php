@@ -17,6 +17,7 @@ enum IngredientCategory: int
     case BAKING = 10;
     case CANNED_GOODS = 11;
     case SPREAD = 12;
+    case GRAINS_CEREALS = 13;
 
     public function getLabel(): string
     {
@@ -34,6 +35,7 @@ enum IngredientCategory: int
             self::BAKING => __('Baking Supplies'),
             self::CANNED_GOODS => __('Canned Goods'),
             self::SPREAD => __('Spread'),
+            self::GRAINS_CEREALS => __('Grains & Cereals'),
         };
     }
 }
