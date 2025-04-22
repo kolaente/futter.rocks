@@ -14,7 +14,7 @@
         <tr>
             @foreach($paginated as $date => $meal)
                 <th class="p-2 pb-0 font-semibold font-display text-lg border">
-                    {{ $date }}
+                    {{ \Illuminate\Support\Carbon::parse($date)->translatedFormat(__('l, j F Y')) }}
                 </th>
             @endforeach
         </tr>
