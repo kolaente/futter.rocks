@@ -12,7 +12,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
 
     Route::prefix('events')->name('events.')->group(function () {
         Route::get('/', \App\Livewire\Events\All::class)->name('list');
