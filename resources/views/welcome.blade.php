@@ -25,7 +25,7 @@
                 </p>
 
                 @if (Route::has('register'))
-                    <x-button href="{{ route('register') }}">
+                    <x-button href="{{ route('dashboard') }}">
                         {{ __('Start Planning now') }}
                     </x-button>
                 @endif
@@ -101,7 +101,7 @@
                     {{ __('Ready to simplify your kitchen planning?') }}
                 </p>
                 @if (Route::has('register'))
-                    <x-button href="{{ route('register') }}">
+                    <x-button href="{{ route('dashboard') }}">
                         {{ __('Start Planning now') }}
                     </x-button>
                 @endif
