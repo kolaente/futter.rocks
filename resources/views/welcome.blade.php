@@ -1,21 +1,21 @@
 <x-guest-layout>
-    <div class="py-12 text-gray-800">
+    <div class="py-6 px-4 md:px-0 text-gray-800">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             {{-- Top Nav Links --}}
             <div class="flex justify-between items-center mb-8">
                 <x-application-logo class="mx-auto" />
                 <div class="text-right">
                     @if (Route::has('login'))
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Log in') }}</a>
+                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary">{{ __('Log in') }}</a>
                     @endif
 
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('Register') }}</a>
+                        <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary">{{ __('Register') }}</a>
                     @endif
                 </div>
             </div>
 
-            <div class="p-6 text-gray-900 dark:text-gray-100 text-center">
+            <div class="p-6 text-gray-900 dark:text-gray-100 text-center min-h-[50vh] flex flex-col justify-center items-center">
                 <h1 class="text-5xl font-bold mb-4 font-display">
                     {{ __('Camp Kitchen Planning made simple') }}
                 </h1>
@@ -24,15 +24,13 @@
                     {{ __('Focus on your event, not the spreadsheets.') }}
                 </p>
 
-                @if (Route::has('register'))
-                    <x-button href="{{ route('dashboard') }}">
-                        {{ __('Start Planning now') }}
-                    </x-button>
-                @endif
+                <x-button href="{{ route('dashboard') }}">
+                    {{ __('Start Planning now') }}
+                </x-button>
             </div>
 
             {{-- Features Section --}}
-            <div class="mt-16 space-y-16">
+            <div class="mt-16 space-y-12 md:space-y-24">
                 <x-feature-section
                     :title="__('Meal Planning')"
                     :features="[
@@ -96,15 +94,13 @@
             </div>
 
             {{-- Bottom CTA --}}
-            <div class="mt-16 text-center">
+            <div class="my-36 text-center">
                 <p class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
                     {{ __('Ready to simplify your kitchen planning?') }}
                 </p>
-                @if (Route::has('register'))
-                    <x-button href="{{ route('dashboard') }}">
-                        {{ __('Start Planning now') }}
-                    </x-button>
-                @endif
+                <x-button href="{{ route('dashboard') }}">
+                    {{ __('Start Planning now') }}
+                </x-button>
             </div>
 
             {{-- FAQ Section --}}
