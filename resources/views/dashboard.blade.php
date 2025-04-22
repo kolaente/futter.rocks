@@ -6,7 +6,7 @@
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6">
                         <h2 class="font-display text-xl font-semibold text-gray-800 dark:text-gray-200">
-                            Next Event: {{ $currentEvent->title ?? 'No Active Event' }}
+                            {{ isset($currentEvent) ? __('Next Event: :title', ['title' => $currentEvent->title]) : __('No Active Event') }}
                         </h2>
                         @if(isset($currentEvent))
                             <p class="text-gray-600 dark:text-gray-400 mb-2">
@@ -14,19 +14,19 @@
                             </p>
                             <div class="flex flex-wrap gap-4 mt-4">
                                 <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 flex-1">
-                                    <span class="block text-sm text-gray-500 dark:text-gray-400">Participants</span>
+                                    <span class="block text-sm text-gray-500 dark:text-gray-400">{{ __('Participants') }}</span>
                                     <span class="text-xl font-bold text-gray-800 dark:text-gray-200">
-                                        {{ $participantCount ?? 'N/A' }}
+                                        {{ $participantCount ?? __('N/A') }}
                                     </span>
                                 </div>
                                 <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 flex-1">
-                                    <span class="block text-sm text-gray-500 dark:text-gray-400">Recipes</span>
+                                    <span class="block text-sm text-gray-500 dark:text-gray-400">{{ __('Recipes') }}</span>
                                     <span class="text-xl font-bold text-gray-800 dark:text-gray-200">
                                         {{ $recipeCount }}
                                     </span>
                                 </div>
                                 <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 flex-1">
-                                    <span class="block text-sm text-gray-500 dark:text-gray-400">Meals</span>
+                                    <span class="block text-sm text-gray-500 dark:text-gray-400">{{ __('Meals') }}</span>
                                     <span class="text-xl font-bold text-gray-800 dark:text-gray-200">
                                         {{ $currentEvent->meals->count() }}
                                     </span>
@@ -34,7 +34,7 @@
                             </div>
                         @else
                             <p class="text-gray-600 dark:text-gray-400 mt-2">
-                                Select or create an event to begin planning.
+                                {{ __('Select or create an event to begin planning.') }}
                             </p>
                             <div class="mt-4">
                                 <x-button href="{{ route('events.create') }}" wire:navigate>
@@ -51,7 +51,7 @@
                 <!-- Quick Actions -->
                  <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6">
-                        <h3 class="text-lg font-display font-semibold text-gray-800 dark:text-gray-200 mb-4">Quick Actions</h3>
+                        <h3 class="text-lg font-display font-semibold text-gray-800 dark:text-gray-200 mb-4">{{ __('Quick Actions') }}</h3>
                         <div class="space-y-3 flex flex-col">
                             <x-secondary-button href="{{ route('recipes.create') }}" wire:navigate>
                                 {{ __('Create Recipe') }}
@@ -75,7 +75,7 @@
                  <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6">
                         <h3 class="text-lg font-display font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                            Recent Recipes
+                            {{ __('Recent Recipes') }}
                         </h3>
                         @if($recentRecipes?->count() > 0)
                             <ul>
@@ -88,7 +88,7 @@
                                 @endforeach
                             </ul>
                         @else
-                             <p class="text-gray-600 dark:text-gray-400">No recent recipes found.</p>
+                             <p class="text-gray-600 dark:text-gray-400">{{ __('No recent recipes found.') }}</p>
                         @endif
                     </div>
                 </div>

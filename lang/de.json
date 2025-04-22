@@ -206,5 +206,16 @@
     "Baking Supplies": "Backzutaten",
     "Canned Goods": "Konserven",
     "Spread": "Brotaufstrich",
+    "Next Event: :title": "Nächste Veranstaltung: :title",
+    "No Active Event": "Keine aktive Veranstaltung",
+    "Participants": "Teilnehmer:innen",
+    "N/A": "k.A.",
+    "Select or create an event to begin planning.": "Wähle oder erstelle eine Veranstaltung, um mit der Planung zu beginnen.",
+    "Quick Actions": "Schnellaktionen",
+    "View Event": "Veranstaltung anzeigen",
+    "View Meal Plan": "Speiseplan anzeigen",
+    "View Shopping List": "Einkaufsliste anzeigen",
+    "Recent Recipes": "Letzte Rezepte",
+    "No recent recipes found.": "Keine letzten Rezepte gefunden.",
     "__": "__"
 }
