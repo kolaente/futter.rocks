@@ -160,7 +160,7 @@ class Event extends Model
             uasort($list[$shoppingTourId], fn ($a, $b) => strnatcasecmp($a['ingredient']->title, $b['ingredient']->title));
             $list[$shoppingTourId] = collect($list[$shoppingTourId])
                 ->groupBy('ingredient.category')
-                ->sortKeysUsing(fn($category1, $category2) => strcasecmp(
+                ->sortKeysUsing(fn ($category1, $category2) => strcasecmp(
                     IngredientCategory::from($category1)->getLabel(),
                     IngredientCategory::from($category2)->getLabel(),
                 ))
