@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enums\IngredientCategory;
 use App\Models\Scopes\CurrentTeam;
 use App\Utils\RoundIngredients;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
@@ -157,7 +158,13 @@ class Event extends Model
             }
 
             uasort($list[$shoppingTourId], fn ($a, $b) => strnatcasecmp($a['ingredient']->title, $b['ingredient']->title));
-            $list[$shoppingTourId] = collect($list[$shoppingTourId])->groupBy('ingredient.category')->toArray();
+            $list[$shoppingTourId] = collect($list[$shoppingTourId])
+                ->groupBy('ingredient.category')
+                ->sortKeysUsing(fn($category1, $category2) => strcasecmp(
+                    IngredientCategory::from($category1)->getLabel(),
+                    IngredientCategory::from($category2)->getLabel(),
+                ))
+                ->toArray();
         }
 
         return $list;
