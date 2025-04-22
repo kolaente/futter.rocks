@@ -11,7 +11,7 @@
         </x-faq-item>
         <x-faq-item :question="__('What happens to my data?')">
             {{ __('The only personal data we store is your name and email address. Because we only work with participant groups, we do not see the names or other information of the participants.') }}
-            {!! __('Check out the :privacy for more details.', ['privacy' => '<a class="text-primary underline" href="/privacy">'.__('Privacy Policy').'</a>']) !!}
+            {!! __('Check out the :privacy for more details.', ['privacy' => '<a class="text-primary underline" href="'.route('policy.show').'">'.__('Privacy Policy').'</a>']) !!}
         </x-faq-item>
         <x-faq-item :question="__('Does this cost anything?')">
             {{ __('It is free to use, since I\'ve built it for my own use and wanted to share it with others. If it is useful for you, please consider donating to my coffee fund or buy me a beer should we meet at an event.') }}
