@@ -16,9 +16,10 @@
 
         <!-- Styles -->
         @livewireStyles
+        @filamentStyles
     </head>
-    <body>
-        <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
+    <body class="bg-gray-50">
+        <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
         </div>
 
