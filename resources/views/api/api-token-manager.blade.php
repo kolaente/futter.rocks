@@ -39,7 +39,7 @@
                 {{ __('Created.') }}
             </x-action-message>
 
-            </x-button>
+            <x-button>
                 {{ __('Create') }}
             </x-button>
         </x-slot>
