@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Project description
+
+This project is a Laravel application, heavily using Livewire. It uses Tailwindcss for styling and Filament for forms and tables (but not the admin panel).
+
+Use the available components (buttons, messages, etc) whenever possible.
+
+## Translations
+
+Whenever you're asked to translate something, add the translated strings to [de.json](mdc:lang/de.json), translate it using the same style as the other existing translations and replace the usage of the original string with a call to __('STRING') (use {{ __('STRING') }} when in a blade template) so that the translated string is shown to the user.
+
+The same applies when you're asked to extract strings for translation.
