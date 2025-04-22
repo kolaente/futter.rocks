@@ -106,6 +106,8 @@
             {{-- FAQ Section --}}
             <x-faq />
 
+            <x-footer />
+
         </div>
     </div>
 </x-guest-layout>
