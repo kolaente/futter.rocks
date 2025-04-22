@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\SharedEventController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Jetstream\Http\Controllers\Livewire\PrivacyPolicyController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -54,4 +53,5 @@ Route::middleware([
 });
 
 Route::get('/shared/events/{event:share_id}/meal-plan', [SharedEventController::class, 'mealPlan'])->name('shared.event.meal-plan');
-Route::get('/privacy-policy', [PrivacyPolicyController::class, 'show'])->name('policy.show');
+Route::get('/privacy-policy', fn () => view('components.markdown-content', ['file' => 'policy.md', 'title' => __('Privacy Policy')]))
+    ->name('policy.show');
