@@ -104,35 +104,7 @@
             </div>
 
             {{-- FAQ Section --}}
-            <div class="mt-16 pt-12 border-t border-gray-200 dark:border-gray-700">
-                <h2 class="text-center text-3xl font-bold font-display mb-8 text-gray-900 dark:text-gray-100">{{ __('Frequently Asked Questions (FAQ)') }}</h2>
-                <div class="max-w-3xl mx-auto space-y-6 text-gray-900 dark:text-gray-100">
-                    <div>
-                        <h3 class="text-xl font-semibold font-display">{{ __('Who is Futter.rocks for?') }}</h3>
-                        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('[Answer coming soon...]') }}</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold font-display">{{ __('Is it suitable for very large groups too?') }}</h3>
-                        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('[Answer coming soon...]') }}</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold font-display">{{ __('What happens to my data (Privacy)?') }}</h3>
-                        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('[Answer coming soon...]') }}</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold font-display">{{ __('Does using Futter.rocks cost anything?') }}</h3>
-                        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('[Answer coming soon...]') }}</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold font-display">{{ __('How can I collaborate with people from my group?') }}</h3>
-                        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('[Answer coming soon...]') }}</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold font-display">{{ __('I have a question or a problem, where can I get help?') }}</h3>
-                        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('[Answer coming soon...]') }}</p>
-                    </div>
-                </div>
-            </div>
+            <x-faq />
 
         </div>
     </div>
