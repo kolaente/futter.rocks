@@ -30,9 +30,9 @@
         'bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500' => !$imagePath
     ])>
         @if($imagePath)
-            <img src="{{ asset($imagePath) }}" alt="{{ __($title) }}" class="object-cover w-full h-full rounded-lg">
+            <img src="{{ asset('images/'.$imagePath) }}" alt="{{ __($title) }}" class="object-cover object-top w-full h-full rounded-lg">
         @else
-        Placeholder
+            Placeholder
         @endif
     </div>
 </div>
