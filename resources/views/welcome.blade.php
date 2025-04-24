@@ -39,6 +39,7 @@
                         __('Keep track of all planned dishes.'),
                     ]"
                     image-order="right"
+                    image-path="meal-plan.png"
                 />
                 <x-feature-section
                     :title="__('Groups & Food Factor')"
@@ -48,6 +49,7 @@
                         __('Automatic quantity calculation based on recipes and participant numbers.'),
                     ]"
                     image-order="left"
+                    image-path="groups.png"
                 />
                 <x-feature-section
                     :title="__('Generate Shopping List')"
@@ -57,6 +59,7 @@
                         __('Set the dates when you need to go shopping, we\'ll do the rest'),
                     ]"
                     image-order="right"
+                    image-path="shopping-list.png"
                 />
                 <x-feature-section
                     :title="__('Manage Recipes')"
@@ -66,6 +69,7 @@
                         __('Import recipes quickly and easily from various sources (e.g. from Chefkoch).'),
                     ]"
                     image-order="left"
+                    image-path="recipes.png"
                 />
                 <x-feature-section
                     :title="__('Collaboration')"
@@ -73,6 +77,7 @@
                         __('Work together with your group on meal plans and recipes.'),
                     ]"
                     image-order="right"
+                    image-path="collaboration.png"
                 />
                 <x-feature-section
                     :title="__('Campflow Import')"
@@ -90,6 +95,7 @@
                         __('Benefit from the community and contribute yourself.'),
                     ]"
                     image-order="right"
+                    image-path="open-source.png"
                 />
             </div>
 
