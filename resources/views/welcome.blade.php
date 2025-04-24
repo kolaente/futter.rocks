@@ -16,8 +16,8 @@
             </div>
 
             <div class="p-6 text-gray-900 dark:text-gray-100 text-center min-h-[50vh] flex flex-col justify-center items-center">
-                <h1 class="text-5xl font-bold mb-4 font-display">
-                    {{ __('Camp Kitchen Planning made simple') }}
+                <h1 class="text-5xl font-bold mb-4 font-display text-balance">
+                    {!! __('Camp Kitchen Planning made simple') !!}
                 </h1>
 
                 <p class="mb-6">
