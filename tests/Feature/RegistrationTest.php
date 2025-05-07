@@ -26,10 +26,27 @@ test('new users can register', function () {
         'password' => 'password',
         'password_confirmation' => 'password',
         'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
+        'privacy' => true,
     ]);
 
     $this->assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
+})->skip(function () {
+    return ! Features::enabled(Features::registration());
+}, 'Registration support is not enabled.');
+
+test('new users cannot register without accepting privacy policy', function () {
+    $response = $this->post('/register', [
+        'name' => 'Test User',
+        'email' => 'test@example.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+        'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
+        'privacy' => false,
+    ]);
+
+    $response->assertSessionHasErrors('privacy');
+    $this->assertGuest();
 })->skip(function () {
     return ! Features::enabled(Features::registration());
 }, 'Registration support is not enabled.');
