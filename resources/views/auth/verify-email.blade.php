@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <div class="mt-4 flex items-center justify-between">
+        <div class="mt-4 text-center">
             <form method="POST" action="{{ route('verification.send') }}">
                 @csrf
 
