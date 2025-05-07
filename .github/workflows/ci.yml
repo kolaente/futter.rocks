@@ -53,6 +53,7 @@ jobs:
     needs:
       - test
       - lint
+    if: ${{ github.ref_type == 'tag' || github.ref_name == 'main' }}
     permissions:
       contents: read
       packages: write
