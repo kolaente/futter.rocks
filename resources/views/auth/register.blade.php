@@ -1,4 +1,9 @@
 <x-guest-layout>
+
+    <x-slot name="head">
+        @turnstileScripts()
+    </x-slot>
+
     <x-authentication-card>
         <x-slot name="logo">
             <x-application-logo />
@@ -57,6 +62,10 @@
                         </div>
                     </div>
                 </x-label>
+            </div>
+
+            <div class="mt-4">
+                <x-turnstile />
             </div>
 
             <div class="flex items-center justify-end mt-4">

@@ -27,6 +27,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
             'privacy' => ['required', 'accepted'],
+            'cf-turnstile-response' => config('services.turnstile.key') ? ['required', 'turnstile'] : '',
         ])->validate();
 
         return DB::transaction(function () use ($input) {

@@ -1,4 +1,4 @@
-@props(['title' => null])
+@props(['title' => null, 'head' => null])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -18,6 +18,8 @@
         <!-- Styles -->
         @livewireStyles
         @filamentStyles
+
+        {{ $head }}
     </head>
     <body class="bg-gray-50">
         <div class="font-sans text-gray-900 antialiased">
