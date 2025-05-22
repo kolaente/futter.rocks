@@ -5,12 +5,16 @@
             <div class="flex justify-between items-center mb-8">
                 <x-application-logo class="mx-auto" />
                 <div class="text-right">
-                    @if (Route::has('login'))
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary">{{ __('Log in') }}</a>
-                    @endif
+                    @if(\Illuminate\Support\Facades\Auth::user())
+                        <a href="{{ route('dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary">{{ __('Dashboard') }}</a>
+                    @else
+                        @if (Route::has('login'))
+                            <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary">{{ __('Log in') }}</a>
+                        @endif
 
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary">{{ __('Register') }}</a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary">{{ __('Register') }}</a>
+                        @endif
                     @endif
                 </div>
             </div>
