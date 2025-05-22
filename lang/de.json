@@ -318,5 +318,7 @@
     "Submit Mappings": "Zuordnungen senden",
     "Participant Count Per Group": "Teilnehmeranzahl pro Gruppe",
     "Clear already stored mappings": "Bereits gespeicherte Zuordnungen löschen",
+    "Import participant group data directly from Campflow.": "Importiere Teilnahmegruppendaten direkt aus Campflow.",
+    "No personal data is transmitted, only the number of people per participant group.": "Es werden keine personenbezogenen Daten übertragen, nur die Anzahl der Personen pro Teilnahmegruppe.",
     "___": "___"
 }

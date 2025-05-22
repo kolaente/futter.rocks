@@ -86,10 +86,11 @@
                 <x-feature-section
                     :title="__('Campflow Import')"
                     :features="[
-                        __('Import participant data directly from Campflow.'),
+                        __('Import participant group data directly from Campflow.'),
+                        __('No personal data is transmitted, only the number of people per participant group.'),
                     ]"
                     image-order="left"
-                    :coming-soon="true"
+                    image-path="campflow-import.png"
                 />
                 <x-feature-section
                     :title="__('Open Source')"
