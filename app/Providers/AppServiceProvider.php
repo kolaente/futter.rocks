@@ -4,8 +4,6 @@ namespace App\Providers;
 
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,9 +25,5 @@ class AppServiceProvider extends ServiceProvider
             'primary' => Color::hex('#3D5467'),
             'danger' => Color::hex('#DB5461'),
         ]);
-
-        RateLimiter::for('ingredients-categorizer', function (object $job) {
-            return Limit::perMinute(30);
-        });
     }
 }

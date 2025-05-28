@@ -16,10 +16,15 @@ class Ingredient extends Model
         'title',
     ];
 
-    protected $dispatchesEvents = [
-        'created' => AddIngredientCategory::class,
-        'updated' => AddIngredientCategory::class,
-    ];
+    protected static function booted(): void
+    {
+        static::created(function (self $ingredient) {
+            AddIngredientCategory::dispatch($ingredient);
+        });
+        static::updated(function (self $ingredient) {
+            AddIngredientCategory::dispatch($ingredient);
+        });
+    }
 
     protected function casts(): array
     {
