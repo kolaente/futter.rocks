@@ -21,6 +21,7 @@ describe('Create', function () {
             ->withCurrentTeam()
             ->create();
         actingAs($this->user);
+        Event::fake();
     });
 
     it('can create a new recipe using only new ingredients', function () {
