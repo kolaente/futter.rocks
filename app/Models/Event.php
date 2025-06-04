@@ -81,6 +81,37 @@ class Event extends Model
         return $this->hasMany(AdditionalShoppingItem::class);
     }
 
+    public function duplicate(User $user): self
+    {
+        $copy = $this->replicate();
+        $copy->share_id = null;
+        $copy->title = $this->title.__(' - Duplicate');
+        $copy->created_by_id = $user->id;
+        $copy->save();
+
+        foreach ($this->participantGroups as $group) {
+            $copy->participantGroups()->attach($group->id, [
+                'quantity' => $group->pivot->quantity,
+            ]);
+        }
+
+        foreach ($this->meals as $meal) {
+            $newMeal = $meal->replicate();
+            $newMeal->event()->associate($copy);
+            $newMeal->save();
+
+            $newMeal->recipes()->attach($meal->recipes->pluck('id'));
+        }
+
+        foreach ($this->shoppingTours as $tour) {
+            $newTour = $tour->replicate();
+            $newTour->event()->associate($copy);
+            $newTour->save();
+        }
+
+        return $copy;
+    }
+
     public function durationDays(): Attribute
     {
         return Attribute::make(
