@@ -145,6 +145,9 @@
     x-data="csvImporter"
     class="space-y-4"
 >
+    <p class="text-sm text-gray-700">
+        {{ __('Upload the CSV exported from Campflow and select the column that lists the participant groups. We will import the number of participants for each group.') }}
+    </p>
     <div class="mb-4">
         <template x-if="!csvFile">
             <div>
@@ -186,14 +189,14 @@
         <div class="space-y-4">
             <div>
                 <label for="column-select"
-                       class="block text-sm font-medium text-gray-700">{{ __('Select Column') }}</label>
+                       class="block text-sm font-medium text-gray-700">{{ __('Select participant group column') }}</label>
                 <select
                     id="column-select"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
                     x-model="selectedColumn"
                     x-on:change="countUniqueValues()"
                 >
-                    <option value="">{{ __('-- Select a column --') }}</option>
+                    <option value="">{{ __('-- Select participant group column --') }}</option>
                     <template x-for="header in headers" :key="header">
                         <option x-text="header" :value="header"></option>
                     </template>
