@@ -2,7 +2,6 @@
 
 use App\Models\Enums\Unit;
 use App\Utils\RoundIngredients;
-use stdClass;
 
 it('converts grams to kilos when quantity exceeds one kilo', function () {
     $ingredient = new stdClass;
