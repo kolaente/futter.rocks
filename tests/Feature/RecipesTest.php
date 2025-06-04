@@ -195,7 +195,7 @@ describe('Create', function () {
 
         beforeEach(function () {
             Http::fake([
-                'https://www.kitchenstories.com/de/rezepte/cremiger-nudel-kurbis-auflauf' => Http::response(file_get_contents(__DIR__.'/../fixtures/recipe-kitchestories.html')),
+                'https://www.kitchenstories.com/de/rezepte/cremiger-nudel-kurbis-auflauf' => Http::response(file_get_contents(__DIR__.'/../fixtures/recipe-kitchenstories.html')),
                 'https://www.chefkoch.de/rezepte/1660421274170785/Vegetarisches-Chili-mit-Bulgur.html' => Http::response(file_get_contents(__DIR__.'/../fixtures/recipe-chefkoch.html')),
             ]);
         });
