@@ -10,9 +10,9 @@ class RecipeParser
 {
     public static function fetchRecipeFromUrl(string $url): array
     {
-        $html = Http::get($url);
+        $html = Http::get($url)->body();
         $dom = new DOMDocument;
-        libxml_use_internal_errors(1);
+        libxml_use_internal_errors(true);
         $dom->loadHTML($html);
         $xpath = new DOMXpath($dom);
         $jsonScripts = $xpath->query('//script[@type="application/ld+json"]');
