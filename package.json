@@ -21,7 +21,7 @@
         "vite": "^6.3.5"
     },
     "dependencies": {
-        "@fontsource-variable/arima": "^5.2.5",
+        "@fontsource-variable/arima": "^5.2.6",
         "@fontsource-variable/open-sans": "^5.2.5"
     }
 }
