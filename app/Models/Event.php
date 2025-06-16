@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Enums\IngredientCategory;
+use App\Models\Meal;
+use App\Models\ShoppingTour;
 use App\Models\Scopes\CurrentTeam;
 use App\Utils\RoundIngredients;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
@@ -168,5 +170,46 @@ class Event extends Model
         }
 
         return $list;
+    }
+
+    public function duplicate(): Event
+    {
+        $newEvent = new Event();
+        $newEvent->title = __('Copy of').' '.$this->title;
+        $newEvent->description = $this->description;
+        $newEvent->date_from = $this->date_from;
+        $newEvent->date_to = $this->date_to;
+        $newEvent->team_id = $this->team_id;
+        $newEvent->created_by_id = $this->created_by_id; // As per requirement
+        $newEvent->save();
+
+        // Duplicate Meals and their Recipes
+        foreach ($this->meals as $meal) {
+            $newMeal = new Meal();
+            $newMeal->date = $meal->date;
+            $newMeal->name = $meal->name;
+            $newMeal->event_id = $newEvent->id;
+            $newMeal->save();
+
+            $recipeIds = $meal->recipes()->pluck('recipes.id');
+            if ($recipeIds->isNotEmpty()) {
+                $newMeal->recipes()->attach($recipeIds);
+            }
+        }
+
+        // Duplicate Participant Groups
+        foreach ($this->participantGroups as $group) {
+            $newEvent->participantGroups()->attach($group->id, ['quantity' => $group->pivot->quantity]);
+        }
+
+        // Duplicate Shopping Tours
+        foreach ($this->shoppingTours as $tour) {
+            $newTour = new ShoppingTour();
+            $newTour->date = $tour->date;
+            $newTour->event_id = $newEvent->id;
+            $newTour->save();
+        }
+
+        return $newEvent;
     }
 }

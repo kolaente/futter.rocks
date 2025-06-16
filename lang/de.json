@@ -322,5 +322,10 @@
     "Import participant group data directly from Campflow.": "Importiere Teilnahmegruppendaten direkt aus Campflow.",
     "No personal data is transmitted, only the number of people per participant group.": "Es werden keine personenbezogenen Daten übertragen, nur die Anzahl der Personen pro Teilnahmegruppe.",
     "What happens to my data?": "Was passiert mit meinen Daten?",
-    "___": "___"
+    "___": "___",
+    "Duplicate": "Duplizieren",
+    "Duplicate event": "Ereignis duplizieren",
+    "Event duplicated successfully": "Ereignis erfolgreich dupliziert",
+    "Copy of :title": "Kopie von :title",
+    "Are you sure you want to duplicate this event? The title will be prefixed with \"Copy of \" and all related data will be duplicated as well.": "Möchten Sie dieses Ereignis wirklich duplizieren? Der Titel wird mit \"Kopie von \" beginnen und alle zugehörigen Daten werden ebenfalls dupliziert."
 }

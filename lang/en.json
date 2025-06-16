@@ -1,0 +1,7 @@
+{
+    "Duplicate": "Duplicate",
+    "Duplicate event": "Duplicate event",
+    "Event duplicated successfully": "Event duplicated successfully",
+    "Copy of :title": "Copy of :title",
+    "Are you sure you want to duplicate this event? The title will be prefixed with \"Copy of \" and all related data will be duplicated as well.": "Are you sure you want to duplicate this event? The title will be prefixed with \"Copy of \" and all related data will be duplicated as well."
+}
