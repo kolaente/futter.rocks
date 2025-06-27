@@ -9,6 +9,7 @@
         <x-button href="{{ route('events.shopping-list', ['event' => $event]) }}">
             {{ __('Shopping list') }}
         </x-button>
+        {{ $this->duplicateAction }}
         {{ $this->deleteAction }}
     </x-slot:actions>
 
