@@ -67,9 +67,11 @@ class CreateEdit extends Component implements HasForms
                     ->required(),
                 Forms\Components\Repeater::make('ingredients')
                     ->label(__('Ingredients'))
+                    ->addActionLabel(__('Add Ingredient'))
                     ->schema([
                         Forms\Components\Grid::make(3)->schema([
                             Forms\Components\Select::make('ingredient')
+                                ->label(__('Ingredient'))
                                 ->searchable()
                                 ->required()
                                 ->getSearchResultsUsing(function (string $search) {
@@ -88,7 +90,7 @@ class CreateEdit extends Component implements HasForms
                                 }),
                             Forms\Components\Select::make('unit')
                                 ->label(__('Unit'))
-                                ->options(Unit::class)
+                                ->options(Unit::getLocalizedOptionsArray())
                                 ->required(),
                             Forms\Components\TextInput::make('quantity')
                                 ->label(__('Quantity'))

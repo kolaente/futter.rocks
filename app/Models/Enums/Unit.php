@@ -21,6 +21,17 @@ enum Unit: int
         };
     }
 
+    public static function getLocalizedOptionsArray(): array
+    {
+        $values = [];
+
+        foreach (self::cases() as $case) {
+            $values[$case->value] = $case->getLabel();
+        }
+
+        return $values;
+    }
+
     public function getShortLabel(): ?string
     {
         return match ($this) {
