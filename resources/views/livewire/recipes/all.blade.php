@@ -4,6 +4,8 @@
             {{ __('Create') }}
         </x-button>
 
+        <livewire:recipes.create-from-text/>
+
         <livewire:recipes.import/>
     </x-slot:actions>
 

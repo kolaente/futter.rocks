@@ -60,50 +60,67 @@ class Recipe extends Model
             'team_id' => $teamId,
         ]);
 
-        foreach ($parsed['recipeIngredient'] as $ing) {
+        $recipe->addIngredientsFromText($parsed['recipeIngredient'], $servings);
 
-            $parts = explode(' ', $ing);
+        return $recipe;
+    }
 
-            $title = null;
-            if (count($parts) >= 3) {
-                $copy = [...$parts];
-                $title = implode(' ', array_splice($copy, 2));
+    public function addIngredientsFromText(array $lines, int $servings = 1)
+    {
+        foreach ($lines as $ing) {
+            // Use regex to parse quantity+unit+title pattern
+            if (preg_match('/^(\d+(?:\.\d+)?)\s*([a-zA-Z]+)\s+(.+)$/', $ing, $matches)) {
+                $quantityStr = $matches[1];
+                $unitStr = $matches[2];
+                $title = trim($matches[3]);
+            } else {
+                // Fallback to original space-based parsing
+                $parts = explode(' ', $ing);
+
+                $title = null;
+                if (count($parts) >= 3) {
+                    $copy = [...$parts];
+                    $title = implode(' ', array_splice($copy, 2));
+                }
+
+                if ($title === null) {
+                    continue;
+                }
+
+                $quantityStr = $parts[0];
+                $unitStr = $parts[1];
             }
 
-            if ($title === null) {
-                continue;
-            }
-
-            $quantity = match ($parts[0]) {
+            $quantity = match ($quantityStr) {
                 '¼' => 0.25,
                 '½' => 0.5,
                 '¾' => 0.75,
                 '⅓' => 0.333333,
-                default => floatval($parts[0]),
+                default => floatval($quantityStr),
             };
 
             if ($quantity === 0.0) {
                 continue;
             }
 
-            $unit = Unit::fromString($parts[1]);
-            if (strtolower($parts[1]) === 'tasse' || strtolower($parts[1]) === 'tassen') {
+            $unit = Unit::fromString($unitStr);
+            if (strtolower($unitStr) === 'tasse' || strtolower($unitStr) === 'tassen') {
                 $unit = Unit::Grams;
                 $quantity = $quantity * 150;
             }
 
-            if (strtolower($parts[1]) === 'el') {
+            if (strtolower($unitStr) === 'el') {
                 $unit = Unit::Milliliters;
                 $quantity = $quantity * 15;
             }
 
-            if (strtolower($parts[1]) === 'tl') {
+            if (strtolower($unitStr) === 'tl') {
                 $unit = Unit::Milliliters;
                 $quantity = $quantity * 5;
             }
 
             if ($unit === null) {
-                $title = trim($parts[1]).' '.$title;
+                $title = trim($unitStr).' '.$title;
                 $unit = Unit::Pieces;
             }
 
@@ -112,13 +129,11 @@ class Recipe extends Model
                 'title' => trim($title),
             ]);
 
-            $recipe->ingredients()->attach($ingredient, [
+            $this->ingredients()->attach($ingredient, [
                 'quantity' => $quantity / $servings,
                 'unit' => $unit,
             ]);
         }
-
-        return $recipe;
     }
 
     public function getCalculatedIngredientsForEvent(Event $event)

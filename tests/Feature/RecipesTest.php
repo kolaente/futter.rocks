@@ -24,6 +24,25 @@ describe('Create', function () {
         Event::fake();
     });
 
+    function assertIngredients(Recipe $recipe, array $ingredients)
+    {
+        foreach ($ingredients as $ingredient) {
+            assertDatabaseHas('ingredients', [
+                'title' => $ingredient['title'],
+            ]);
+            $ing = Ingredient::where('title', $ingredient['title'])
+                ->first();
+            assertDatabaseHas('ingredient_recipe', [
+                'recipe_id' => $recipe->id,
+                'ingredient_id' => $ing->id,
+                'quantity' => $ingredient['quantity'],
+                'unit' => $ingredient['unit'],
+            ]);
+        }
+
+        assertDatabaseCount('ingredient_recipe', count($ingredients));
+    }
+
     it('can create a new recipe using only new ingredients', function () {
 
         $testTitle = 'Käsebrot';
@@ -172,26 +191,98 @@ describe('Create', function () {
             ]));
     });
 
+    describe('Import from Text', function () {
+        it('imports from text simple case', function () {
+            $team = Team::factory()->create();
+
+            $recipe = Recipe::create([
+                'title' => 'Test',
+                'team_id' => $team->id,
+            ]);
+
+            $recipe->addIngredientsFromText([
+                '20g Kidneybohnen, Dose',
+                '25g Mais, Dose',
+                '25g Geriebener Käse',
+                '10g Butter',
+                '100ml Wasser',
+            ]);
+
+            assertIngredients($recipe, [
+                [
+                    'title' => 'Kidneybohnen, Dose',
+                    'unit' => Unit::Grams,
+                    'quantity' => 20,
+                ],
+                [
+                    'title' => 'Mais, Dose',
+                    'unit' => Unit::Grams,
+                    'quantity' => 25,
+                ],
+                [
+                    'title' => 'Geriebener Käse',
+                    'unit' => Unit::Grams,
+                    'quantity' => 25,
+                ],
+                [
+                    'title' => 'Butter',
+                    'unit' => Unit::Grams,
+                    'quantity' => 10,
+                ],
+                [
+                    'title' => 'Wasser',
+                    'unit' => Unit::Milliliters,
+                    'quantity' => 100,
+                ],
+            ]);
+        });
+        it('imports from text complex case', function () {
+            $team = Team::factory()->create();
+
+            $recipe = Recipe::create([
+                'title' => 'Test',
+                'team_id' => $team->id,
+            ]);
+
+            $recipe->addIngredientsFromText([
+                '20 	g 	Kidneybohnen, Dose',
+                '25 	g 	Mais, Dose',
+                '25 	g 	Geriebener Käse',
+                '10 	g 	Butter',
+                '100 	ml 	Wasser',
+            ]);
+
+            assertIngredients($recipe, [
+                [
+                    'title' => 'Kidneybohnen, Dose',
+                    'unit' => Unit::Grams,
+                    'quantity' => 20,
+                ],
+                [
+                    'title' => 'Mais, Dose',
+                    'unit' => Unit::Grams,
+                    'quantity' => 25,
+                ],
+                [
+                    'title' => 'Geriebener Käse',
+                    'unit' => Unit::Grams,
+                    'quantity' => 25,
+                ],
+                [
+                    'title' => 'Butter',
+                    'unit' => Unit::Grams,
+                    'quantity' => 10,
+                ],
+                [
+                    'title' => 'Wasser',
+                    'unit' => Unit::Milliliters,
+                    'quantity' => 100,
+                ],
+            ]);
+        });
+    });
+
     describe('Import', function () {
-
-        function assertIngredients(Recipe $recipe, array $ingredients)
-        {
-            foreach ($ingredients as $ingredient) {
-                assertDatabaseHas('ingredients', [
-                    'title' => $ingredient['title'],
-                ]);
-                $ing = Ingredient::where('title', $ingredient['title'])
-                    ->first();
-                assertDatabaseHas('ingredient_recipe', [
-                    'recipe_id' => $recipe->id,
-                    'ingredient_id' => $ing->id,
-                    'quantity' => $ingredient['quantity'],
-                    'unit' => $ingredient['unit'],
-                ]);
-            }
-
-            assertDatabaseCount('ingredient_recipe', count($ingredients));
-        }
 
         beforeEach(function () {
             Http::fake([
