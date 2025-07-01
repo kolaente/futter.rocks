@@ -7,13 +7,11 @@ use App\Models\Scopes\CurrentTeam;
 use App\Utils\RoundIngredients;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -130,13 +128,24 @@ class Event extends Model
         );
     }
 
-    public function getMealsByDate(): EloquentCollection|Collection|array
+    public function getMealsByDate()
     {
         return $this->meals()
             ->orderBy('date')
             ->with('recipes')
             ->get()
-            ->groupBy('date');
+            ->groupBy('date')
+            ->map(fn ($meals) => $meals->sortBy(function ($item) {
+                $order = [
+                    'Frühstück' => 1,
+                    'Mittag' => 2,
+                    'Mittagessen' => 2,
+                    'Abend' => 3,
+                    'Abendessen' => 3,
+                ];
+
+                return $order[$item->title] ?? 4;
+            }));
     }
 
     public function getShoppingList(): array
