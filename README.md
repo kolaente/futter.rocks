@@ -12,6 +12,7 @@ A tool designed for planning and managing camp kitchens for (mostly) youth retre
 - Calculating quantities (with food factor adjustment)
 - Managing recipes
 - Simplifying shopping trips
+- Add manual shopping items to events
 
 Visit [the website](https://futter.rocks) to learn more.
 
