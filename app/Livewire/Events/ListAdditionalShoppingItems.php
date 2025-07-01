@@ -13,6 +13,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Livewire\Component;
 
 class ListAdditionalShoppingItems extends Component implements HasForms, HasTable
@@ -29,7 +30,10 @@ class ListAdditionalShoppingItems extends Component implements HasForms, HasTabl
 
     protected function getShoppingTourOptions(): array
     {
-        $options = $this->event->shoppingTours()->orderBy('date')->get()
+        $options = $this->event
+            ->shoppingTours()
+            ->orderBy('date')
+            ->get()
             ->pluck('date', 'id')
             ->map(fn ($d) => $d->translatedFormat(__('j F Y')))
             ->toArray();
@@ -62,24 +66,33 @@ class ListAdditionalShoppingItems extends Component implements HasForms, HasTabl
             ->relationship(fn (): HasMany => $this->event->additionalShoppingItems())
             ->inverseRelationship('event')
             ->recordTitleAttribute('title')
+            ->emptyStateHeading(__('No additional shopping items yet'))
+            ->emptyStateDescription(__('Add a new item to the list to begin.'))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('Title')),
                 Tables\Columns\TextColumn::make('quantity')
                     ->label(__('Quantity')),
                 Tables\Columns\TextColumn::make('unit')
-                    ->formatStateUsing(fn ($state) => Unit::from($state)->getShortLabel())
+                    ->formatStateUsing(fn (Unit $state) => $state->getShortLabel())
                     ->label(__('Unit')),
                 Tables\Columns\TextColumn::make('shoppingTour.date')
                     ->label(__('Shopping Date'))
-                    ->formatStateUsing(fn ($state) => $state?->translatedFormat(__('j F Y')) ?? __('Before the event'))
+                    ->default(__('Before the event'))
+                    ->formatStateUsing(fn (Carbon|string $state): string => $state instanceof Carbon
+                        ? $state->translatedFormat(__('j F Y'))
+                        : $state)
                     ->visible(fn () => $this->event->shoppingTours()->exists()),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->form($form),
+                Tables\Actions\CreateAction::make()
+                    ->modalHeading(__('Add an additional shopping item'))
+                    ->form($form),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->form($form),
+                Tables\Actions\EditAction::make()
+                    ->modalHeading(__('Edit an additional shopping item'))
+                    ->form($form),
                 Tables\Actions\DeleteAction::make(),
             ]);
     }
