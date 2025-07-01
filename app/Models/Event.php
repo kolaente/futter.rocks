@@ -42,6 +42,7 @@ class Event extends Model
                 ->delete();
             $event->meals()->delete();
             $event->shoppingTours()->delete();
+            $event->additionalShoppingItems()->delete();
             $event->participantGroups()->detach();
         });
     }
@@ -73,6 +74,11 @@ class Event extends Model
     public function shoppingTours()
     {
         return $this->hasMany(ShoppingTour::class);
+    }
+
+    public function additionalShoppingItems(): HasMany
+    {
+        return $this->hasMany(AdditionalShoppingItem::class);
     }
 
     public function durationDays(): Attribute
@@ -156,7 +162,18 @@ class Event extends Model
             foreach ($tourList as $id => $item) {
                 $list[$shoppingTourId][$id] = RoundIngredients::round($item);
             }
+        }
 
+        foreach ($this->additionalShoppingItems as $item) {
+            $tourId = $item->shopping_tour_id ?? 0;
+            $list[$tourId][] = [
+                'ingredient' => $item,
+                'quantity' => $item->quantity,
+                'unit' => $item->unit,
+            ];
+        }
+
+        foreach ($list as $shoppingTourId => $tourList) {
             uasort($list[$shoppingTourId], fn ($a, $b) => strnatcasecmp($a['ingredient']->title, $b['ingredient']->title));
             $list[$shoppingTourId] = collect($list[$shoppingTourId])
                 ->groupBy('ingredient.category')

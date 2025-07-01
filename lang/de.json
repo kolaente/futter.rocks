@@ -176,6 +176,7 @@
     "The team's name and owner information.": "Name und Besitzer:innen-Informationen des Teams.",
     "Edit": "Bearbeiten",
     "Shopping Tours": "Einkaufstouren",
+    "Additional Shopping Items": "Weitere Einkaufsartikel",
     "Save Event": "Veranstaltung speichern",
     "Back to Event": "Zurück zur Veranstaltung",
     "Print": "Drucken",
@@ -185,6 +186,7 @@
     "Save Recipe": "Rezept speichern",
     "Save Group": "Gruppe speichern",
     "Before the event": "Vor der Veranstaltung",
+    "Shopping Date": "Einkaufsdatum",
     "At :date": "Am :date",
     "Shopping List": "Einkaufsliste",
     "No events yet": "Noch keine Veranstaltungen",
@@ -325,5 +327,9 @@
     "Add Ingredient": "Zutat hinzufügen",
     "Create from text": "Von Text erstellen",
     "Ingredients List": "Zutatenliste",
+    "No additional shopping items yet": "Noch keine weiteren Einkaufsartikel",
+    "Add a new item to the list to begin.": "Füge einen Artikel oben rechts hinzu.",
+    "Add an additional shopping item": "Füge einen Einkaufsartikel hinzu",
+    "Edit an additional shopping item": "Bearbeite einen Einkaufsartikel",
     "___": "___"
 }
