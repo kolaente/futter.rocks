@@ -64,10 +64,13 @@ class ListMeals extends Component implements HasForms, HasTable
             ->defaultSort('date')
             ->headerActions([
                 Tables\Actions\CreateAction::make()
+                    ->modalHeading(__('Create meal'))
                     ->form($form),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->form($form),
+                Tables\Actions\EditAction::make()
+                    ->modalHeading(__('Edit meal'))
+                    ->form($form),
                 Tables\Actions\DeleteAction::make(),
             ]);
     }
