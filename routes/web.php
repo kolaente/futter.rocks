@@ -52,7 +52,7 @@ Route::middleware([
     });
 });
 
-Route::get('/shared/events/{event:share_id}/meal-plan', [SharedEventController::class, 'mealPlan'])->name('shared.event.meal-plan');
+Route::get('/shared/events/{shareId}/meal-plan', [SharedEventController::class, 'mealPlan'])->name('shared.event.meal-plan');
 Route::get('/privacy-policy', fn () => view('components.markdown-content', ['file' => 'policy.md', 'title' => __('Privacy Policy')]))
     ->name('policy.show');
 Route::get('/imprint', fn () => view('components.markdown-content', ['file' => 'imprint.md', 'title' => __('Imprint')]))

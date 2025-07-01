@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Scopes\CurrentTeam;
 
 class SharedEventController extends Controller
 {
-    public function mealPlan(Event $event)
+    public function mealPlan(string $shareId)
     {
+
+        $event = Event::withoutGlobalScope(CurrentTeam::class)
+            ->where('share_id', $shareId)
+            ->firstOrFail();
+
         return view('pages.meal-plan', [
             'event' => $event,
             'mealsByDate' => $event->getMealsByDate(),

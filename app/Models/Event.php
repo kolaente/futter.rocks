@@ -132,7 +132,11 @@ class Event extends Model
     {
         return $this->meals()
             ->orderBy('date')
-            ->with('recipes')
+            ->with([
+                'recipes' => function ($query) {
+                    $query->withoutGlobalScope(CurrentTeam::class);
+                },
+            ])
             ->get()
             ->groupBy('date')
             ->map(fn ($meals) => $meals->sortBy(function ($item) {
