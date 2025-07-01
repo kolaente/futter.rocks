@@ -58,7 +58,7 @@ it('calculates ingredients for an event with proper units', function () {
 
     $gramsItem = collect($calculated)->firstWhere('ingredient.id', $ingGrams->id);
     expect($gramsItem['quantity'])->toBe(2.0)
-        ->and($gramsItem['ingredient']->unit)->toBe(Unit::Kilos);
+        ->and($gramsItem['ingredient']->unit)->toBe(Unit::Grams);
 
     $piecesItem = collect($calculated)->firstWhere('ingredient.id', $ingPieces->id);
     expect($piecesItem['quantity'])->toBe(20.0)

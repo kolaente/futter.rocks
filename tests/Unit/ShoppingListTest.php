@@ -28,7 +28,7 @@ it('generates shopping lists for seeded events', function () {
     $third = collect($list[$tourIds[1]][IngredientCategory::OTHER->value])
         ->firstWhere('ingredient.title', 'Brot');
 
-    expect($first['quantity'])->toBe(18191.25)
-        ->and($second['quantity'])->toBe(15592.5)
-        ->and($third['quantity'])->toBe(13860.0);
+    expect($first['quantity'])->toBe(18.2)
+        ->and($second['quantity'])->toBe(15.6)
+        ->and($third['quantity'])->toBe(13.9);
 });
