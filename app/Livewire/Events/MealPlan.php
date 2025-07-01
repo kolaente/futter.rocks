@@ -28,6 +28,8 @@ class MealPlan extends Component
                 $order = [
                     'Frühstück' => 1,
                     'Mittag' => 2,
+                    'Mittagessen' => 2,
+                    'Abend' => 3,
                     'Abendessen' => 3,
                 ];
 
