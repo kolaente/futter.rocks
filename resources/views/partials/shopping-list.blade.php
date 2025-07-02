@@ -17,18 +17,23 @@
     @endif
 
     @foreach($tourListByCategories as $category => $tourList)
-        <h3 class="shopping-tour-list font-display font-semibold text-lg mb-0 mt-4">
-            {{ \App\Models\Enums\IngredientCategory::from($category)->getLabel() }}
-        </h3>
+        <div>
+            <h3 class="shopping-tour-list font-display font-semibold text-lg mb-0 mt-4">
+                {{ \App\Models\Enums\IngredientCategory::from($category)->getLabel() }}
+            </h3>
 
-        <ul>
-            @foreach($tourList as $item)
-                <li>
-                    <span class="check inline-block w-3 h-3 border border-gray-500"></span>
-                    {{ $fmt->format($item['quantity']) }} {{ $item['unit']->getShortLabel() }} {{ $item['ingredient']->title }}
-                </li>
-            @endforeach
-        </ul>
-
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                @foreach(collect($tourList)->splitIn(2) as $items)
+                    <ul>
+                        @foreach($items as $item)
+                            <li>
+                                <span class="check inline-block w-3 h-3 border border-gray-500"></span>
+                                {{ $fmt->format($item['quantity']) }} {{ $item['unit']->getShortLabel() }} {{ $item['ingredient']->title }}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endforeach
+            </div>
+        </div>
     @endforeach
 @endforeach

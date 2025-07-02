@@ -9,12 +9,17 @@
         margin: .5rem 0 .5rem;
     }
 
+    h3 {
+        padding: 1rem 0 0.5rem;
+    }
+
     .shopping-tour-list {
         text-align: left;
     }
 
     ul, .shopping-tour-list {
         padding-left: 2rem;
+        margin: 0;
     }
 
     ul li {
