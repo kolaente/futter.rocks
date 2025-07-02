@@ -5,10 +5,6 @@
 @endphp
 
 @while($paginated->count() > 0)
-    @php
-        $paginated = $mealsByDate->forPage($i, 4);
-        $i++;
-    @endphp
     <table class="border {{ $i > 1 ? 'mt-4' : '' }} table-fixed w-full">
         <thead>
         <tr>
@@ -39,4 +35,8 @@
             @endforeach
         </tr>
     </table>
+    @php
+        $paginated = $mealsByDate->forPage($i, 4);
+        $i++;
+    @endphp
 @endwhile
