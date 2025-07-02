@@ -69,7 +69,10 @@ class ListMeals extends Component implements HasForms, HasTable
             ->filters([
                 Filter::make('date')
                     ->form([
-                        DatePicker::make('date'),
+                        DatePicker::make('date')
+                            ->label(__('Date'))
+                            ->minDate(fn () => $this->event->date_from)
+                            ->maxDate(fn () => $this->event->date_to),
                     ])
                     ->query(fn (Builder $query, array $data): Builder => $query->when($data['date'], fn (Builder $query, $date): Builder => $query->whereDate('date', $date)))
                     ->indicateUsing(fn (array $data) => $data['date'] ? Carbon::parse($data['date'])->translatedFormat(__('j F Y')) : null),
