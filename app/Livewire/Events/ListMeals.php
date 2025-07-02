@@ -4,14 +4,18 @@ namespace App\Livewire\Events;
 
 use App\Models\Event;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Livewire\Component;
 
 class ListMeals extends Component implements HasForms, HasTable
@@ -54,12 +58,21 @@ class ListMeals extends Component implements HasForms, HasTable
             ->emptyStateDescription(__('Create a meal on the top right.'))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label(__('Title')),
+                    ->label(__('Title'))
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('date')
                     ->formatStateUsing(fn ($state) => $state->translatedFormat(__('j F Y')))
                     ->label(__('Date')),
                 Tables\Columns\TextColumn::make('recipes.title')
                     ->label(__('Recipes')),
+            ])
+            ->filters([
+                Filter::make('date')
+                    ->form([
+                        DatePicker::make('date'),
+                    ])
+                    ->query(fn (Builder $query, array $data): Builder => $query->when($data['date'], fn (Builder $query, $date): Builder => $query->whereDate('date', $date)))
+                    ->indicateUsing(fn (array $data) => $data['date'] ? Carbon::parse($data['date'])->translatedFormat(__('j F Y')) : null),
             ])
             ->defaultSort('date')
             ->headerActions([
