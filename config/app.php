@@ -137,4 +137,8 @@ return [
 
     'google_api_key' => env('GOOGLE_API_KEY'),
 
+    'pdf-service' => env('PDF_SERVICE_URL', 'http://pdf-service'),
+
+    'pdf-service-auth' => env('PDF_SERVICE_AUTH'),
+
 ];

@@ -3,7 +3,7 @@
 namespace App\Livewire\Events;
 
 use App\Models\Event;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\PdfGenerator;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -22,22 +22,12 @@ class MealPlan extends Component
         return $this->event->getMealsByDate();
     }
 
-    public function download()
+    public function download(PdfGenerator $generator)
     {
-        Pdf::setOption([
-            'dpi' => 300,
-            'defaultFont' => 'sans-serif',
-            'orientation' => 'portrait',
-        ]);
+        $url = route('shared.event.meal-plan', ['shareId' => $this->event->share_id, 'fullPlan' => true]);
+        $pdf = $generator->fromUrl($url, true);
 
-        $pdf = Pdf::loadView('pdf.meal-plan', [
-            'event' => $this->event,
-            'mealsByDate' => $this->mealsByDate,
-        ])->setPaper('a4', 'landscape');
-
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf->output();
-        }, $this->event->title.' '.__('Meal Plan').'.pdf');
+        return response()->streamDownload(fn () => print ($pdf), $this->event->title.' '.__('Meal Plan').'.pdf');
     }
 
     public function render()
