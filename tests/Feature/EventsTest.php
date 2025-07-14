@@ -44,7 +44,7 @@ it('can duplicate an event with all associated data', function () {
     $tour->save();
 
     livewire(View::class, ['event' => $event])
-        ->callAction('duplicate')
+        ->call('duplicateEvent')
         ->assertHasNoActionErrors();
 
     assertDatabaseCount('events', 2);
