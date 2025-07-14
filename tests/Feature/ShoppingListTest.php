@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function Pest\Laravel\actingAs;
 
-uses(Tests\TestCase::class, RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 it('generates shopping lists for seeded events', function () {
     $this->seed(DatabaseSeeder::class);
@@ -21,11 +21,11 @@ it('generates shopping lists for seeded events', function () {
 
     $list = $event->fresh()->getShoppingList();
 
-    $first = collect($list[0][IngredientCategory::FRUIT_VEGETABLES->value])
+    $first = collect($list[0][IngredientCategory::BAKERY->value])
         ->firstWhere('ingredient.title', 'Brot');
-    $second = collect($list[$tourIds[0]][IngredientCategory::FRUIT_VEGETABLES->value])
+    $second = collect($list[$tourIds[0]][IngredientCategory::BAKERY->value])
         ->firstWhere('ingredient.title', 'Brot');
-    $third = collect($list[$tourIds[1]][IngredientCategory::FRUIT_VEGETABLES->value])
+    $third = collect($list[$tourIds[1]][IngredientCategory::BAKERY->value])
         ->firstWhere('ingredient.title', 'Brot');
 
     expect($first['quantity'])->toBe(18.2)
