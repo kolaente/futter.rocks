@@ -182,7 +182,7 @@ class Event extends Model
             if ($firstShoppingTour !== null && $firstShoppingTour->date < $meal->date) {
                 $currentShoppingTour = $allShoppingTours->shift();
             }
-            foreach ($meal->recipes as $recipe) {
+            foreach ($meal->recipes()->withoutGlobalScope(CurrentTeam::class)->get() as $recipe) {
                 foreach ($recipe->ingredients as $ingredient) {
 
                     $key = $ingredient->id.'_'.$ingredient->pivot->unit->value;
@@ -195,7 +195,7 @@ class Event extends Model
                         ];
                     }
 
-                    foreach ($this->participantGroups as $group) {
+                    foreach ($this->participantGroups()->withoutGlobalScope(CurrentTeam::class)->get() as $group) {
                         $list[$currentShoppingTour->id][$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
                     }
                 }
