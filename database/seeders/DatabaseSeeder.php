@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Enums\IngredientCategory;
 use App\Models\Enums\Unit;
 use App\Models\Event;
 use App\Models\Ingredient;
@@ -53,13 +54,13 @@ class DatabaseSeeder extends Seeder
         //     'title' => 'Ingredient 1',
         //     'quantity' => 1,
         //     'unit' => Unit::Pieces,
+        //     'category' => IngredientCategory::FRUIT_VEGETABLES,
         // ]
         foreach ($ingredients as $ingredientData) {
             $ingredient = Ingredient::withoutGlobalScope(CurrentTeam::class)->firstOrCreate([
                 'title' => $ingredientData['title'],
+                'category' => $ingredientData['category'] ?? IngredientCategory::OTHER,
             ]);
-            $ingredient->category = \App\Models\Enums\IngredientCategory::FRUIT_VEGETABLES;
-            $ingredient->save();
 
             // Use updateOrInsert to avoid duplicate pivot entries if seeder runs multiple times
             $recipe->ingredients()->updateExistingPivot($ingredient->id, [
@@ -75,226 +76,226 @@ class DatabaseSeeder extends Seeder
     private function createRecipes(User $user): void
     {
         $this->createRecipe($user, 'Chili Sin Carne', [
-            ['title' => 'Zwiebel', 'quantity' => 25, 'unit' => Unit::Grams],
-            ['title' => 'Tomaten, stückig, Dose', 'quantity' => 100, 'unit' => Unit::Grams],
-            ['title' => 'Kidneybohnen, Dose', 'quantity' => 65, 'unit' => Unit::Grams],
-            ['title' => 'Mais, Dose', 'quantity' => 65, 'unit' => Unit::Grams],
-            ['title' => 'Paprika', 'quantity' => 0.4, 'unit' => Unit::Pieces],
-            ['title' => 'Tomatenmark', 'quantity' => 15, 'unit' => Unit::Grams],
-            ['title' => 'Sonnenblumenöl', 'quantity' => 10, 'unit' => Unit::Milliliters],
+            ['title' => 'Zwiebel', 'quantity' => 25, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Tomaten, stückig, Dose', 'quantity' => 100, 'unit' => Unit::Grams, 'category' => IngredientCategory::CANNED_GOODS],
+            ['title' => 'Kidneybohnen, Dose', 'quantity' => 65, 'unit' => Unit::Grams, 'category' => IngredientCategory::CANNED_GOODS],
+            ['title' => 'Mais, Dose', 'quantity' => 65, 'unit' => Unit::Grams, 'category' => IngredientCategory::CANNED_GOODS],
+            ['title' => 'Paprika', 'quantity' => 0.4, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Tomatenmark', 'quantity' => 15, 'unit' => Unit::Grams, 'category' => IngredientCategory::CONDIMENTS],
+            ['title' => 'Sonnenblumenöl', 'quantity' => 10, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::OTHER],
         ]);
 
         $this->createRecipe($user, 'Reis als Beilage', [
-            ['title' => 'Reis', 'quantity' => 50, 'unit' => Unit::Grams],
+            ['title' => 'Reis', 'quantity' => 50, 'unit' => Unit::Grams, 'category' => IngredientCategory::GRAINS_CEREALS],
         ]);
 
         $this->createRecipe($user, 'Chai', [
-            ['title' => 'Fruchtsaft', 'quantity' => 75, 'unit' => Unit::Milliliters],
-            ['title' => 'Früchtetee oder Punschmischung', 'quantity' => 75, 'unit' => Unit::Milliliters],
-            ['title' => 'Rosinen', 'quantity' => 10, 'unit' => Unit::Grams],
+            ['title' => 'Fruchtsaft', 'quantity' => 75, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::BEVERAGES],
+            ['title' => 'Früchtetee oder Punschmischung', 'quantity' => 75, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::BEVERAGES],
+            ['title' => 'Rosinen', 'quantity' => 10, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
         ]);
 
         $this->createRecipe($user, 'Brotzeit herzhaft', [
-            ['title' => 'Brot', 'quantity' => 75, 'unit' => Unit::Grams],
-            ['title' => 'Butter / Magarine', 'quantity' => 10, 'unit' => Unit::Grams],
-            ['title' => 'Käseaufschnitt', 'quantity' => 18, 'unit' => Unit::Grams],
-            ['title' => 'veganer Brotaufstrich', 'quantity' => 10, 'unit' => Unit::Grams],
-            ['title' => 'Wurstaufschnitt', 'quantity' => 10, 'unit' => Unit::Grams],
+            ['title' => 'Brot', 'quantity' => 75, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKERY],
+            ['title' => 'Butter / Magarine', 'quantity' => 10, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Käseaufschnitt', 'quantity' => 18, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'veganer Brotaufstrich', 'quantity' => 10, 'unit' => Unit::Grams, 'category' => IngredientCategory::SPREAD],
+            ['title' => 'Wurstaufschnitt', 'quantity' => 10, 'unit' => Unit::Grams, 'category' => IngredientCategory::MEAT_SEAFOOD],
         ]);
 
         $this->createRecipe($user, 'Müsli', [
-            ['title' => 'Müsli aller Art', 'quantity' => 90, 'unit' => Unit::Grams],
+            ['title' => 'Müsli aller Art', 'quantity' => 90, 'unit' => Unit::Grams, 'category' => IngredientCategory::GRAINS_CEREALS],
         ]);
 
         $this->createRecipe($user, 'Kekse', [
-            ['title' => 'Kekse', 'quantity' => 50, 'unit' => Unit::Grams],
+            ['title' => 'Kekse', 'quantity' => 50, 'unit' => Unit::Grams, 'category' => IngredientCategory::SNACKS],
         ]);
 
         $this->createRecipe($user, 'Baguette als Beilage', [
-            ['title' => 'Baguette', 'quantity' => 0.3, 'unit' => Unit::Pieces],
+            ['title' => 'Baguette', 'quantity' => 0.3, 'unit' => Unit::Pieces, 'category' => IngredientCategory::BAKERY],
         ]);
 
         $this->createRecipe($user, 'Rohkost Obst', [
-            ['title' => 'Apfel', 'quantity' => 0.35, 'unit' => Unit::Pieces],
-            ['title' => 'Mandarinen', 'quantity' => 1, 'unit' => Unit::Pieces],
+            ['title' => 'Apfel', 'quantity' => 0.35, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Mandarinen', 'quantity' => 1, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
         ]);
 
         $this->createRecipe($user, 'Rohkost herzhaft', [
-            ['title' => 'Gurke', 'quantity' => 0.1, 'unit' => Unit::Pieces],
-            ['title' => 'Möhre', 'quantity' => 0.4, 'unit' => Unit::Pieces],
+            ['title' => 'Gurke', 'quantity' => 0.1, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Möhre', 'quantity' => 0.4, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
         ]);
 
         $this->createRecipe($user, 'Chips', [
-            ['title' => 'Chips', 'quantity' => 20, 'unit' => Unit::Grams],
+            ['title' => 'Chips', 'quantity' => 20, 'unit' => Unit::Grams, 'category' => IngredientCategory::SNACKS],
         ]);
 
         $this->createRecipe($user, 'Kürbispuffer', [
-            ['title' => 'Kürbisfleisch ich nehme Hokkaido', 'quantity' => 150, 'unit' => Unit::Grams],
-            ['title' => 'Eier', 'quantity' => 0.4, 'unit' => Unit::Pieces],
-            ['title' => 'Eigelb', 'quantity' => 0.2, 'unit' => Unit::Pieces],
-            ['title' => 'Bergkäse , fein geraffelt', 'quantity' => 44, 'unit' => Unit::Grams],
-            ['title' => 'Basilikum , frisch gehackt', 'quantity' => 9, 'unit' => Unit::Milliliters],
-            ['title' => 'Knoblauchzehen', 'quantity' => 0.6, 'unit' => Unit::Pieces],
-            ['title' => 'Mehl , glatt', 'quantity' => 18, 'unit' => Unit::Grams],
-            ['title' => 'Pck. Backpulver', 'quantity' => 0.1, 'unit' => Unit::Pieces],
-            ['title' => 'Haferflocken (Zart)', 'quantity' => 6, 'unit' => Unit::Grams],
+            ['title' => 'Kürbisfleisch ich nehme Hokkaido', 'quantity' => 150, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Eier', 'quantity' => 0.4, 'unit' => Unit::Pieces, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Eigelb', 'quantity' => 0.2, 'unit' => Unit::Pieces, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Bergkäse , fein geraffelt', 'quantity' => 44, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Basilikum , frisch gehackt', 'quantity' => 9, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::SPICES],
+            ['title' => 'Knoblauchzehen', 'quantity' => 0.6, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Mehl , glatt', 'quantity' => 18, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Pck. Backpulver', 'quantity' => 0.1, 'unit' => Unit::Pieces, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Haferflocken (Zart)', 'quantity' => 6, 'unit' => Unit::Grams, 'category' => IngredientCategory::GRAINS_CEREALS],
         ]);
 
         $this->createRecipe($user, 'Käsige Lauchnudeln', [
-            ['title' => 'Knoblauchzehen', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Sonnenblumenöl', 'quantity' => 15, 'unit' => Unit::Milliliters],
-            ['title' => 'Lauch', 'quantity' => 250, 'unit' => Unit::Grams],
-            ['title' => 'Schmand', 'quantity' => 50, 'unit' => Unit::Grams],
-            ['title' => 'Hartkäse (vegetarisch, ohne Lab!)', 'quantity' => 20, 'unit' => Unit::Grams],
-            ['title' => 'Nudeln', 'quantity' => 120, 'unit' => Unit::Grams],
+            ['title' => 'Knoblauchzehen', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Sonnenblumenöl', 'quantity' => 15, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::OTHER],
+            ['title' => 'Lauch', 'quantity' => 250, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Schmand', 'quantity' => 50, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Hartkäse (vegetarisch, ohne Lab!)', 'quantity' => 20, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Nudeln', 'quantity' => 120, 'unit' => Unit::Grams, 'category' => IngredientCategory::GRAINS_CEREALS],
         ]);
 
         $this->createRecipe($user, 'Lunchpakete aufwerten', [
-            ['title' => 'Gurke', 'quantity' => 0.175, 'unit' => Unit::Pieces],
-            ['title' => 'Apfel', 'quantity' => 50, 'unit' => Unit::Grams],
-            ['title' => 'Karotte', 'quantity' => 25, 'unit' => Unit::Grams],
+            ['title' => 'Gurke', 'quantity' => 0.175, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Apfel', 'quantity' => 50, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Karotte', 'quantity' => 25, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
         ]);
 
         $this->createRecipe($user, 'Gekochtes Ei', [
-            ['title' => 'Ei', 'quantity' => 1, 'unit' => Unit::Pieces],
+            ['title' => 'Ei', 'quantity' => 1, 'unit' => Unit::Pieces, 'category' => IngredientCategory::DAIRY_EGGS],
         ]);
 
         $this->createRecipe($user, 'Wassermelone', [
-            ['title' => 'Wassermelone', 'quantity' => 0.1, 'unit' => Unit::Pieces], // Recipe ID 18
+            ['title' => 'Wassermelone', 'quantity' => 0.1, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES], // Recipe ID 18
         ]);
 
         $this->createRecipe($user, 'Leitungskekse', [
-            ['title' => '1 Kasten Leitungskekse', 'quantity' => 0.01, 'unit' => Unit::Pieces],
+            ['title' => '1 Kasten Leitungskekse', 'quantity' => 0.01, 'unit' => Unit::Pieces, 'category' => IngredientCategory::OTHER],
         ]);
 
         $this->createRecipe($user, 'Kumpir-Kartoffeln', [
-            ['title' => 'große Kartoffeln', 'quantity' => 300, 'unit' => Unit::Grams],
-            ['title' => 'Butter', 'quantity' => 10, 'unit' => Unit::Grams],
-            ['title' => 'Geriebener Käse', 'quantity' => 25, 'unit' => Unit::Grams],
-            ['title' => 'Mais, Dose', 'quantity' => 25, 'unit' => Unit::Grams],
-            ['title' => 'Erbsen, Dose', 'quantity' => 20, 'unit' => Unit::Grams],
-            ['title' => 'Kidneybohnen, Dose', 'quantity' => 20, 'unit' => Unit::Grams],
-            ['title' => 'Tomaten, getrocknet', 'quantity' => 10, 'unit' => Unit::Grams],
-            ['title' => 'Zwiebeln', 'quantity' => 20, 'unit' => Unit::Grams],
-            ['title' => 'Frühlingszwiebeln', 'quantity' => 20, 'unit' => Unit::Grams],
-            ['title' => 'Quark', 'quantity' => 70, 'unit' => Unit::Grams],
-            ['title' => 'Rote Beete', 'quantity' => 10, 'unit' => Unit::Grams],
-            ['title' => 'Oliven', 'quantity' => 5, 'unit' => Unit::Grams],
+            ['title' => 'große Kartoffeln', 'quantity' => 300, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Butter', 'quantity' => 10, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Geriebener Käse', 'quantity' => 25, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Mais, Dose', 'quantity' => 25, 'unit' => Unit::Grams, 'category' => IngredientCategory::CANNED_GOODS],
+            ['title' => 'Erbsen, Dose', 'quantity' => 20, 'unit' => Unit::Grams, 'category' => IngredientCategory::CANNED_GOODS],
+            ['title' => 'Kidneybohnen, Dose', 'quantity' => 20, 'unit' => Unit::Grams, 'category' => IngredientCategory::CANNED_GOODS],
+            ['title' => 'Tomaten, getrocknet', 'quantity' => 10, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Zwiebeln', 'quantity' => 20, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Frühlingszwiebeln', 'quantity' => 20, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Quark', 'quantity' => 70, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Rote Beete', 'quantity' => 10, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Oliven', 'quantity' => 5, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
         ]);
 
         $this->createRecipe($user, 'Bratwürstchen', [
-            ['title' => 'Bratwurst', 'quantity' => 1.5, 'unit' => Unit::Pieces],
+            ['title' => 'Bratwurst', 'quantity' => 1.5, 'unit' => Unit::Pieces, 'category' => IngredientCategory::MEAT_SEAFOOD],
         ]);
 
         $this->createRecipe($user, 'Couscous-Salat, lecker würzig', [
-            ['title' => 'Couscous', 'quantity' => 62.5, 'unit' => Unit::Grams],
-            ['title' => 'Gemüsebrühe oder Gemüsefond', 'quantity' => 62.5, 'unit' => Unit::Milliliters],
-            ['title' => 'Tomatenmark', 'quantity' => 3.75, 'unit' => Unit::Milliliters], // Original unit was not mapped, assuming ml based on context
-            ['title' => 'Paprikaschoten, rote', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Paprikaschoten, gelbe', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Dosen Mais', 'quantity' => 0.25, 'unit' => Unit::Pieces], // Assuming pcs for 'Dosen Mais'
-            ['title' => 'Reisessig', 'quantity' => 7.5, 'unit' => Unit::Milliliters],
-            ['title' => 'Sojasauce', 'quantity' => 3.75, 'unit' => Unit::Milliliters],
-            ['title' => 'Frühlingszwiebeln', 'quantity' => 0.25, 'unit' => Unit::Grams], // Note: ID 71 used for Frühlingszwiebeln, keeping gr unit as per SQL
-            ['title' => 'Sonnenblumenöl', 'quantity' => 5, 'unit' => Unit::Milliliters],
+            ['title' => 'Couscous', 'quantity' => 62.5, 'unit' => Unit::Grams, 'category' => IngredientCategory::GRAINS_CEREALS],
+            ['title' => 'Gemüsebrühe oder Gemüsefond', 'quantity' => 62.5, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::CONDIMENTS],
+            ['title' => 'Tomatenmark', 'quantity' => 3.75, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::CONDIMENTS], // Original unit was not mapped, assuming ml based on context
+            ['title' => 'Paprikaschoten, rote', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Paprikaschoten, gelbe', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Dosen Mais', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::CANNED_GOODS], // Assuming pcs for 'Dosen Mais'
+            ['title' => 'Reisessig', 'quantity' => 7.5, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::CONDIMENTS],
+            ['title' => 'Sojasauce', 'quantity' => 3.75, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::CONDIMENTS],
+            ['title' => 'Frühlingszwiebeln', 'quantity' => 0.25, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES], // Note: ID 71 used for Frühlingszwiebeln, keeping gr unit as per SQL
+            ['title' => 'Sonnenblumenöl', 'quantity' => 5, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::OTHER],
         ]);
 
         $this->createRecipe($user, 'Apfelkuchen aus dem Dutch Oven', [
-            ['title' => 'Zucker', 'quantity' => 37.5, 'unit' => Unit::Grams],
-            ['title' => 'Margarine', 'quantity' => 37.5, 'unit' => Unit::Grams],
-            ['title' => 'Eier', 'quantity' => 0.5, 'unit' => Unit::Pieces],
-            ['title' => 'Pck. Vanillezucker', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Mehl', 'quantity' => 85, 'unit' => Unit::Grams],
-            ['title' => 'Pck. Backpulver', 'quantity' => 0.1875, 'unit' => Unit::Pieces],
-            ['title' => 'Apfel', 'quantity' => 0.75, 'unit' => Unit::Pieces], // ID 19 Apfel
+            ['title' => 'Zucker', 'quantity' => 37.5, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Margarine', 'quantity' => 37.5, 'unit' => Unit::Grams, 'category' => IngredientCategory::SPREAD],
+            ['title' => 'Eier', 'quantity' => 0.5, 'unit' => Unit::Pieces, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Pck. Vanillezucker', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Mehl', 'quantity' => 85, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Pck. Backpulver', 'quantity' => 0.1875, 'unit' => Unit::Pieces, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Apfel', 'quantity' => 0.75, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 19 Apfel
         ]);
 
         $this->createRecipe($user, 'Käsespätzle', [
-            ['title' => 'Bergkäse , fein geraffelt', 'quantity' => 50, 'unit' => Unit::Grams], // ID 51 Bergkäse
-            ['title' => 'Zwiebeln', 'quantity' => 75, 'unit' => Unit::Grams], // ID 25 Zwiebeln
-            ['title' => 'Spätzle, trocken', 'quantity' => 120, 'unit' => Unit::Grams],
+            ['title' => 'Bergkäse , fein geraffelt', 'quantity' => 50, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS], // ID 51 Bergkäse
+            ['title' => 'Zwiebeln', 'quantity' => 75, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 25 Zwiebeln
+            ['title' => 'Spätzle, trocken', 'quantity' => 120, 'unit' => Unit::Grams, 'category' => IngredientCategory::GRAINS_CEREALS],
         ]);
 
         $this->createRecipe($user, 'Salat mit Essig-Öl Dressing', [
-            ['title' => 'Olivenöl', 'quantity' => 10, 'unit' => Unit::Milliliters], // ID 90 Olivenöl
-            ['title' => 'Zucker', 'quantity' => 5, 'unit' => Unit::Grams],
-            ['title' => 'Weißweinessig', 'quantity' => 15, 'unit' => Unit::Milliliters],
-            ['title' => 'Eisbergsalat', 'quantity' => 80, 'unit' => Unit::Grams],
+            ['title' => 'Olivenöl', 'quantity' => 10, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::CONDIMENTS], // ID 90 Olivenöl
+            ['title' => 'Zucker', 'quantity' => 5, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Weißweinessig', 'quantity' => 15, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::CONDIMENTS],
+            ['title' => 'Eisbergsalat', 'quantity' => 80, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
         ]);
 
         $this->createRecipe($user, 'Gemüsepfanne', [
-            ['title' => 'Tomate, frisch', 'quantity' => 40, 'unit' => Unit::Grams],
-            ['title' => 'Mais, Dose', 'quantity' => 40, 'unit' => Unit::Grams],
-            ['title' => 'Zucchini', 'quantity' => 60, 'unit' => Unit::Grams],
-            ['title' => 'Zwiebel', 'quantity' => 30, 'unit' => Unit::Grams], // ID 1 Zwiebel
-            ['title' => 'Karotte', 'quantity' => 40, 'unit' => Unit::Grams], // ID 63 Karotte
-            ['title' => 'Paprika', 'quantity' => 50, 'unit' => Unit::Grams], // ID 99 Paprika
+            ['title' => 'Tomate, frisch', 'quantity' => 40, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Mais, Dose', 'quantity' => 40, 'unit' => Unit::Grams, 'category' => IngredientCategory::CANNED_GOODS],
+            ['title' => 'Zucchini', 'quantity' => 60, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Zwiebel', 'quantity' => 30, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 1 Zwiebel
+            ['title' => 'Karotte', 'quantity' => 40, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 63 Karotte
+            ['title' => 'Paprika', 'quantity' => 50, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 99 Paprika
         ]);
 
         $this->createRecipe($user, 'Wrap mit Tzatziki', [
-            ['title' => 'Wraps', 'quantity' => 2.25, 'unit' => Unit::Pieces],
-            ['title' => 'Tomaten', 'quantity' => 110, 'unit' => Unit::Grams], // ID 97 Tomaten
-            ['title' => 'Paprika', 'quantity' => 40, 'unit' => Unit::Grams], // ID 99 Paprika
-            ['title' => 'Eisbergsalat', 'quantity' => 30, 'unit' => Unit::Grams],
-            ['title' => 'Feta oder Hirtenkäse', 'quantity' => 55, 'unit' => Unit::Grams],
-            ['title' => 'Naturjoghurt, 3,5% Fett', 'quantity' => 80, 'unit' => Unit::Grams],
-            ['title' => 'Weißweinessig', 'quantity' => 5, 'unit' => Unit::Milliliters],
-            ['title' => 'Sonnenblumenöl', 'quantity' => 10, 'unit' => Unit::Milliliters],
-            ['title' => 'Zwiebel', 'quantity' => 35, 'unit' => Unit::Grams], // ID 1 Zwiebel
-            ['title' => 'Gurke', 'quantity' => 0.2, 'unit' => Unit::Pieces], // ID 21 Gurke
+            ['title' => 'Wraps', 'quantity' => 2.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::BAKERY],
+            ['title' => 'Tomaten', 'quantity' => 110, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 97 Tomaten
+            ['title' => 'Paprika', 'quantity' => 40, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 99 Paprika
+            ['title' => 'Eisbergsalat', 'quantity' => 30, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Feta oder Hirtenkäse', 'quantity' => 55, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Naturjoghurt, 3,5% Fett', 'quantity' => 80, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Weißweinessig', 'quantity' => 5, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::CONDIMENTS],
+            ['title' => 'Sonnenblumenöl', 'quantity' => 10, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::OTHER],
+            ['title' => 'Zwiebel', 'quantity' => 35, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 1 Zwiebel
+            ['title' => 'Gurke', 'quantity' => 0.2, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 21 Gurke
         ]);
 
         $this->createRecipe($user, 'Obstsalat', [
-            ['title' => 'Bananen', 'quantity' => 0.125, 'unit' => Unit::Pieces],
-            ['title' => 'Kiwis', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Apfel', 'quantity' => 0.35, 'unit' => Unit::Pieces], // ID 19 Apfel
-            ['title' => 'Nektarinen', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Wassermelone', 'quantity' => 0.1, 'unit' => Unit::Pieces], // ID 107 Wassermelone
-            ['title' => 'Zitronen, den Saft davon', 'quantity' => 0.125, 'unit' => Unit::Pieces],
-            ['title' => 'Orangen, filetiert', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Beeren TK, gemischte, nach Wahl', 'quantity' => 25, 'unit' => Unit::Grams],
+            ['title' => 'Bananen', 'quantity' => 0.125, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Kiwis', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Apfel', 'quantity' => 0.35, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 19 Apfel
+            ['title' => 'Nektarinen', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Wassermelone', 'quantity' => 0.1, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 107 Wassermelone
+            ['title' => 'Zitronen, den Saft davon', 'quantity' => 0.125, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Orangen, filetiert', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Beeren TK, gemischte, nach Wahl', 'quantity' => 25, 'unit' => Unit::Grams, 'category' => IngredientCategory::FROZEN],
         ]);
 
         $this->createRecipe($user, 'Stockbrot', [
-            ['title' => 'Wasser, lauwarm', 'quantity' => 57, 'unit' => Unit::Milliliters],
-            ['title' => 'Salz, Prise', 'quantity' => 1, 'unit' => Unit::Pieces],
-            ['title' => 'Mehl', 'quantity' => 100, 'unit' => Unit::Grams], // ID 30 Mehl
-            ['title' => 'Trockenhefe', 'quantity' => 2, 'unit' => Unit::Grams],
-            ['title' => 'Zucker', 'quantity' => 3, 'unit' => Unit::Grams],
-            ['title' => 'Sonnenblumenöl', 'quantity' => 10, 'unit' => Unit::Milliliters],
+            ['title' => 'Wasser, lauwarm', 'quantity' => 57, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::BEVERAGES],
+            ['title' => 'Salz, Prise', 'quantity' => 1, 'unit' => Unit::Pieces, 'category' => IngredientCategory::SPICES],
+            ['title' => 'Mehl', 'quantity' => 100, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKING], // ID 30 Mehl
+            ['title' => 'Trockenhefe', 'quantity' => 2, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Zucker', 'quantity' => 3, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Sonnenblumenöl', 'quantity' => 10, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::OTHER],
         ]);
 
         $this->createRecipe($user, 'Früchtequark', [
-            ['title' => 'Quark', 'quantity' => 100, 'unit' => Unit::Grams], // ID 120 Quark
-            ['title' => 'Pck. Vanillezucker', 'quantity' => 0.5, 'unit' => Unit::Pieces],
-            ['title' => 'Honig', 'quantity' => 7.5, 'unit' => Unit::Milliliters],
-            ['title' => 'Apfel', 'quantity' => 0.25, 'unit' => Unit::Pieces], // ID 19 Apfel
-            ['title' => 'Birnen', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Bananen', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Zitronen, der Saft davon', 'quantity' => 0.25, 'unit' => Unit::Pieces],
-            ['title' => 'Orangen', 'quantity' => 0.5, 'unit' => Unit::Pieces], // ID 127 Orangen
+            ['title' => 'Quark', 'quantity' => 100, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS], // ID 120 Quark
+            ['title' => 'Pck. Vanillezucker', 'quantity' => 0.5, 'unit' => Unit::Pieces, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Honig', 'quantity' => 7.5, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::OTHER],
+            ['title' => 'Apfel', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 19 Apfel
+            ['title' => 'Birnen', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Bananen', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Zitronen, der Saft davon', 'quantity' => 0.25, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES],
+            ['title' => 'Orangen', 'quantity' => 0.5, 'unit' => Unit::Pieces, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 127 Orangen
         ]);
 
         $this->createRecipe($user, 'Frühstück mit Brot', [
-            ['title' => 'Brot', 'quantity' => 125, 'unit' => Unit::Grams],
-            ['title' => 'Marmelade', 'quantity' => 15, 'unit' => Unit::Grams],
-            ['title' => 'Käseaufschnitt', 'quantity' => 25, 'unit' => Unit::Grams],
-            ['title' => 'Wurstaufschnitt', 'quantity' => 20, 'unit' => Unit::Grams],
-            ['title' => 'veganer Brotaufstrich', 'quantity' => 30, 'unit' => Unit::Grams],
-            ['title' => 'Magarine', 'quantity' => 15, 'unit' => Unit::Grams], // ID 130 Magarine
+            ['title' => 'Brot', 'quantity' => 125, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKERY],
+            ['title' => 'Marmelade', 'quantity' => 15, 'unit' => Unit::Grams, 'category' => IngredientCategory::SPREAD],
+            ['title' => 'Käseaufschnitt', 'quantity' => 25, 'unit' => Unit::Grams, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Wurstaufschnitt', 'quantity' => 20, 'unit' => Unit::Grams, 'category' => IngredientCategory::MEAT_SEAFOOD],
+            ['title' => 'veganer Brotaufstrich', 'quantity' => 30, 'unit' => Unit::Grams, 'category' => IngredientCategory::SPREAD],
+            ['title' => 'Magarine', 'quantity' => 15, 'unit' => Unit::Grams, 'category' => IngredientCategory::SPREAD], // ID 130 Magarine
         ]);
 
         $this->createRecipe($user, 'Porridge', [
-            ['title' => 'Milch', 'quantity' => 120, 'unit' => Unit::Milliliters],
-            ['title' => 'Haferflocken (Zart)', 'quantity' => 50, 'unit' => Unit::Grams],
-            ['title' => 'Zucker', 'quantity' => 10, 'unit' => Unit::Grams],
-            ['title' => 'Zimt', 'quantity' => 0.5, 'unit' => Unit::Grams],
-            ['title' => 'Apfel', 'quantity' => 37.5, 'unit' => Unit::Grams], // ID 62 Apfel (assuming this one)
-            ['title' => 'Rosinen', 'quantity' => 5, 'unit' => Unit::Grams],
+            ['title' => 'Milch', 'quantity' => 120, 'unit' => Unit::Milliliters, 'category' => IngredientCategory::DAIRY_EGGS],
+            ['title' => 'Haferflocken (Zart)', 'quantity' => 50, 'unit' => Unit::Grams, 'category' => IngredientCategory::GRAINS_CEREALS],
+            ['title' => 'Zucker', 'quantity' => 10, 'unit' => Unit::Grams, 'category' => IngredientCategory::BAKING],
+            ['title' => 'Zimt', 'quantity' => 0.5, 'unit' => Unit::Grams, 'category' => IngredientCategory::SPICES],
+            ['title' => 'Apfel', 'quantity' => 37.5, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES], // ID 62 Apfel (assuming this one)
+            ['title' => 'Rosinen', 'quantity' => 5, 'unit' => Unit::Grams, 'category' => IngredientCategory::FRUIT_VEGETABLES],
         ]);
 
         $this->createRecipe($user, 'Rührei', [
-            ['title' => 'Ei', 'quantity' => 1.5, 'unit' => Unit::Pieces], // ID 133 Ei
+            ['title' => 'Ei', 'quantity' => 1.5, 'unit' => Unit::Pieces, 'category' => IngredientCategory::DAIRY_EGGS], // ID 133 Ei
         ]);
 
         // Add other recipes here following the same pattern
