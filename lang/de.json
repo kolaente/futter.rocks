@@ -38,6 +38,7 @@
     "Shopping list for :event": "Einkaufsliste für :event",
     "Ingredients": "Zutaten",
     "Unit": "Einheit",
+    "Fresh": "Frisch",
     "Create Recipe": "Rezept erstellen",
     "Import": "Importieren",
     "URL": "URL",
@@ -344,5 +345,7 @@
     "Invalid quantity \":quantity\". Please use a valid number (e.g., 1, 2.5, ¼, ½, ¾, or ⅓)": "Ungültige Menge \":quantity\". Bitte verwende eine gültige Zahl (z.B. 1, 2.5, ¼, ½, ¾ oder ⅓)",
     "Line :line": "Zeile :line",
     "Some lines could not be parsed.": "Einige Zeilen konnten nicht verarbeitet werden.",
+    "Buy shelf-able good before the event": "Haltbare Zutaten vor der Veranstaltung einkaufen",
+    "When enabled, all non-fresh ingredients will be put on the shopping tour before the event. This allows faster shopping tours during the event (because only fresh items need to be bought) at the expense of using more storage.": "Wenn aktiviert, werden alle nicht-frischen Zutaten auf die Einkaufstour vor der Veranstaltung gelegt. Dies ermöglicht schnellere Einkaufstouren während der Veranstaltung (da nur frische Artikel gekauft werden müssen) auf Kosten von mehr Lagerraum.",
     "___": "___"
 }

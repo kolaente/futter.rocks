@@ -43,6 +43,7 @@ class CreateEdit extends Component implements HasForms
             'description' => $this->event->description,
             'date_from' => $this->event->date_from,
             'date_to' => $this->event->date_to,
+            'use_fresh_ingredient_attribute' => $this->event->use_fresh_ingredient_attribute,
         ]);
     }
 
@@ -61,6 +62,10 @@ class CreateEdit extends Component implements HasForms
                 Forms\Components\DatePicker::make('date_to')
                     ->label(__('End Date'))
                     ->required(),
+                Forms\Components\Toggle::make('use_fresh_ingredient_attribute')
+                    ->label(__('Buy shelf-able good before the event'))
+                    ->helperText(__('When enabled, all non-fresh ingredients will be put on the shopping tour before the event. This allows faster shopping tours during the event (because only fresh items need to be bought) at the expense of using more storage.'))
+                    ->default(true),
             ])
             ->statePath('data');
     }

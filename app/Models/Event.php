@@ -25,6 +25,7 @@ class Event extends Model
         'description',
         'date_from',
         'date_to',
+        'use_fresh_ingredient_attribute',
         'created_by_id',
         'team_id',
     ];
@@ -50,6 +51,7 @@ class Event extends Model
         return [
             'date_to' => 'date',
             'date_from' => 'date',
+            'use_fresh_ingredient_attribute' => 'boolean',
         ];
     }
 
@@ -186,9 +188,13 @@ class Event extends Model
                 foreach ($recipe->ingredients as $ingredient) {
 
                     $key = $ingredient->id.'_'.$ingredient->pivot->unit->value;
+                    $targetTour = $currentShoppingTour->id;
+                    if ($this->use_fresh_ingredient_attribute) {
+                        $targetTour = $ingredient->is_fresh ? $currentShoppingTour->id : 0;
+                    }
 
-                    if (! isset($list[$currentShoppingTour->id][$key])) {
-                        $list[$currentShoppingTour->id][$key] = [
+                    if (! isset($list[$targetTour][$key])) {
+                        $list[$targetTour][$key] = [
                             'ingredient' => $ingredient,
                             'quantity' => 0,
                             'unit' => $ingredient->pivot->unit,
@@ -196,7 +202,7 @@ class Event extends Model
                     }
 
                     foreach ($this->participantGroups()->withoutGlobalScope(CurrentTeam::class)->get() as $group) {
-                        $list[$currentShoppingTour->id][$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
+                        $list[$targetTour][$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
                     }
                 }
             }
