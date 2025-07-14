@@ -49,18 +49,13 @@ it('calculates ingredients for an event with proper units', function () {
         'unit' => Unit::Pieces,
     ]);
 
-    $recipe->load('ingredients');
-    foreach ($recipe->ingredients as $ingredient) {
-        $ingredient->unit = $ingredient->pivot->unit;
-    }
-
     $calculated = $recipe->getCalculatedIngredientsForEvent($event);
 
     $gramsItem = collect($calculated)->firstWhere('ingredient.id', $ingGrams->id);
     expect($gramsItem['quantity'])->toBe(2.0)
-        ->and($gramsItem['ingredient']->unit)->toBe(Unit::Grams);
+        ->and($gramsItem['unit'])->toBe(Unit::Kilos);
 
     $piecesItem = collect($calculated)->firstWhere('ingredient.id', $ingPieces->id);
     expect($piecesItem['quantity'])->toBe(20.0)
-        ->and($piecesItem['ingredient']->unit)->toBe(Unit::Pieces);
+        ->and($piecesItem['unit'])->toBe(Unit::Pieces);
 });
