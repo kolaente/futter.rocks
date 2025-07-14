@@ -58,6 +58,8 @@ class DatabaseSeeder extends Seeder
             $ingredient = Ingredient::withoutGlobalScope(CurrentTeam::class)->firstOrCreate([
                 'title' => $ingredientData['title'],
             ]);
+            $ingredient->category = \App\Models\Enums\IngredientCategory::FRUIT_VEGETABLES;
+            $ingredient->save();
 
             // Use updateOrInsert to avoid duplicate pivot entries if seeder runs multiple times
             $recipe->ingredients()->updateExistingPivot($ingredient->id, [

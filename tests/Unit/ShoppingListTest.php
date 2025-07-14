@@ -21,11 +21,11 @@ it('generates shopping lists for seeded events', function () {
 
     $list = $event->fresh()->getShoppingList();
 
-    $first = collect($list[0][IngredientCategory::OTHER->value])
+    $first = collect($list[0][IngredientCategory::FRUIT_VEGETABLES->value])
         ->firstWhere('ingredient.title', 'Brot');
-    $second = collect($list[$tourIds[0]][IngredientCategory::OTHER->value])
+    $second = collect($list[$tourIds[0]][IngredientCategory::FRUIT_VEGETABLES->value])
         ->firstWhere('ingredient.title', 'Brot');
-    $third = collect($list[$tourIds[1]][IngredientCategory::OTHER->value])
+    $third = collect($list[$tourIds[1]][IngredientCategory::FRUIT_VEGETABLES->value])
         ->firstWhere('ingredient.title', 'Brot');
 
     expect($first['quantity'])->toBe(18.2)

@@ -85,7 +85,7 @@ describe('Create', function () {
     it('can create a recipe with existing ingredients', function () {
         $testTitle = 'Käsebrot';
 
-        $ingredients = Ingredient::factory(2)->create();
+        $ingredients = Ingredient::factory(2)->createQuietly();
 
         livewire(CreateEdit::class)
             ->assertStatus(200)
@@ -128,7 +128,7 @@ describe('Create', function () {
     it('can create a recipe with partially existing ingredients', function () {
         $testTitle = 'Käsebrot';
 
-        $ingredient = Ingredient::factory()->create();
+        $ingredient = Ingredient::factory()->createQuietly();
 
         livewire(CreateEdit::class)
             ->assertStatus(200)
@@ -503,7 +503,7 @@ describe('Create', function () {
 
         it('imports using existing ingredients', function () {
             $team = Team::factory()->create();
-            $ingredient = Ingredient::create([
+            $ingredient = Ingredient::factory()->createQuietly([
                 'title' => 'Hokkaidokürbis',
             ]);
 
