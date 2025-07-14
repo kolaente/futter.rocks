@@ -340,5 +340,9 @@
     "Delete shopping tour": "Einkaufstour löschen",
     "Actions": "Aktionen",
     "Delete Event": "Veranstaltung löschen",
+    "Unable to parse ingredient. Please use format: \"quantity unit ingredient\" (e.g., \"200ml water\" or \"1 kg sugar\")": "Zutat konnte nicht verarbeitet werden. Bitte verwende das Format: \"Menge Einheit Zutat\" (z.B. \"200ml Wasser\" oder \"1 kg Zucker\")",
+    "Invalid quantity \":quantity\". Please use a valid number (e.g., 1, 2.5, ¼, ½, ¾, or ⅓)": "Ungültige Menge \":quantity\". Bitte verwende eine gültige Zahl (z.B. 1, 2.5, ¼, ½, ¾ oder ⅓)",
+    "Line :line": "Zeile :line",
+    "Some lines could not be parsed.": "Einige Zeilen konnten nicht verarbeitet werden.",
     "___": "___"
 }

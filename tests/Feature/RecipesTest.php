@@ -280,6 +280,158 @@ describe('Create', function () {
                 ],
             ]);
         });
+
+        it('reports errors for non-parsable lines', function () {
+            $team = Team::factory()->create();
+
+            $recipe = Recipe::create([
+                'title' => 'Test',
+                'team_id' => $team->id,
+            ]);
+
+            $errors = $recipe->addIngredientsFromText([
+                '20g Kidneybohnen, Dose',
+                'something invalid',
+                '25g Mais, Dose',
+                '25g Geriebener Käse',
+                '',
+                'Butter',
+                '0ml Wasser',
+            ]);
+
+            // Should have successfully imported 3 valid ingredients
+            assertIngredients($recipe, [
+                [
+                    'title' => 'Kidneybohnen, Dose',
+                    'unit' => Unit::Grams,
+                    'quantity' => 20,
+                ],
+                [
+                    'title' => 'Mais, Dose',
+                    'unit' => Unit::Grams,
+                    'quantity' => 25,
+                ],
+                [
+                    'title' => 'Geriebener Käse',
+                    'unit' => Unit::Grams,
+                    'quantity' => 25,
+                ],
+            ]);
+
+            // Should have 3 errors (empty line should be skipped, not cause error)
+            expect($errors)->toHaveCount(3)
+                ->and($errors[0])->toBe([
+                    'line' => 2,
+                    'content' => 'something invalid',
+                    'error' => __('Unable to parse ingredient. Please use format: "quantity unit ingredient" (e.g., "200ml water" or "1 kg sugar")'),
+                ])
+                ->and($errors[1])->toBe([
+                    'line' => 6,
+                    'content' => 'Butter',
+                    'error' => __('Unable to parse ingredient. Please use format: "quantity unit ingredient" (e.g., "200ml water" or "1 kg sugar")'),
+                ])
+                ->and($errors[2])->toBe([
+                    'line' => 7,
+                    'content' => '0ml Wasser',
+                    'error' => __('Invalid quantity ":quantity". Please use a valid number (e.g., 1, 2.5, ¼, ½, ¾, or ⅓)', ['quantity' => 0]),
+                ]);
+
+            // Check first error (invalid line)
+
+            // Check second error (another invalid)
+
+            // Check third error (zero quantity)
+        });
+
+        it('validates parsing without saving when recipe is not persisted', function () {
+            $team = Team::factory()->create();
+
+            $recipe = new Recipe([
+                'title' => 'Test',
+                'team_id' => $team->id,
+            ]);
+
+            $errors = $recipe->addIngredientsFromText([
+                '20g Kidneybohnen, Dose',
+                'something invalid',
+                '25g Mais, Dose',
+            ]);
+
+            // Should have 1 error
+            expect($errors)->toHaveCount(1)
+                ->and($errors[0])->toBe([
+                    'line' => 2,
+                    'content' => 'something invalid',
+                    'error' => __('Unable to parse ingredient. Please use format: "quantity unit ingredient" (e.g., "200ml water" or "1 kg sugar")'),
+                ]);
+
+            // No ingredients should be created since recipe is not persisted
+            assertDatabaseCount('ingredients', 0);
+            assertDatabaseCount('ingredient_recipe', 0);
+        });
+
+        it('parses ingredients statically with errors and ingredients', function () {
+            [$ingredients, $errors] = Recipe::parseIngredientsFromText([
+                '20g Kidneybohnen, Dose',
+                'something invalid',
+                '25g Mais, Dose',
+                '',
+                'Butter',
+                '0ml Wasser',
+            ]);
+
+            // Should have 2 valid ingredients
+            expect($ingredients)->toHaveCount(2)
+                ->and($ingredients[0])->toBe([
+                    'title' => 'Kidneybohnen, Dose',
+                    'quantity' => 20.0,
+                    'unit' => Unit::Grams,
+                ])
+                ->and($ingredients[1])->toBe([
+                    'title' => 'Mais, Dose',
+                    'quantity' => 25.0,
+                    'unit' => Unit::Grams,
+                ])
+                ->and($errors)->toHaveCount(3)
+                ->and($errors[0])->toBe([
+                    'line' => 2,
+                    'content' => 'something invalid',
+                    'error' => __('Unable to parse ingredient. Please use format: "quantity unit ingredient" (e.g., "200ml water" or "1 kg sugar")'),
+                ])
+                ->and($errors[1])->toBe([
+                    'line' => 5,
+                    'content' => 'Butter',
+                    'error' => __('Unable to parse ingredient. Please use format: "quantity unit ingredient" (e.g., "200ml water" or "1 kg sugar")'),
+                ])
+                ->and($errors[2])->toBe([
+                    'line' => 6,
+                    'content' => '0ml Wasser',
+                    'error' => __('Invalid quantity ":quantity". Please use a valid number (e.g., 1, 2.5, ¼, ½, ¾, or ⅓)', ['quantity' => 0]),
+                ]);
+        });
+
+        it('shows validation errors in create from text form', function () {
+            livewire(\App\Livewire\Recipes\CreateFromText::class)
+                ->callAction('createFromText', data: [
+                    'title' => 'Test Recipe',
+                    'recipe_text' => "20g Kidneybohnen, Dose\nsomething invalid\n25g Mais, Dose",
+                ])
+                ->assertHasActionErrors(['recipe_text']);
+        });
+
+        it('creates recipe successfully with valid text', function () {
+            livewire(\App\Livewire\Recipes\CreateFromText::class)
+                ->callAction('createFromText', data: [
+                    'title' => 'Test Recipe',
+                    'recipe_text' => "20g Kidneybohnen, Dose\n25g Mais, Dose",
+                ])
+                ->assertHasNoActionErrors();
+
+            assertDatabaseHas('recipes', [
+                'title' => 'Test Recipe',
+                'team_id' => Auth::user()->currentTeam->id,
+            ]);
+        });
     });
 
     describe('Import', function () {

@@ -17,6 +17,8 @@ class CreateFromText extends Component implements HasActions, HasForms
     use \Filament\Actions\Concerns\InteractsWithActions;
     use \Filament\Forms\Concerns\InteractsWithForms;
 
+    public array $recipeTextErrors = [];
+
     public function createFromTextAction(): Action
     {
         return Action::make('createFromText')
@@ -29,8 +31,28 @@ class CreateFromText extends Component implements HasActions, HasForms
                 Textarea::make('recipe_text')
                     ->label(__('Ingredients List'))
                     ->autosize()
-                    ->required(),
+                    ->required()
+                    ->rules([
+                        function () {
+                            return function (string $attribute, $value, \Closure $fail) {
+                                // Clear previous errors
+                                $this->recipeTextErrors = [];
+
+                                if (empty($value)) {
+                                    return;
+                                }
+
+                                [$ingredients, $errors] = Recipe::parseIngredientsFromText(explode("\n", $value));
+
+                                if (! empty($errors)) {
+                                    $fail(__('Some lines could not be parsed.'));
+                                    $this->recipeTextErrors = $errors;
+                                }
+                            };
+                        },
+                    ]),
             ])
+            ->modalContentFooter(view('livewire.recipes.create-from-text-modal-errors', ['errors' => $this->recipeTextErrors]))
             ->action(function (array $data) {
                 $recipe = Recipe::create([
                     'title' => $data['title'],

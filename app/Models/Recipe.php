@@ -65,9 +65,19 @@ class Recipe extends Model
         return $recipe;
     }
 
-    public function addIngredientsFromText(array $lines, int $servings = 1)
+    public static function parseIngredientsFromText(array $lines, int $servings = 1): array
     {
-        foreach ($lines as $ing) {
+        $errors = [];
+        $ingredients = [];
+
+        foreach ($lines as $lineIndex => $ing) {
+            $ing = trim($ing);
+
+            // Skip empty lines
+            if (empty($ing)) {
+                continue;
+            }
+
             // Use regex to parse quantity+unit+title pattern
             if (preg_match('/^(\d+(?:\.\d+)?)\s*([a-zA-Z]+)\s+(.+)$/', $ing, $matches)) {
                 $quantityStr = $matches[1];
@@ -84,6 +94,12 @@ class Recipe extends Model
                 }
 
                 if ($title === null) {
+                    $errors[] = [
+                        'line' => $lineIndex + 1,
+                        'content' => $ing,
+                        'error' => __('Unable to parse ingredient. Please use format: "quantity unit ingredient" (e.g., "200ml water" or "1 kg sugar")'),
+                    ];
+
                     continue;
                 }
 
@@ -100,6 +116,12 @@ class Recipe extends Model
             };
 
             if ($quantity === 0.0) {
+                $errors[] = [
+                    'line' => $lineIndex + 1,
+                    'content' => $ing,
+                    'error' => __('Invalid quantity ":quantity". Please use a valid number (e.g., 1, 2.5, ¼, ½, ¾, or ⅓)', ['quantity' => $quantityStr]),
+                ];
+
                 continue;
             }
 
@@ -125,15 +147,36 @@ class Recipe extends Model
             }
 
             $title = str_replace(['/', '(', ')'], '', $title);
-            $ingredient = Ingredient::firstOrCreate([
-                'title' => trim($title),
-            ]);
 
-            $this->ingredients()->attach($ingredient, [
+            $ingredients[] = [
+                'title' => trim($title),
                 'quantity' => $quantity / $servings,
                 'unit' => $unit,
-            ]);
+            ];
         }
+
+        return [$ingredients, $errors];
+    }
+
+    public function addIngredientsFromText(array $lines, int $servings = 1): array
+    {
+        [$ingredients, $errors] = self::parseIngredientsFromText($lines, $servings);
+
+        // Only save to database if recipe is persisted
+        if ($this->exists) {
+            foreach ($ingredients as $ingredientData) {
+                $ingredient = Ingredient::firstOrCreate([
+                    'title' => $ingredientData['title'],
+                ]);
+
+                $this->ingredients()->attach($ingredient, [
+                    'quantity' => $ingredientData['quantity'],
+                    'unit' => $ingredientData['unit'],
+                ]);
+            }
+        }
+
+        return $errors;
     }
 
     public function getCalculatedIngredientsForEvent(Event $event)
