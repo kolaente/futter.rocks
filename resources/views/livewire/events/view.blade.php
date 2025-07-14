@@ -1,15 +1,17 @@
 <x-main-content :title="$event->title . ' - ' . $event->duration_string">
     <x-slot:actions>
-        <x-button href="{{ route('events.edit', ['event' => $event]) }}">
+        <x-action-button href="{{ route('events.edit', ['event' => $event]) }}">
             {{ __('Edit') }}
-        </x-button>
-        <x-button href="{{ route('events.meal-plan', ['event' => $event]) }}">
+        </x-action-button>
+        <x-action-button href="{{ route('events.meal-plan', ['event' => $event]) }}">
             {{ __('Meal Plan') }}
-        </x-button>
-        <x-button href="{{ route('events.shopping-list', ['event' => $event]) }}">
+        </x-action-button>
+        <x-action-button href="{{ route('events.shopping-list', ['event' => $event]) }}">
             {{ __('Shopping list') }}
-        </x-button>
-        {{ $this->duplicateAction }}
+        </x-action-button>
+        <x-action-button wire:click="duplicateEvent">
+            {{ __('Duplicate') }}
+        </x-action-button>
         {{ $this->deleteAction }}
     </x-slot:actions>
 

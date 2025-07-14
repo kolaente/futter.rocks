@@ -3,7 +3,6 @@
 namespace App\Livewire\Events;
 
 use App\Models\Event;
-use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteAction;
@@ -31,15 +30,11 @@ class View extends Component implements HasActions, HasForms
             ->successRedirectUrl(route('events.list'));
     }
 
-    public function duplicateAction()
+    public function duplicateEvent(): void
     {
-        return Action::make('duplicate')
-            ->label(__('Duplicate'))
-            ->action(function () {
-                $newEvent = $this->event->duplicate(auth()->user());
+        $newEvent = $this->event->duplicate(auth()->user());
 
-                $this->redirect(route('events.edit', ['event' => $newEvent]), true);
-            });
+        $this->redirect(route('events.edit', ['event' => $newEvent]), true);
     }
 
     public function render()

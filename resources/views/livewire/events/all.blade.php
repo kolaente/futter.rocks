@@ -1,4 +1,4 @@
-<x-main-content :title="__('Events')">
+<x-main-content :title="__('Events')" :collapse-actions="false">
     <x-slot:actions>
         <x-button href="{{ route('events.create') }}">
             {{ __('Create') }}

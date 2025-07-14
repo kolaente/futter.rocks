@@ -1,4 +1,4 @@
-<x-main-content :title="__('Groups')">
+<x-main-content :title="__('Groups')" :collapse-actions="false">
     <x-slot:actions>
         <x-button href="{{ route('participant-groups.create') }}">
             {{ __('Create') }}

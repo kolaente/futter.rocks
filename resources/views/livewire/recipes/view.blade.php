@@ -2,9 +2,9 @@
 
 <x-main-content :title="$recipe->title">
     <x-slot:actions>
-        <x-button href="{{ route('recipes.edit', ['recipe' => $recipe]) }}">
+        <x-action-button href="{{ route('recipes.edit', ['recipe' => $recipe]) }}">
             {{ __('Edit') }}
-        </x-button>
+        </x-action-button>
         {{ $this->deleteAction }}
     </x-slot:actions>
 

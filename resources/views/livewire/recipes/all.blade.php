@@ -1,8 +1,8 @@
 <x-main-content :title="__('Recipes')">
     <x-slot:actions>
-        <x-button href="{{ route('recipes.create') }}">
+        <x-action-button href="{{ route('recipes.create') }}">
             {{ __('Create') }}
-        </x-button>
+        </x-action-button>
 
         <livewire:recipes.create-from-text/>
 
