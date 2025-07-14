@@ -36,7 +36,7 @@
         </tr>
     </table>
     @php
-        $paginated = $mealsByDate->forPage($i, 4);
         $i++;
+        $paginated = $mealsByDate->forPage($i, 4);
     @endphp
 @endwhile
