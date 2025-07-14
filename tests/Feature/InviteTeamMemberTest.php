@@ -14,12 +14,15 @@ test('team members can be invited to team', function () {
 
     Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
         ->set('addTeamMemberForm', [
-            'email' => 'test@example.com',
+            'email' => 'Test@Example.COM',
             'role' => 'admin',
         ])->call('addTeamMember');
 
     Mail::assertSent(TeamInvitation::class);
 
+    $invitation = $user->currentTeam->fresh()->teamInvitations->first();
+
+    expect($invitation->email)->toBe('test@example.com');
     expect($user->currentTeam->fresh()->teamInvitations)->toHaveCount(1);
 })->skip(function () {
     return ! Features::sendsTeamInvitations();
