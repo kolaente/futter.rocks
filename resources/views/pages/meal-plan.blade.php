@@ -7,7 +7,9 @@
     </p>
 
     @if($fullPlan ?? false)
-        @include('partials.meal-plan', ['mealsByDate' => $mealsByDate, 'event' => $event])
+        <div class="p-8">
+            @include('partials.meal-plan', ['mealsByDate' => $mealsByDate, 'event' => $event])
+        </div>
     @else
         @foreach($mealsByDate as $date => $meals)
             <section class="p-4 whitespace-nowrap text-gray-800 @if(!$loop->last) border-b border-gray-200 @endif">
