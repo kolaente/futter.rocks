@@ -139,7 +139,10 @@ class Recipe extends Model
     public function getCalculatedIngredientsForEvent(Event $event)
     {
         $list = [];
-        foreach ($this->ingredients as $ingredient) {
+        $ingredients = $this->ingredients()->withoutGlobalScope(CurrentTeam::class)->get();
+        $participantGroups = $event->participantGroups()->withoutGlobalScope(CurrentTeam::class)->get();
+
+        foreach ($ingredients as $ingredient) {
 
             $key = $ingredient->id.'_'.$ingredient->pivot->unit->value;
 
@@ -151,7 +154,7 @@ class Recipe extends Model
                 ];
             }
 
-            foreach ($event->participantGroups as $group) {
+            foreach ($participantGroups as $group) {
                 $list[$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
             }
         }
