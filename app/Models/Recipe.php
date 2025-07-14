@@ -163,6 +163,10 @@ class Recipe extends Model
             $list[$id] = RoundIngredients::round($item);
         }
 
+        uasort($list, function ($a, $b) {
+            return strcasecmp($a['ingredient']->title, $b['ingredient']->title);
+        });
+
         return $list;
     }
 }

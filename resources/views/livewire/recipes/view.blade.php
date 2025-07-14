@@ -19,7 +19,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($recipe->ingredients as $ingredient)
+            @foreach($recipe->ingredients->sortBy('title') as $ingredient)
                 <tr>
                     <td class="text-right py-1">{{ $fmt->format($ingredient->pivot->quantity) }}</td>
                     <td class="text-left py-1">{{ $ingredient->pivot->unit->getShortLabel() }}</td>
