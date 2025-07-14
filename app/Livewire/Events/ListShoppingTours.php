@@ -39,6 +39,7 @@ class ListShoppingTours extends Component implements HasForms, HasTable
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
+                    ->modalHeading(__('Create shopping tour'))
                     ->form([
                         Forms\Components\DatePicker::make('date')
                             ->label(__('Date'))
@@ -48,7 +49,8 @@ class ListShoppingTours extends Component implements HasForms, HasTable
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->modalHeading(__('Delete shopping tour')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
