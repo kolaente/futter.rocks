@@ -12,8 +12,8 @@ importers:
         specifier: ^5.2.8
         version: 5.2.8
       '@fontsource-variable/open-sans':
-        specifier: ^5.2.6
-        version: 5.2.6
+        specifier: ^5.2.7
+        version: 5.2.7
     devDependencies:
       '@tailwindcss/forms':
         specifier: ^0.5.10
@@ -226,8 +226,8 @@ packages:
   '@fontsource-variable/arima@5.2.8':
     resolution: {integrity: sha512-Qbvrn4kSfsUoWsZY0kfWHZx6P5y4nuA0+EQnFGFwOCHLS5Vf2zWjlXyJLQuykxlPkk4NhPBMXN7WzzMen+hi+A==}
 
-  '@fontsource-variable/open-sans@5.2.6':
-    resolution: {integrity: sha512-O596UvQZ7KkR8yDJWIP8UZZoqs0DHpYsrL0Szml0/EkrJ35HcMIM3bJ3sSAIAjWsBSqKgzV2HJEIuhvxBd1iog==}
+  '@fontsource-variable/open-sans@5.2.7':
+    resolution: {integrity: sha512-wzCLm2STuekK9Fz58DiuBnk4GgJpvvVtAU85a4b06ACNG/UsVjQcCvkUd6R/ETlHfsaykCUZamLRvSXg4KtWuA==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -1225,7 +1225,7 @@ snapshots:
 
   '@fontsource-variable/arima@5.2.8': {}
 
-  '@fontsource-variable/open-sans@5.2.6': {}
+  '@fontsource-variable/open-sans@5.2.7': {}
 
   '@isaacs/cliui@8.0.2':
     dependencies:

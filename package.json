@@ -21,6 +21,6 @@
     },
     "dependencies": {
         "@fontsource-variable/arima": "^5.2.8",
-        "@fontsource-variable/open-sans": "^5.2.6"
+        "@fontsource-variable/open-sans": "^5.2.7"
     }
 }
