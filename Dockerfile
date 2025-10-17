@@ -4,7 +4,7 @@ WORKDIR /app
 COPY ./ ./
 RUN composer install --optimize-autoloader --ignore-platform-req=php --ignore-platform-req=ext-*
 
-FROM node:24 AS build-frontend
+FROM node:25 AS build-frontend
 
 WORKDIR /app
 
