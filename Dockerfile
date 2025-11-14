@@ -1,4 +1,4 @@
-FROM composer:2.8 AS build-php
+FROM composer:2.9 AS build-php
 
 WORKDIR /app
 COPY ./ ./
