@@ -60,7 +60,7 @@ Only reply with the single category you're most sure of. Do not reply with multi
 Remember, if you're not entirely sure about the categorization, it's better to respond with "0" rather than making an uncertain guess.
 EOT;
 
-        $model = 'gemini-2.5-flash-preview-04-17';
+        $model = 'gemini-flash-latest';
         $apiKey = config('app.google_api_key');
 
         if (empty($apiKey)) {
