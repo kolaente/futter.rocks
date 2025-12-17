@@ -5214,16 +5214,16 @@
         },
         {
             "name": "ryangjchandler/laravel-cloudflare-turnstile",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile.git",
-                "reference": "a9f5fd54c82983bc755fae0a03368ec7fa659f9d"
+                "reference": "c5712e515aa355397159e0b59fe331469bee5a87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ryangjchandler/laravel-cloudflare-turnstile/zipball/a9f5fd54c82983bc755fae0a03368ec7fa659f9d",
-                "reference": "a9f5fd54c82983bc755fae0a03368ec7fa659f9d",
+                "url": "https://api.github.com/repos/ryangjchandler/laravel-cloudflare-turnstile/zipball/c5712e515aa355397159e0b59fe331469bee5a87",
+                "reference": "c5712e515aa355397159e0b59fe331469bee5a87",
                 "shasum": ""
             },
             "require": {
@@ -5282,9 +5282,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile/issues",
-                "source": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile/tree/v3.0.0"
+                "source": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile/tree/v3.0.1"
             },
-            "time": "2025-11-05T18:28:00+00:00"
+            "time": "2025-12-16T15:56:01+00:00"
         },
         {
             "name": "spatie/color",
