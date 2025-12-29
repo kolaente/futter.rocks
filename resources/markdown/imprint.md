@@ -1,8 +1,9 @@
 # Impressum
 
 Konrad Langenberg Software<br/>
-Mengstraße 9-11<br/>
-23552 Lübeck
+Willy-Brandt-Allee 31A<br/>
+23554 Lübeck<br/>
+GERMANY
 
 ## Kontakt
 
