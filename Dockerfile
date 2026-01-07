@@ -12,8 +12,7 @@ COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./.npmrc ./
 
-RUN npm install -g corepack && \
-    corepack enable && \
+RUN npm install -g pnpm@10.8.1 && \
     pnpm install
 
 # To make tailwind purge find templates from vendor
