@@ -14,7 +14,9 @@
             {!! __('Check out the :privacy for more details.', ['privacy' => '<a class="text-primary underline" href="'.route('policy.show').'">'.__('Privacy Policy').'</a>']) !!}
         </x-faq-item>
         <x-faq-item :question="__('Does this cost anything?')">
-            {{ __('It is free to use, since I\'ve built it for my own use and wanted to share it with others. If it is useful for you, please consider donating to my coffee fund or buy me a beer should we meet at an event.') }}
+            {{ __('It is free to use, since I\'ve built it for my own use and wanted to share it with others. If it is useful for you, please consider donating to my coffee fund or buy me a drink should we meet at an event:') }}
+            <a href="https://paypal.me/kolaente" target="_blank" class="underline text-primary">PayPal</a> | 
+            <a href="https://buymeacoffee.com/kolaente" target="_blank" class="underline text-primary">Buy Me a Coffee</a>
         </x-faq-item>
         <x-faq-item :question="__('How can I collaborate with people from my group?')">
             {{ __('You can create a team and invite people to it. Once they are part of the team, you can work together on meal plans and recipes. All events and recipes are associated with a team.') }}
