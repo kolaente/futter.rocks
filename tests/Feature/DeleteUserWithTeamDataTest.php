@@ -93,3 +93,17 @@ test('user can be deleted when they own multiple teams with data', function () {
 })->skip(function () {
     return ! Features::hasAccountDeletionFeatures();
 }, 'Account deletion is not enabled.');
+
+test('user can be deleted when team has no events or recipes', function () {
+    $user = User::factory()->withPersonalTeam()->create();
+    $team = $user->currentTeam;
+
+    // Delete user (team has no events, recipes, or participant groups)
+    app(\Laravel\Jetstream\Contracts\DeletesUsers::class)->delete($user);
+
+    // Assert user and team are deleted
+    expect($user->fresh())->toBeNull();
+    expect($team->fresh())->toBeNull();
+})->skip(function () {
+    return ! Features::hasAccountDeletionFeatures();
+}, 'Account deletion is not enabled.');
