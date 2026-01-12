@@ -47,6 +47,20 @@ class Team extends JetstreamTeam
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::deleting(function (Team $team) {
+            // Delete all events (which cascades to meals, shopping tours, etc.)
+            $team->events()->withoutGlobalScopes()->each(fn ($event) => $event->delete());
+
+            // Delete all recipes (which detaches ingredients and meals)
+            $team->recipes()->withoutGlobalScopes()->each(fn ($recipe) => $recipe->delete());
+
+            // Delete all participant groups (which detaches from events)
+            $team->participantGroups()->withoutGlobalScopes()->each(fn ($participantGroup) => $participantGroup->delete());
+        });
+    }
+
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
