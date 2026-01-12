@@ -1,7 +1,7 @@
 <x-guest-layout>
 
     <x-slot name="head">
-        @turnstileScripts()
+        <x-turnstile.scripts />
     </x-slot>
 
     <x-authentication-card>

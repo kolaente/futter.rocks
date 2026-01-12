@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -27,7 +28,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
             'privacy' => ['required', 'accepted'],
-            'cf-turnstile-response' => config('services.turnstile.key') ? ['required', 'turnstile'] : '',
+            'cf-turnstile-response' => config('services.turnstile.key') ? ['required', new Turnstile] : '',
         ])->validate();
 
         return DB::transaction(function () use ($input) {
