@@ -2055,28 +2055,28 @@
         },
         {
             "name": "laravel/fortify",
-            "version": "v1.32.1",
+            "version": "v1.36.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/fortify.git",
-                "reference": "26db37ed915770e5f0f91f6b7e153d9b3e6c09e8"
+                "reference": "cad8bfeb63f6818f173d40090725c565c92651d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/fortify/zipball/26db37ed915770e5f0f91f6b7e153d9b3e6c09e8",
-                "reference": "26db37ed915770e5f0f91f6b7e153d9b3e6c09e8",
+                "url": "https://api.github.com/repos/laravel/fortify/zipball/cad8bfeb63f6818f173d40090725c565c92651d4",
+                "reference": "cad8bfeb63f6818f173d40090725c565c92651d4",
                 "shasum": ""
             },
             "require": {
                 "bacon/bacon-qr-code": "^3.0",
                 "ext-json": "*",
-                "illuminate/support": "^10.0|^11.0|^12.0",
+                "illuminate/console": "^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
                 "php": "^8.1",
-                "pragmarx/google2fa": "^9.0",
-                "symfony/console": "^6.0|^7.0"
+                "pragmarx/google2fa": "^9.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^8.36|^9.15|^10.8",
+                "orchestra/testbench": "^8.36|^9.15|^10.8|^11.0",
                 "phpstan/phpstan": "^1.10"
             },
             "type": "library",
@@ -2114,7 +2114,7 @@
                 "issues": "https://github.com/laravel/fortify/issues",
                 "source": "https://github.com/laravel/fortify"
             },
-            "time": "2025-11-21T01:53:28+00:00"
+            "time": "2026-03-10T19:59:49+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2340,22 +2340,22 @@
         },
         {
             "name": "laravel/jetstream",
-            "version": "v5.4.0",
+            "version": "v5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/jetstream.git",
-                "reference": "5a83a20b419c2b2c42a8c2407ca4647d8734456b"
+                "reference": "dbe57e175873fc62ea854eb689bb6afea1a6da71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/jetstream/zipball/5a83a20b419c2b2c42a8c2407ca4647d8734456b",
-                "reference": "5a83a20b419c2b2c42a8c2407ca4647d8734456b",
+                "url": "https://api.github.com/repos/laravel/jetstream/zipball/dbe57e175873fc62ea854eb689bb6afea1a6da71",
+                "reference": "dbe57e175873fc62ea854eb689bb6afea1a6da71",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/console": "^11.0|^12.0",
-                "illuminate/support": "^11.0|^12.0",
+                "illuminate/console": "^11.0|^12.0|^13.0",
+                "illuminate/support": "^11.0|^12.0|^13.0",
                 "laravel/fortify": "^1.20",
                 "mobiledetect/mobiledetectlib": "^4.8.08",
                 "php": "^8.2.0",
@@ -2366,7 +2366,7 @@
                 "laravel/sanctum": "^4.0",
                 "livewire/livewire": "^3.3",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^9.15|^10.8",
+                "orchestra/testbench": "^9.15|^10.8|^11.0",
                 "phpstan/phpstan": "^1.10"
             },
             "type": "library",
@@ -2402,7 +2402,7 @@
                 "issues": "https://github.com/laravel/jetstream/issues",
                 "source": "https://github.com/laravel/jetstream"
             },
-            "time": "2025-11-25T14:46:14+00:00"
+            "time": "2026-03-10T20:00:07+00:00"
         },
         {
             "name": "laravel/octane",
@@ -3538,29 +3538,28 @@
         },
         {
             "name": "mobiledetect/mobiledetectlib",
-            "version": "4.8.09",
+            "version": "4.8.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "a06fe2e546a06bb8c2639d6823d5250b2efb3209"
+                "reference": "96b1e1fa9a968de7660a031106ab529f659d0192"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/a06fe2e546a06bb8c2639d6823d5250b2efb3209",
-                "reference": "a06fe2e546a06bb8c2639d6823d5250b2efb3209",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/96b1e1fa9a968de7660a031106ab529f659d0192",
+                "reference": "96b1e1fa9a968de7660a031106ab529f659d0192",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0",
-                "psr/cache": "^3.0",
                 "psr/simple-cache": "^3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^v3.65.0",
+                "friendsofphp/php-cs-fixer": "^v3.75.0",
                 "phpbench/phpbench": "^1.2",
-                "phpstan/phpstan": "^1.12.x-dev",
-                "phpunit/phpunit": "^9.6.18",
-                "squizlabs/php_codesniffer": "^3.11.1"
+                "phpstan/phpstan": "^2.1.11",
+                "phpunit/phpunit": "^9.6.22",
+                "squizlabs/php_codesniffer": "^3.12.1"
             },
             "type": "library",
             "autoload": {
@@ -3591,7 +3590,7 @@
             ],
             "support": {
                 "issues": "https://github.com/serbanghita/Mobile-Detect/issues",
-                "source": "https://github.com/serbanghita/Mobile-Detect/tree/4.8.09"
+                "source": "https://github.com/serbanghita/Mobile-Detect/tree/4.8.10"
             },
             "funding": [
                 {
@@ -3599,7 +3598,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-10T15:32:06+00:00"
+            "time": "2026-01-09T16:21:59+00:00"
         },
         {
             "name": "monolog/monolog",
