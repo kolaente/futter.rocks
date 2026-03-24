@@ -7,7 +7,7 @@
             {{ __('Futter.rocks is for groups who want to plan their meals and shopping lists for their camp or retreat.') }}
         </x-faq-item>
         <x-faq-item :question="__('Can I plan a national camp with this?')">
-            {{ __('Not really, it is designed for one cooking group. If your event has more than that, you should look elsewhere, for example Ferkel from Kohldampf.') }}
+            {!! __('Not really, it is designed for one cooking group. If your event has more than that, you should look elsewhere, for example :verkel.', ['verkel' => '<a class="text-primary underline" href="https://github.com/buenaventure/verkel" target="_blank">Verkel</a>']) !!}
         </x-faq-item>
         <x-faq-item :question="__('What happens to my data?')">
             {{ __('The only personal data we store is your name and email address. Because we only work with participant groups, we do not see the names or other information of the participants.') }}
