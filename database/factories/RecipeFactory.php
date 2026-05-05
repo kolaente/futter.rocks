@@ -16,6 +16,7 @@ class RecipeFactory extends Factory
         return [
             'title' => $this->faker->word(),
             'imported_from_url' => null,
+            'servings' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

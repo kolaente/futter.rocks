@@ -21,7 +21,15 @@ class Recipe extends Model
         'title',
         'imported_from_url',
         'team_id',
+        'servings',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'servings' => 'integer',
+        ];
+    }
 
     protected static function booted(): void
     {
