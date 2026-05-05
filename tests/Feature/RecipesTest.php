@@ -318,6 +318,33 @@ describe('Create', function () {
             ]);
         });
 
+        it('imports ingredients without a unit as pieces', function () {
+            $team = Team::factory()->create();
+
+            $recipe = Recipe::create([
+                'title' => 'Test',
+                'team_id' => $team->id,
+            ]);
+
+            $recipe->addIngredientsFromText([
+                '2 Zwiebeln',
+                '3 Tomaten',
+            ]);
+
+            assertIngredients($recipe, [
+                [
+                    'title' => 'Zwiebeln',
+                    'unit' => Unit::Pieces,
+                    'quantity' => 2,
+                ],
+                [
+                    'title' => 'Tomaten',
+                    'unit' => Unit::Pieces,
+                    'quantity' => 3,
+                ],
+            ]);
+        });
+
         it('reports errors for non-parsable lines', function () {
             $team = Team::factory()->create();
 

@@ -96,6 +96,11 @@ class Recipe extends Model
                 $quantityStr = $matches[1];
                 $unitStr = $matches[2];
                 $title = trim($matches[3]);
+            } elseif (preg_match('/^(\d+(?:\.\d+)?)\s+(.+)$/', $ing, $matches)) {
+                // quantity + title (no unit), e.g. "2 Zwiebeln"
+                $quantityStr = $matches[1];
+                $unitStr = '';
+                $title = trim($matches[2]);
             } else {
                 // Fallback to original space-based parsing
                 $parts = explode(' ', $ing);
