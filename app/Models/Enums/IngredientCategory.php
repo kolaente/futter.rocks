@@ -38,4 +38,24 @@ enum IngredientCategory: int
             self::GRAINS_CEREALS => __('Grains & Cereals'),
         };
     }
+
+    public function getPromptHint(): string
+    {
+        return match ($this) {
+            self::FRUIT_VEGETABLES => 'fresh fruit and vegetables (Apfel, Tomate, Karotte, salad, banana)',
+            self::MEAT_SEAFOOD => 'fresh meat, poultry, fish, seafood (Hühnchen, Hackfleisch, Lachs, ground beef)',
+            self::DAIRY_EGGS => 'milk, butter, cheese, yogurt, eggs, plant-based milk and yogurt (Milch, Joghurt, Käse, Eier, Hafermilch)',
+            self::BAKERY => 'bread, rolls, pastries (Brot, Brötchen, Baguette)',
+            self::FROZEN => 'frozen foods (TK-Erbsen, Tiefkühlpizza, ice cream, Eis)',
+            self::BEVERAGES => 'water, juice, soda, coffee, tea (Wasser, Saft, Kaffee, Tee, Limo)',
+            self::SNACKS => 'chips, crackers, sweets, chocolate (Schokolade, Kekse, Chips, Gummibärchen)',
+            self::CONDIMENTS => 'cooking oils, vinegar, sauces, mustard, ketchup, soy sauce (Öl, Olivenöl, Essig, Senf, Sojasauce)',
+            self::SPICES => 'dry spices and herbs (Salz, Pfeffer, Paprikapulver, Oregano, Zimt)',
+            self::BAKING => 'sugar, flour, yeast, baking powder, cocoa, vanilla (Zucker, Puderzucker, Mehl, Hefe, Backpulver, Kakao)',
+            self::CANNED_GOODS => 'canned vegetables, beans, fish, soup (Kichererbsen Dose, Tomaten Dose, Thunfisch Dose)',
+            self::SPREAD => 'jam, honey, nut butters, chocolate spread (Marmelade, Honig, Nutella, Erdnussbutter)',
+            self::GRAINS_CEREALS => 'rice, pasta, oats, couscous, quinoa, muesli (Reis, Nudeln, Haferflocken, Müsli, Couscous)',
+            self::OTHER => 'use only when no other category clearly applies',
+        };
+    }
 }

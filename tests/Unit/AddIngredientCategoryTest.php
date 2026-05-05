@@ -17,7 +17,7 @@ it('assigns category returned by the service', function () {
                 [
                     'content' => [
                         'parts' => [
-                            ['text' => '<category>3</category>'],
+                            ['text' => 'DAIRY_EGGS'],
                         ],
                     ],
                 ],
