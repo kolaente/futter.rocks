@@ -45,13 +45,32 @@ enum Unit: int
 
     public static function fromString(string $input): ?self
     {
-        $input = strtolower($input);
+        $input = strtolower(trim($input));
 
-        return match ($input) {
-            'g', 'grams', 'gram', 'gr' => self::Grams,
+        if ($input === '') {
+            return null;
+        }
+
+        $direct = match ($input) {
+            'g', 'gr', 'gram', 'grams' => self::Grams,
+            'kg', 'kilo', 'kilos', 'kilogram', 'kilograms' => self::Kilos,
             'ml', 'milliliter', 'millilitre', 'milliliters', 'millilitres' => self::Milliliters,
-            'pc', 'piece', 'pieces' => self::Pieces,
+            'l', 'liter', 'liters', 'litre', 'litres' => self::Liters,
+            'pc', 'pcs', 'piece', 'pieces' => self::Pieces,
             default => null,
         };
+
+        if ($direct !== null) {
+            return $direct;
+        }
+
+        foreach (self::cases() as $case) {
+            if (strtolower($case->getShortLabel() ?? '') === $input
+                || strtolower($case->getLabel() ?? '') === $input) {
+                return $case;
+            }
+        }
+
+        return null;
     }
 }

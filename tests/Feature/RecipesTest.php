@@ -318,6 +318,51 @@ describe('Create', function () {
             ]);
         });
 
+        it('recognizes units in the current language', function () {
+            $team = Team::factory()->create();
+
+            $recipe = Recipe::create([
+                'title' => 'Test',
+                'team_id' => $team->id,
+            ]);
+
+            $recipe->addIngredientsFromText([
+                '2 Stk Zwiebeln',
+                '3 Stück Tomaten',
+                '1 kg Mehl',
+                '1 l Wasser',
+                '50 Gramm Butter',
+            ]);
+
+            assertIngredients($recipe, [
+                [
+                    'title' => 'Zwiebeln',
+                    'unit' => Unit::Pieces,
+                    'quantity' => 2,
+                ],
+                [
+                    'title' => 'Tomaten',
+                    'unit' => Unit::Pieces,
+                    'quantity' => 3,
+                ],
+                [
+                    'title' => 'Mehl',
+                    'unit' => Unit::Kilos,
+                    'quantity' => 1,
+                ],
+                [
+                    'title' => 'Wasser',
+                    'unit' => Unit::Liters,
+                    'quantity' => 1,
+                ],
+                [
+                    'title' => 'Butter',
+                    'unit' => Unit::Grams,
+                    'quantity' => 50,
+                ],
+            ]);
+        });
+
         it('imports ingredients without a unit as pieces', function () {
             $team = Team::factory()->create();
 

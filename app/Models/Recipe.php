@@ -92,7 +92,7 @@ class Recipe extends Model
             }
 
             // Use regex to parse quantity+unit+title pattern
-            if (preg_match('/^(\d+(?:\.\d+)?)\s*([a-zA-Z]+)\s+(.+)$/', $ing, $matches)) {
+            if (preg_match('/^(\d+(?:\.\d+)?)\s*(\p{L}+)\s+(.+)$/u', $ing, $matches)) {
                 $quantityStr = $matches[1];
                 $unitStr = $matches[2];
                 $title = trim($matches[3]);
