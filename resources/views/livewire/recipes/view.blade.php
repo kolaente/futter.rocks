@@ -11,6 +11,7 @@
     <x-filament-actions::modals />
 
     <x-floating-content class="p-2">
+        <p class="px-1 pb-2 text-sm text-gray-600">{{ __('Serves :count', ['count' => $recipe->servings]) }}</p>
         <table>
             <thead>
             <tr>

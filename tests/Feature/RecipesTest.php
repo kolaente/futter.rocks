@@ -51,6 +51,7 @@ describe('Create', function () {
             ->assertStatus(200)
             ->set('data', [
                 'title' => $testTitle,
+                'servings' => 1,
                 'ingredients' => [
                     [
                         'ingredient' => 'Brot',
@@ -91,6 +92,7 @@ describe('Create', function () {
             ->assertStatus(200)
             ->set('data', [
                 'title' => $testTitle,
+                'servings' => 1,
                 'ingredients' => [
                     [
                         'ingredient' => $ingredients[0]->id,
@@ -134,6 +136,7 @@ describe('Create', function () {
             ->assertStatus(200)
             ->set('data', [
                 'title' => $testTitle,
+                'servings' => 1,
                 'ingredients' => [
                     [
                         'ingredient' => $ingredient->id,
@@ -163,6 +166,39 @@ describe('Create', function () {
         ]);
     });
 
+    it('persists servings on store', function () {
+        livewire(CreateEdit::class)
+            ->assertStatus(200)
+            ->set('data', [
+                'title' => 'Mehrportionenrezept',
+                'servings' => 4,
+                'ingredients' => [
+                    [
+                        'ingredient' => 'Mehl',
+                        'unit' => Unit::Grams,
+                        'quantity' => 200,
+                    ],
+                ],
+            ])
+            ->call('store');
+
+        assertDatabaseHas('recipes', [
+            'title' => 'Mehrportionenrezept',
+            'servings' => 4,
+        ]);
+    });
+
+    it('prefills servings when editing an existing recipe', function () {
+        $recipe = Recipe::factory()->create([
+            'team_id' => $this->user->currentTeam->id,
+            'servings' => 6,
+        ]);
+
+        \Livewire\Livewire::withQueryParams(['recipe' => $recipe->id])
+            ->test(CreateEdit::class)
+            ->assertSet('data.servings', 6);
+    });
+
     it('redirects after creation', function () {
         Recipe::factory(5)->create();
 
@@ -172,6 +208,7 @@ describe('Create', function () {
             ->assertStatus(200)
             ->set('data', [
                 'title' => $testTitle,
+                'servings' => 1,
                 'ingredients' => [
                     [
                         'ingredient' => 'Brot',

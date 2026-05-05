@@ -347,5 +347,8 @@
     "Some lines could not be parsed.": "Einige Zeilen konnten nicht verarbeitet werden.",
     "Buy shelf-able good before the event": "Haltbare Zutaten vor der Veranstaltung einkaufen",
     "When enabled, all non-fresh ingredients will be put on the shopping tour before the event. This allows faster shopping tours during the event (because only fresh items need to be bought) at the expense of using more storage.": "Wenn aktiviert, werden alle nicht-frischen Zutaten auf die Einkaufstour vor der Veranstaltung gelegt. Dies ermöglicht schnellere Einkaufstouren während der Veranstaltung (da nur frische Artikel gekauft werden müssen) auf Kosten von mehr Lagerraum.",
+    "Servings": "Portionen",
+    "The number of servings this recipe makes. Ingredient quantities will be scaled accordingly.": "Die Anzahl der Portionen, für die das Rezept geschrieben ist. Mengenangaben werden entsprechend skaliert.",
+    "Serves :count": "Für :count Portionen",
     "___": "___"
 }

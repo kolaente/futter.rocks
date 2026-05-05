@@ -54,6 +54,7 @@ class CreateEdit extends Component implements HasForms
 
         $this->form->fill([
             'title' => $this->recipe->title,
+            'servings' => $this->recipe->servings,
             'ingredients' => $ingredients,
         ]);
     }
@@ -64,6 +65,13 @@ class CreateEdit extends Component implements HasForms
             ->schema([
                 Forms\Components\TextInput::make('title')
                     ->label(__('Title'))
+                    ->required(),
+                Forms\Components\TextInput::make('servings')
+                    ->label(__('Servings'))
+                    ->helperText(__('The number of servings this recipe makes. Ingredient quantities will be scaled accordingly.'))
+                    ->numeric()
+                    ->minValue(1)
+                    ->default(1)
                     ->required(),
                 Forms\Components\Repeater::make('ingredients')
                     ->label(__('Ingredients'))
@@ -114,6 +122,7 @@ class CreateEdit extends Component implements HasForms
             }
 
             $this->recipe->title = $this->form->getState()['title'];
+            $this->recipe->servings = $this->form->getState()['servings'];
             $this->recipe->save();
 
             $this->recipe->ingredients()->detach();
