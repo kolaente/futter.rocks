@@ -206,7 +206,7 @@ class Recipe extends Model
             }
 
             foreach ($participantGroups as $group) {
-                $list[$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
+                $list[$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity / $this->servings;
             }
         }
 

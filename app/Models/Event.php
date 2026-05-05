@@ -202,7 +202,7 @@ class Event extends Model
                     }
 
                     foreach ($this->participantGroups()->withoutGlobalScope(CurrentTeam::class)->get() as $group) {
-                        $list[$targetTour][$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity;
+                        $list[$targetTour][$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity / $recipe->servings;
                     }
                 }
             }
