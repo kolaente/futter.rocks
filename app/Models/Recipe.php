@@ -60,20 +60,25 @@ class Recipe extends Model
     {
         $parsed = RecipeParser::fetchRecipeFromUrl($url);
 
-        $servings = floatval($parsed['recipeYield'] ?? $parsed['nutrition']['servingSize']);
+        $rawYield = $parsed['recipeYield'] ?? $parsed['nutrition']['servingSize'] ?? null;
+        if (is_array($rawYield)) {
+            $rawYield = $rawYield[0] ?? null;
+        }
+        $servings = max(1, (int) round(floatval($rawYield)));
 
         $recipe = self::create([
             'title' => $parsed['name'],
             'imported_from_url' => $url,
             'team_id' => $teamId,
+            'servings' => $servings,
         ]);
 
-        $recipe->addIngredientsFromText($parsed['recipeIngredient'], $servings);
+        $recipe->addIngredientsFromText($parsed['recipeIngredient']);
 
         return $recipe;
     }
 
-    public static function parseIngredientsFromText(array $lines, int $servings = 1): array
+    public static function parseIngredientsFromText(array $lines): array
     {
         $errors = [];
         $ingredients = [];
@@ -158,7 +163,7 @@ class Recipe extends Model
 
             $ingredients[] = [
                 'title' => trim($title),
-                'quantity' => $quantity / $servings,
+                'quantity' => $quantity,
                 'unit' => $unit,
             ];
         }
@@ -166,9 +171,9 @@ class Recipe extends Model
         return [$ingredients, $errors];
     }
 
-    public function addIngredientsFromText(array $lines, int $servings = 1): array
+    public function addIngredientsFromText(array $lines): array
     {
-        [$ingredients, $errors] = self::parseIngredientsFromText($lines, $servings);
+        [$ingredients, $errors] = self::parseIngredientsFromText($lines);
 
         // Only save to database if recipe is persisted
         if ($this->exists) {

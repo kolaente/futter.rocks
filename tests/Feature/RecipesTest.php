@@ -450,6 +450,7 @@ describe('Create', function () {
             assertDatabaseHas('recipes', [
                 'id' => $recipe->id,
                 'title' => 'Cremiger Nudel-Kürbis-Auflauf',
+                'servings' => 1,
             ]);
 
             assertIngredients($recipe, [
@@ -523,70 +524,134 @@ describe('Create', function () {
             assertDatabaseHas('recipes', [
                 'id' => $recipe->id,
                 'title' => 'Vegetarisches Chili mit Bulgur',
+                'servings' => 4,
             ]);
 
             assertIngredients($recipe, [
                 [
                     'title' => 'Bulgur',
                     'unit' => Unit::Grams,
-                    'quantity' => 28.125, // 1 tasse = 150g
+                    'quantity' => 112.5, // 0.75 tasse * 150g/tasse
                 ],
                 [
                     'title' => 'Olivenöl',
                     'unit' => Unit::Milliliters,
-                    'quantity' => 7.5,
+                    'quantity' => 30, // 2 EL * 15 ml/EL
                 ],
                 [
                     'title' => 'große Zwiebeln , klein gehackt',
                     'unit' => Unit::Pieces,
-                    'quantity' => 0.25,
+                    'quantity' => 1,
                 ],
                 [
                     'title' => 'Knoblauchzehen , klein gehackt',
                     'unit' => Unit::Pieces,
-                    'quantity' => 0.5,
+                    'quantity' => 2,
                 ],
                 [
                     'title' => 'Kreuzkümmelpulver',
                     'unit' => Unit::Milliliters,
-                    'quantity' => 2.5,
+                    'quantity' => 10, // 2 TL * 5 ml/TL
                 ],
                 [
                     'title' => 'Zimt',
                     'unit' => Unit::Milliliters,
-                    'quantity' => 0.625,
+                    'quantity' => 2.5, // 0.5 TL * 5 ml/TL
                 ],
                 [
                     'title' => 'Dosen Pizzatomaten  je 400 g',
                     'unit' => Unit::Pieces,
-                    'quantity' => 0.5,
+                    'quantity' => 2,
                 ],
                 [
                     'title' => 'Tassen Gemüsebrühe',
                     'unit' => Unit::Pieces,
-                    'quantity' => 0.75,
+                    'quantity' => 3,
                 ],
                 [
                     'title' => 'Dose Mais 310 g',
                     'unit' => Unit::Pieces,
-                    'quantity' => 0.25,
+                    'quantity' => 1,
                 ],
                 [
                     'title' => 'Dose Kidneybohnen 440 g',
                     'unit' => Unit::Pieces,
-                    'quantity' => 0.25,
+                    'quantity' => 1,
                 ],
                 [
                     'title' => 'Dose Kichererbsen 400 g',
                     'unit' => Unit::Pieces,
-                    'quantity' => 0.25,
+                    'quantity' => 1,
                 ],
                 [
                     'title' => 'Tomatenmark',
                     'unit' => Unit::Milliliters,
-                    'quantity' => 7.5,
+                    'quantity' => 30, // 2 EL * 15 ml/EL
                 ],
             ]);
+        });
+
+        it('falls back to 1 serving when recipeYield is missing', function () {
+            Http::fake([
+                'https://example.test/no-yield' => Http::response('<html><head><script type="application/ld+json">'
+                    .json_encode([
+                        '@context' => 'https://schema.org/',
+                        '@type' => 'Recipe',
+                        'name' => 'No Yield Recipe',
+                        'recipeIngredient' => ['200g Mehl'],
+                    ])
+                    .'</script></head><body></body></html>'),
+            ]);
+
+            $team = Team::factory()->create();
+            $recipe = Recipe::importFromUrl('https://example.test/no-yield', $team->id);
+
+            assertDatabaseHas('recipes', [
+                'id' => $recipe->id,
+                'servings' => 1,
+            ]);
+            assertIngredients($recipe, [
+                [
+                    'title' => 'Mehl',
+                    'unit' => Unit::Grams,
+                    'quantity' => 200,
+                ],
+            ]);
+        });
+
+        it('falls back to 1 serving when recipeYield is zero or unparseable', function () {
+            Http::fake([
+                'https://example.test/zero-yield' => Http::response('<html><head><script type="application/ld+json">'
+                    .json_encode([
+                        '@context' => 'https://schema.org/',
+                        '@type' => 'Recipe',
+                        'name' => 'Zero Yield Recipe',
+                        'recipeYield' => '0',
+                        'recipeIngredient' => ['100g Zucker'],
+                    ])
+                    .'</script></head><body></body></html>'),
+                'https://example.test/junk-yield' => Http::response('<html><head><script type="application/ld+json">'
+                    .json_encode([
+                        '@context' => 'https://schema.org/',
+                        '@type' => 'Recipe',
+                        'name' => 'Junk Yield Recipe',
+                        'recipeYield' => 'as many as you like',
+                        'recipeIngredient' => ['50g Salz'],
+                    ])
+                    .'</script></head><body></body></html>'),
+            ]);
+
+            $team = Team::factory()->create();
+
+            $zeroRecipe = Recipe::importFromUrl('https://example.test/zero-yield', $team->id);
+            assertDatabaseHas('recipes', ['id' => $zeroRecipe->id, 'servings' => 1]);
+            $zeroIng = $zeroRecipe->ingredients()->first();
+            expect($zeroIng->pivot->quantity)->toBe(100.0);
+
+            $junkRecipe = Recipe::importFromUrl('https://example.test/junk-yield', $team->id);
+            assertDatabaseHas('recipes', ['id' => $junkRecipe->id, 'servings' => 1]);
+            $junkIng = $junkRecipe->ingredients()->first();
+            expect($junkIng->pivot->quantity)->toBe(50.0);
         });
     });
 });
