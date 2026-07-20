@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@fontsource-variable/arima':
-        specifier: ^5.2.8
-        version: 5.2.8
+        specifier: ^5.3.0
+        version: 5.3.0
       '@fontsource-variable/open-sans':
         specifier: ^5.3.0
         version: 5.3.0
@@ -223,8 +223,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fontsource-variable/arima@5.2.8':
-    resolution: {integrity: sha512-Qbvrn4kSfsUoWsZY0kfWHZx6P5y4nuA0+EQnFGFwOCHLS5Vf2zWjlXyJLQuykxlPkk4NhPBMXN7WzzMen+hi+A==}
+  '@fontsource-variable/arima@5.3.0':
+    resolution: {integrity: sha512-CJbdtqI7noFGlJFivvFqbdDZpGICIYMhcvFJHRnsZ+j6JEIoeKeBZ0kKI6hyX2wIxEom8FdnB6+X0HKPgZ/A0g==}
 
   '@fontsource-variable/open-sans@5.3.0':
     resolution: {integrity: sha512-VOfhZfLIOBVa6K/dTEu7scqQXYdGa4jBX8quFpQ0S6574B+W2EOBJf9PkqyVtMEI7WWIWNEbpvPc3vY1mN2mmQ==}
@@ -1253,7 +1253,7 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
-  '@fontsource-variable/arima@5.2.8': {}
+  '@fontsource-variable/arima@5.3.0': {}
 
   '@fontsource-variable/open-sans@5.3.0': {}
 
