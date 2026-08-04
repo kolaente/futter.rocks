@@ -15,14 +15,4 @@ return new class extends Migration
             $table->decimal('multiplier', 8, 2)->nullable();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('meals', function (Blueprint $table) {
-            $table->dropColumn('multiplier');
-        });
-    }
 };
