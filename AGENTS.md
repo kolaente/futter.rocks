@@ -8,11 +8,12 @@ Futter.rocks is a Laravel-based application for planning and managing camp kitch
 
 ## Technology Stack
 
-- **Backend**: Laravel 12.0 (PHP 8.3+) with Jetstream/Sanctum
-- **Frontend**: Livewire 3.0 + Filament 3.3 (forms/tables) + Tailwind CSS
+Package versions are listed in the Laravel Boost guidelines below. Beyond those:
+
+- **Backend**: Jetstream on top of Laravel/Sanctum
+- **Frontend**: Filament 3.3 (forms/tables) alongside Livewire + Tailwind
 - **Database**: PostgreSQL (dev), SQLite (test)
-- **Testing**: Pest PHP
-- **Build**: Vite 6.3 with pnpm 10.8
+- **Build**: Vite with pnpm
 - **Environment**: Devenv (Nix-based) with Docker
 
 ## Development Commands
@@ -67,10 +68,7 @@ aa <command>
 - Blade components in App/View/Components/
 
 ### Database
-- PostgreSQL for development
-- SQLite for testing
 - Multi-tenancy via CurrentTeam scope on models
-- Comprehensive migrations with proper relationships
 
 ### Translations
 
@@ -82,9 +80,7 @@ aa <command>
 
 1. **Setup**: Clone repo, enter `devenv shell`, run `composer install` and `pnpm install`
 2. **Development**: Start with `devenv up`, frontend with `pnpm dev`
-3. **Testing**: Use `a test` for full suite, `atf <filter>` for specific tests
-4. **Linting**: Run `composer lint` before commits
-5. **CI/CD**: GitHub Actions handles testing, linting, and Docker image releases
+3. **CI/CD**: GitHub Actions handles testing, linting, and Docker image releases
 
 ## Key Features
 
@@ -97,13 +93,8 @@ aa <command>
 
 ## Development Notes
 
-- Use Livewire testing methods for component tests
 - All models should extend from base model with team scoping
-- Follow Laravel conventions with Pest PHP testing
 - Use Filament components for complex forms and tables
-- Maintain comprehensive test coverage for core functionality
-- Use the available components (buttons, messages, etc) whenever possible.
-- Use artisan commands to create new models, controllers, factories, migrations, etc.
 
 ===
 
