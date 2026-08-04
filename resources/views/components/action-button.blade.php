@@ -1,4 +1,4 @@
-@props(['target' => null, 'variant' => 'primary'])
+@props(['target' => null, 'variant' => 'primary', 'spinner' => true])
 
 @php
     $mobileClasses = 'lg:rounded-lg lg:shadow-sm lg:border-transparent w-full lg:w-auto justify-start lg:justify-center !shadow-none text-left lg:text-center rounded-none border-0 shadow-none px-3 py-2 lg:px-4 lg:py-2';
@@ -15,6 +15,7 @@
 <x-button
     :target="$target"
     :variant="$variant"
+    :spinner="$spinner"
     {{ $attributes->merge(['class' => $mobileClasses]) }}
 >
     {{ $slot }}

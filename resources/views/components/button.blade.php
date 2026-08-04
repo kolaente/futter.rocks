@@ -1,4 +1,4 @@
-@props(['target' => null, 'variant' => 'primary'])
+@props(['target' => null, 'variant' => 'primary', 'spinner' => true])
 
 @php
     $tag = 'button';
@@ -22,7 +22,7 @@
 @endphp
 
 <{{ $tag }} {{ $tag === 'a' ? 'wire:navigate': '' }} {{ $attributes->merge(['type' => 'submit', 'class' => $classes]) }}>
-@if($tag === 'button')
+@if($tag === 'button' && $spinner)
     <div wire:target="{{ $target }}" wire:loading.class="opacity-100" class="opacity-0 absolute left-0 right-0 flex items-center justify-center">
         <svg aria-hidden="true" class="w-4 h-4 text-gray-200 animate-spin fill-primary-light" viewBox="0 0 100 101"
              fill="none" xmlns="http://www.w3.org/2000/svg">

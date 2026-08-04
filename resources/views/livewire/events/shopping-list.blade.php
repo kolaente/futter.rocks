@@ -1,6 +1,6 @@
 <x-main-content :title="__('Shopping list for :event', ['event' => $event->title])">
     <x-slot:actions>
-        <x-action-button onclick="window.print()">
+        <x-action-button onclick="window.print()" :spinner="false">
             {{ __('Print') }}
         </x-action-button>
         <x-action-button wire:click="download" target="download">
