@@ -22,7 +22,7 @@ COPY ./ ./
 RUN pnpm run build && \
     rm -rf node_modules
 
-FROM kolaente/laravel:8.3-octane-frankenphp
+FROM ghcr.io/kolaente/laravel-docker:8.3-octane-frankenphp
 
 RUN apt-get update && apt-get install -y libpq-dev postgresql-client && \
   docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
