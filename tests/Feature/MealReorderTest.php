@@ -53,6 +53,34 @@ describe('Meal reorder', function () {
             ->toBe(['Zebra', 'Abendessen', 'Frühstück']);
     });
 
+    it('appends new meals to the end of their day', function () {
+        $user = User::factory()->withCurrentTeam()->create();
+        actingAs($user);
+
+        $event = createReorderEvent($user);
+        createMealAt($event, 'Frühstück', '2026-08-10');
+        createMealAt($event, 'Mittagessen', '2026-08-10');
+        $otherDay = createMealAt($event, 'Frühstück', '2026-08-11');
+
+        expect(Meal::query()->whereDate('date', '2026-08-10')->orderBy('position')->pluck('position', 'title')->all())
+            ->toBe(['Frühstück' => 1, 'Mittagessen' => 2])
+            ->and($otherDay->position)->toBe(1);
+    });
+
+    it('appends a meal to the end of the target day when its date is edited', function () {
+        $user = User::factory()->withCurrentTeam()->create();
+        actingAs($user);
+
+        $event = createReorderEvent($user);
+        createMealAt($event, 'Frühstück', '2026-08-10');
+        $moved = createMealAt($event, 'Mittagessen', '2026-08-10');
+        createMealAt($event, 'Frühstück', '2026-08-11');
+
+        $moved->update(['date' => '2026-08-11']);
+
+        expect($moved->refresh()->position)->toBe(2);
+    });
+
     it('backfills positions from the old name-based order', function () {
         $user = User::factory()->withCurrentTeam()->create();
         actingAs($user);
