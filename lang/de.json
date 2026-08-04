@@ -350,5 +350,7 @@
     "Servings": "Portionen",
     "The number of servings this recipe makes. Ingredient quantities will be scaled accordingly.": "Die Anzahl der Portionen, für die das Rezept geschrieben ist. Mengenangaben werden entsprechend skaliert.",
     "Serves :count": "Für :count Portionen",
+    "Multiplier": "Multiplikator",
+    "Scales all quantities of this meal. Leave empty for no change.": "Skaliert alle Mengen dieser Mahlzeit. Leer lassen für keine Änderung.",
     "___": "___"
 }

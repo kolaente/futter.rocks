@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Events;
 
+use App\Formatter;
 use App\Models\Event;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -42,6 +43,13 @@ class ListMeals extends Component implements HasForms, HasTable
                 ->minDate(fn () => $this->event->date_from)
                 ->maxDate(fn () => $this->event->date_to)
                 ->required(),
+            Forms\Components\TextInput::make('multiplier')
+                ->label(__('Multiplier'))
+                ->numeric()
+                ->rule('gt:0')
+                ->nullable()
+                ->placeholder('1')
+                ->helperText(__('Scales all quantities of this meal. Leave empty for no change.')),
             Forms\Components\Select::make('recipes')
                 ->label(__('Recipes'))
                 ->required()
@@ -63,6 +71,9 @@ class ListMeals extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('date')
                     ->formatStateUsing(fn ($state) => $state->translatedFormat(__('j F Y')))
                     ->label(__('Date')),
+                Tables\Columns\TextColumn::make('multiplier')
+                    ->formatStateUsing(fn ($state) => $state == 1 ? null : '×'.(new Formatter)->format($state))
+                    ->label(__('Multiplier')),
                 Tables\Columns\TextColumn::make('recipes.title')
                     ->label(__('Recipes')),
             ])
