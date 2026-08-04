@@ -31,7 +31,7 @@ EOT;
             throw new Exception('Google API key is not configured.');
         }
 
-        $model = 'gemini-flash-latest';
+        $model = 'gemini-3.6-flash';
 
         $payload = [
             'contents' => [
@@ -40,7 +40,7 @@ EOT;
             'systemInstruction' => ['parts' => [['text' => $systemPrompt]]],
             'generationConfig' => [
                 'thinkingConfig' => [
-                    'thinkingBudget' => 0,
+                    'thinkingLevel' => 'minimal',
                 ],
                 'responseMimeType' => 'text/x.enum',
                 'responseSchema' => [

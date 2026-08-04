@@ -35,4 +35,9 @@ it('assigns category returned by the service', function () {
     $ingredient->refresh();
 
     expect($ingredient->category)->toBe(IngredientCategory::DAIRY_EGGS);
+
+    Http::assertSent(function ($request) {
+        return str_contains($request->url(), 'models/gemini-3.6-flash:generateContent')
+            && $request['generationConfig']['thinkingConfig'] === ['thinkingLevel' => 'minimal'];
+    });
 });
