@@ -134,24 +134,14 @@ class Event extends Model
     {
         return $this->meals()
             ->orderBy('date')
+            ->orderBy('position')
             ->with([
                 'recipes' => function ($query) {
                     $query->withoutGlobalScope(CurrentTeam::class);
                 },
             ])
             ->get()
-            ->groupBy('date')
-            ->map(fn ($meals) => $meals->sortBy(function ($item) {
-                $order = [
-                    'Frühstück' => 1,
-                    'Mittag' => 2,
-                    'Mittagessen' => 2,
-                    'Abend' => 3,
-                    'Abendessen' => 3,
-                ];
-
-                return $order[$item->title] ?? 4;
-            }));
+            ->groupBy(fn (Meal $meal) => $meal->date->format('Y-m-d'));
     }
 
     public function getShoppingList(): array
