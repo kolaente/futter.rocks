@@ -4,6 +4,8 @@ namespace App\Livewire\Events;
 
 use App\Formatter;
 use App\Models\Event;
+use App\Models\Meal;
+use App\Models\Recipe;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -43,18 +45,27 @@ class ListMeals extends Component implements HasForms, HasTable
                 ->minDate(fn () => $this->event->date_from)
                 ->maxDate(fn () => $this->event->date_to)
                 ->required(),
-            Forms\Components\TextInput::make('multiplier')
-                ->label(__('Multiplier'))
-                ->numeric()
-                ->rule('gt:0')
-                ->nullable()
-                ->placeholder('1')
-                ->helperText(__('Scales all quantities of this meal. Leave empty for no change.')),
-            Forms\Components\Select::make('recipes')
+            Forms\Components\Repeater::make('mealRecipes')
                 ->label(__('Recipes'))
-                ->required()
-                ->multiple()
-                ->relationship(name: 'recipes', titleAttribute: 'title'),
+                ->relationship()
+                ->schema([
+                    Forms\Components\Select::make('recipe_id')
+                        ->label(__('Recipe'))
+                        ->options(fn () => Recipe::orderBy('title')->pluck('title', 'id'))
+                        ->searchable()
+                        ->required(),
+                    Forms\Components\TextInput::make('multiplier')
+                        ->label(__('Multiplier'))
+                        ->numeric()
+                        ->rule('gt:0')
+                        ->nullable()
+                        ->placeholder('1')
+                        ->helperText(__('Scales all quantities of this recipe in this meal. Leave empty for no change.')),
+                ])
+                ->columns(2)
+                ->addActionLabel(__('Add recipe'))
+                ->minItems(1)
+                ->required(),
         ];
 
         return $table
@@ -71,10 +82,14 @@ class ListMeals extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('date')
                     ->formatStateUsing(fn ($state) => $state->translatedFormat(__('j F Y')))
                     ->label(__('Date')),
-                Tables\Columns\TextColumn::make('multiplier')
-                    ->formatStateUsing(fn ($state) => $state == 1 ? null : '×'.(new Formatter)->format($state))
-                    ->label(__('Multiplier')),
-                Tables\Columns\TextColumn::make('recipes.title')
+                Tables\Columns\TextColumn::make('recipes')
+                    ->getStateUsing(fn (Meal $record) => $record->recipes
+                        ->map(function ($recipe) {
+                            $multiplier = $recipe->pivot->multiplier;
+
+                            return $recipe->title.($multiplier === null || $multiplier == 1 ? '' : ' ×'.(new Formatter)->format($multiplier));
+                        })
+                        ->all())
                     ->label(__('Recipes')),
             ])
             ->filters([

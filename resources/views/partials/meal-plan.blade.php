@@ -71,15 +71,15 @@
                             <div class="@if($editable) flex-1 min-w-0 @endif">
                                 <h4 class="font-semibold text-gray-800 mb-2">
                                     {{ $meal->title }}
-                                    @if($meal->multiplier !== null && $meal->multiplier != 1)
-                                        <span class="text-gray-500 text-sm font-normal">×{{ $fmt->format($meal->multiplier) }}</span>
-                                    @endif
                                 </h4>
                                 @foreach($meal->recipes as $recipe)
                                     <div class="ml-2 mb-3 last:mb-0">
                                         <em class="text-gray-700 font-medium">{{ $recipe->title }}:</em>
+                                        @if($recipe->pivot->multiplier !== null && $recipe->pivot->multiplier != 1)
+                                            <span class="text-gray-500 text-sm">×{{ $fmt->format($recipe->pivot->multiplier) }}</span>
+                                        @endif
                                         <ul class="mt-1 ml-6 list-disc marker:text-gray-300 space-y-1">
-                                            @foreach($recipe->getCalculatedIngredientsForEvent($event, $meal) as $item)
+                                            @foreach($recipe->getCalculatedIngredientsForEvent($event, $recipe->pivot->multiplier) as $item)
                                                 <li>
                                                     {{ $fmt->format($item['quantity']) }} {{ $item['unit']->getShortLabel() }} {{ $item['ingredient']->title }}
                                                 </li>

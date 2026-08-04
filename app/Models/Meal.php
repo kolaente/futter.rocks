@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[ObservedBy(MealObserver::class)]
 class Meal extends Model
@@ -17,20 +18,13 @@ class Meal extends Model
     protected $fillable = [
         'title',
         'date',
-        'multiplier',
     ];
 
     protected function casts(): array
     {
         return [
             'date' => 'date',
-            'multiplier' => 'float',
         ];
-    }
-
-    public function getEffectiveMultiplier(): float
-    {
-        return $this->multiplier ?? 1.0;
     }
 
     protected static function booted(): void
@@ -42,7 +36,14 @@ class Meal extends Model
 
     public function recipes(): BelongsToMany
     {
-        return $this->belongsToMany(Recipe::class);
+        return $this->belongsToMany(Recipe::class)
+            ->using(MealRecipe::class)
+            ->withPivot('multiplier');
+    }
+
+    public function mealRecipes(): HasMany
+    {
+        return $this->hasMany(MealRecipe::class);
     }
 
     public function event(): BelongsTo

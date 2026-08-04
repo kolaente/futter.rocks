@@ -197,7 +197,7 @@ class Recipe extends Model
         return $errors;
     }
 
-    public function getCalculatedIngredientsForEvent(Event $event, ?Meal $meal = null)
+    public function getCalculatedIngredientsForEvent(Event $event, ?float $multiplier = null)
     {
         $list = [];
         $ingredients = $this->ingredients()->withoutGlobalScope(CurrentTeam::class)->get();
@@ -216,7 +216,7 @@ class Recipe extends Model
             }
 
             foreach ($participantGroups as $group) {
-                $list[$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity / $this->servings * ($meal?->getEffectiveMultiplier() ?? 1.0);
+                $list[$key]['quantity'] += $group->pivot->quantity * $group->food_factor * $ingredient->pivot->quantity / $this->servings * ($multiplier ?? 1.0);
             }
         }
 

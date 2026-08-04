@@ -48,13 +48,24 @@ function createMealFor(Event $event, Recipe $recipe, ?float $multiplier = null):
     $meal = new Meal([
         'title' => 'Lunch',
         'date' => $event->date_from,
-        'multiplier' => $multiplier,
     ]);
     $meal->event_id = $event->id;
     $meal->save();
-    $meal->recipes()->attach($recipe);
+    $meal->recipes()->attach($recipe, ['multiplier' => $multiplier]);
 
     return $meal;
+}
+
+// setTableActionData() dot-merges, which would keep the repeater's default
+// item around - so replace the repeater state wholesale instead.
+function createMealViaForm(Event $event, array $mealRecipes): \Livewire\Features\SupportTesting\Testable
+{
+    return livewire(ListMeals::class, ['event' => $event])
+        ->mountTableAction('create')
+        ->set('mountedTableActionsData.0.title', 'Dinner')
+        ->set('mountedTableActionsData.0.date', $event->date_from->format('Y-m-d'))
+        ->set('mountedTableActionsData.0.mealRecipes', $mealRecipes)
+        ->callMountedTableAction();
 }
 
 function shoppingListQuantity(Event $event, Ingredient $ingredient): float
@@ -65,9 +76,9 @@ function shoppingListQuantity(Event $event, Ingredient $ingredient): float
         ->firstWhere('ingredient.id', $ingredient->id)['quantity'];
 }
 
-describe('Meal multiplier', function () {
+describe('Meal recipe multiplier', function () {
 
-    it('scales shopping list quantities by meal multiplier', function (float $multiplier, float $expected) {
+    it('scales shopping list quantities by recipe multiplier', function (float $multiplier, float $expected) {
         $user = User::factory()->withCurrentTeam()->create();
         actingAs($user);
 
@@ -90,9 +101,31 @@ describe('Meal multiplier', function () {
 
         $withNull = shoppingListQuantity($event, $ingredient);
 
-        $meal->update(['multiplier' => 1]);
+        $meal->recipes()->updateExistingPivot($recipe->id, ['multiplier' => 1]);
 
         expect(shoppingListQuantity($event, $ingredient))->toBe($withNull);
+    });
+
+    it('scales only the recipe with a multiplier within the same meal', function () {
+        $user = User::factory()->withCurrentTeam()->create();
+        actingAs($user);
+
+        [$event, $recipe, $ingredient] = createEventWithRecipe($user);
+
+        $otherRecipe = Recipe::factory()->create([
+            'team_id' => $user->currentTeam->id,
+            'servings' => 4,
+        ]);
+        $otherRecipe->ingredients()->attach($ingredient->id, [
+            'quantity' => 100,
+            'unit' => Unit::Grams,
+        ]);
+
+        $meal = createMealFor($event, $recipe, 0.5);
+        $meal->recipes()->attach($otherRecipe, ['multiplier' => null]);
+
+        // 500 g * 0.5 + 500 g = 750 g
+        expect(shoppingListQuantity($event, $ingredient))->toBe(750.0);
     });
 
     it('scales only the contribution of the meal with a multiplier', function () {
@@ -107,26 +140,24 @@ describe('Meal multiplier', function () {
         expect(shoppingListQuantity($event, $ingredient))->toBe(750.0);
     });
 
-    it('respects meal multiplier in calculated recipe ingredients', function () {
+    it('respects the multiplier in calculated recipe ingredients', function () {
         $user = User::factory()->withCurrentTeam()->create();
         actingAs($user);
 
         [$event, $recipe, $ingredient] = createEventWithRecipe($user);
-        $meal = createMealFor($event, $recipe, 2);
 
-        $calculated = $recipe->getCalculatedIngredientsForEvent($event, $meal);
+        $calculated = $recipe->getCalculatedIngredientsForEvent($event, 2);
 
         $item = collect($calculated)->firstWhere('ingredient.id', $ingredient->id);
         expect($item['quantity'])->toBe(1000.0)
             ->and($item['unit'])->toBe(Unit::Grams);
     });
 
-    it('calculates without meal argument as before', function () {
+    it('calculates without multiplier argument as before', function () {
         $user = User::factory()->withCurrentTeam()->create();
         actingAs($user);
 
         [$event, $recipe, $ingredient] = createEventWithRecipe($user);
-        createMealFor($event, $recipe, 2);
 
         $calculated = $recipe->getCalculatedIngredientsForEvent($event);
 
@@ -142,18 +173,14 @@ describe('Meal multiplier', function () {
 
             [$event, $recipe] = createEventWithRecipe($user);
 
-            livewire(ListMeals::class, ['event' => $event])
-                ->callTableAction('create', data: [
-                    'title' => 'Dinner',
-                    'date' => $event->date_from->format('Y-m-d'),
-                    'multiplier' => 1.5,
-                    'recipes' => [$recipe->id],
-                ])
-                ->assertHasNoTableActionErrors();
+            createMealViaForm($event, [
+                ['recipe_id' => $recipe->id, 'multiplier' => 1.5],
+            ])->assertHasNoTableActionErrors();
 
-            assertDatabaseHas('meals', [
-                'event_id' => $event->id,
-                'title' => 'Dinner',
+            $meal = Meal::where('title', 'Dinner')->firstOrFail();
+            assertDatabaseHas('meal_recipe', [
+                'meal_id' => $meal->id,
+                'recipe_id' => $recipe->id,
                 'multiplier' => 1.5,
             ]);
         });
@@ -164,18 +191,41 @@ describe('Meal multiplier', function () {
 
             [$event, $recipe] = createEventWithRecipe($user);
 
-            livewire(ListMeals::class, ['event' => $event])
-                ->callTableAction('create', data: [
-                    'title' => 'Dinner',
-                    'date' => $event->date_from->format('Y-m-d'),
-                    'multiplier' => null,
-                    'recipes' => [$recipe->id],
-                ])
-                ->assertHasNoTableActionErrors();
+            createMealViaForm($event, [
+                ['recipe_id' => $recipe->id, 'multiplier' => null],
+            ])->assertHasNoTableActionErrors();
 
-            assertDatabaseHas('meals', [
-                'event_id' => $event->id,
-                'title' => 'Dinner',
+            $meal = Meal::where('title', 'Dinner')->firstOrFail();
+            assertDatabaseHas('meal_recipe', [
+                'meal_id' => $meal->id,
+                'recipe_id' => $recipe->id,
+                'multiplier' => null,
+            ]);
+        });
+
+        it('saves different multipliers per recipe', function () {
+            $user = User::factory()->withCurrentTeam()->create();
+            actingAs($user);
+
+            [$event, $recipe] = createEventWithRecipe($user);
+            $otherRecipe = Recipe::factory()->create([
+                'team_id' => $user->currentTeam->id,
+            ]);
+
+            createMealViaForm($event, [
+                ['recipe_id' => $recipe->id, 'multiplier' => 2],
+                ['recipe_id' => $otherRecipe->id, 'multiplier' => null],
+            ])->assertHasNoTableActionErrors();
+
+            $meal = Meal::where('title', 'Dinner')->firstOrFail();
+            assertDatabaseHas('meal_recipe', [
+                'meal_id' => $meal->id,
+                'recipe_id' => $recipe->id,
+                'multiplier' => 2,
+            ]);
+            assertDatabaseHas('meal_recipe', [
+                'meal_id' => $meal->id,
+                'recipe_id' => $otherRecipe->id,
                 'multiplier' => null,
             ]);
         });
@@ -186,14 +236,9 @@ describe('Meal multiplier', function () {
 
             [$event, $recipe] = createEventWithRecipe($user);
 
-            livewire(ListMeals::class, ['event' => $event])
-                ->callTableAction('create', data: [
-                    'title' => 'Dinner',
-                    'date' => $event->date_from->format('Y-m-d'),
-                    'multiplier' => $value,
-                    'recipes' => [$recipe->id],
-                ])
-                ->assertHasTableActionErrors(['multiplier']);
+            createMealViaForm($event, [
+                ['recipe_id' => $recipe->id, 'multiplier' => $value],
+            ])->assertHasTableActionErrors(['mealRecipes.0.multiplier']);
         })->with([
             'zero' => [0],
             'negative' => [-1],
