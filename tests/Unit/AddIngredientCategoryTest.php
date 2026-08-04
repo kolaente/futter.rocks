@@ -31,6 +31,9 @@ it('assigns category returned by the service', function () {
     expect($ingredient->category)->toBe(IngredientCategory::OTHER);
 
     $job = new AddIngredientCategory($ingredient);
+
+    expect($job->backoff)->toBe([30, 120]);
+
     $job->handle();
     $ingredient->refresh();
 

@@ -13,6 +13,9 @@ class AddIngredientCategory implements ShouldQueue
 
     public int $tries = 3;
 
+    /** @var array<int> Spread retries out so bulk dispatches survive API rate limits */
+    public array $backoff = [30, 120];
+
     public function __construct(
         private readonly Ingredient $ingredient,
     ) {}
