@@ -14,13 +14,20 @@ class Meal extends Model
     protected $fillable = [
         'title',
         'date',
+        'multiplier',
     ];
 
     protected function casts(): array
     {
         return [
             'date' => 'date',
+            'multiplier' => 'float',
         ];
+    }
+
+    public function getEffectiveMultiplier(): float
+    {
+        return $this->multiplier ?? 1.0;
     }
 
     protected static function booted(): void
