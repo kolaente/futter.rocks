@@ -352,5 +352,11 @@
     "Serves :count": "Für :count Portionen",
     "Multiplier": "Multiplikator",
     "Scales all quantities of this meal. Leave empty for no change.": "Skaliert alle Mengen dieser Mahlzeit. Leer lassen für keine Änderung.",
+    "Reorder": "Umsortieren",
+    "Done": "Fertig",
+    "No meals": "Keine Mahlzeiten",
+    "Drag to reorder": "Zum Umsortieren ziehen",
+    "Move up": "Nach oben schieben",
+    "Move down": "Nach unten schieben",
     "___": "___"
 }
