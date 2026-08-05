@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Events\ListShoppingTours;
 use App\Models\AdditionalShoppingItem;
 use App\Models\Enums\IngredientCategory;
 use App\Models\Enums\Unit;
@@ -13,6 +14,7 @@ use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function Pest\Laravel\actingAs;
+use function Pest\Livewire\livewire;
 
 uses(RefreshDatabase::class);
 
@@ -232,6 +234,25 @@ describe('Shopping list', function () {
         expect($freshQuantity(0))->toBe(1.0)
             ->and($freshQuantity($regularTour->id))->toBe(1.0)
             ->and($freshQuantity($stockUpTour->id))->toBe(2.0);
+    });
+
+    it('always shows a virtual before-the-event tour in the shopping tour list', function () {
+        $user = User::factory()->withCurrentTeam()->create();
+        actingAs($user);
+
+        $event = Event::factory()->create([
+            'team_id' => $user->currentTeam->id,
+            'created_by_id' => $user->id,
+        ]);
+
+        livewire(ListShoppingTours::class, ['event' => $event])
+            ->assertSee(__('Before the event'));
+
+        $tour = $event->shoppingTours()->create(['date' => $event->date_from->addDay()]);
+
+        livewire(ListShoppingTours::class, ['event' => $event])
+            ->assertSee(__('Before the event'))
+            ->assertSee($tour->date->translatedFormat(__('j F Y')));
     });
 
     describe('Freshness', function () {
