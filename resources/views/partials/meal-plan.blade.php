@@ -12,8 +12,10 @@
     }
 @endphp
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-4">
-    @foreach($days as $date => $meals)
+<div class="space-y-4">
+@foreach(collect($days)->chunk(4) as $dayGroup)
+    <div @class(['grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-4', 'print:break-before-page' => ! $loop->first])>
+    @foreach($dayGroup as $date => $meals)
         @php
             $in++;
             $responsiveClass = 'md:border-r-0';
@@ -31,7 +33,7 @@
         <div class="bg-white border {{ $responsiveClass }} overflow-hidden h-full">
             <div class="bg-gray-50 px-4 pt-3 pb-1 border-b">
                 <h3 class="font-semibold font-display text-lg text-gray-800">
-                    {{ \Illuminate\Support\Carbon::parse($date)->translatedFormat(__('l, j F Y')) }}
+                    {{ \Illuminate\Support\Carbon::parse($date)->translatedFormat(__('l, j F')) }}<span class="print:hidden"> {{ \Illuminate\Support\Carbon::parse($date)->format('Y') }}</span>
                 </h3>
             </div>
             <div
@@ -120,4 +122,6 @@
             </div>
         </div>
     @endforeach
+    </div>
+@endforeach
 </div>
