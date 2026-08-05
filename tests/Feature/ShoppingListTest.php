@@ -106,7 +106,8 @@ describe('Shopping list', function () {
 
         $html = view('partials.shopping-list', ['event' => $event->fresh()])->render();
 
-        expect(substr_count($html, 'print:break-before-page'))->toBe(1);
+        expect(substr_count($html, 'print:break-before-page'))->toBe(1)
+            ->and(substr_count($html, 'print:break-inside-avoid'))->toBe(2);
     });
 
     it('scales shopping list quantities by recipe servings', function () {

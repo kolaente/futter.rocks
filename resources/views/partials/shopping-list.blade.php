@@ -18,7 +18,7 @@
     @endif
 
     @foreach($tourListByCategories as $category => $tourList)
-        <div>
+        <div class="print:break-inside-avoid">
             <h3 class="shopping-tour-list font-display font-semibold text-lg mb-0 mt-4">
                 {{ \App\Models\Enums\IngredientCategory::from($category)->getLabel() }}
             </h3>
