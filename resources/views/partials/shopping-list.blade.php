@@ -5,6 +5,7 @@
 @endphp
 
 @foreach($list as $shoppingTourId => $tourListByCategories)
+<div @class(['print:break-before-page' => ! $loop->first])>
 
     @if(count($list) > 1)
         <h2 class="shopping-tour-list font-display font-semibold text-2xl mb-2 mt-6">
@@ -36,4 +37,5 @@
             </div>
         </div>
     @endforeach
+</div>
 @endforeach

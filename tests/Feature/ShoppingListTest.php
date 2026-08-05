@@ -81,6 +81,34 @@ describe('Shopping list', function () {
             ->and($withoutTour['quantity'])->toBe(3.0);
     });
 
+    it('starts each shopping tour on a new page when printing', function () {
+        $user = User::factory()->withCurrentTeam()->create();
+        actingAs($user);
+
+        $event = Event::factory()->create([
+            'team_id' => $user->currentTeam->id,
+            'created_by_id' => $user->id,
+        ]);
+
+        $firstTour = $event->shoppingTours()->create(['date' => $event->date_from]);
+        $secondTour = $event->shoppingTours()->create(['date' => $event->date_from->addDay()]);
+
+        foreach ([$firstTour, $secondTour] as $tour) {
+            AdditionalShoppingItem::factory()->createQuietly([
+                'event_id' => $event->id,
+                'shopping_tour_id' => $tour->id,
+                'title' => 'Item '.$tour->id,
+                'quantity' => 1,
+                'unit' => Unit::Pieces,
+                'category' => IngredientCategory::OTHER,
+            ]);
+        }
+
+        $html = view('partials.shopping-list', ['event' => $event->fresh()])->render();
+
+        expect(substr_count($html, 'print:break-before-page'))->toBe(1);
+    });
+
     it('scales shopping list quantities by recipe servings', function () {
         $user = User::factory()->withCurrentTeam()->create();
         actingAs($user);
