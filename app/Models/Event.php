@@ -167,12 +167,18 @@ class Event extends Model
         $currentShoppingTour->id = 0;
         $currentShoppingTour->date = $this->date_from;
 
+        // The virtual before-event tour is always a stock-up point for non-fresh ingredients.
+        $currentStockUpTour = $currentShoppingTour;
+
         $allShoppingTours = $this->shoppingTours()->orderBy('date')->get();
 
         foreach ($this->meals()->orderBy('date')->get() as $meal) {
             $firstShoppingTour = $allShoppingTours->first();
             if ($firstShoppingTour !== null && $firstShoppingTour->date < $meal->date) {
                 $currentShoppingTour = $allShoppingTours->shift();
+                if ($currentShoppingTour->is_stock_up) {
+                    $currentStockUpTour = $currentShoppingTour;
+                }
             }
             foreach ($meal->recipes()->withoutGlobalScope(CurrentTeam::class)->get() as $recipe) {
                 foreach ($recipe->ingredients as $ingredient) {
@@ -180,7 +186,7 @@ class Event extends Model
                     $key = $ingredient->id.'_'.$ingredient->pivot->unit->value;
                     $targetTour = $currentShoppingTour->id;
                     if ($this->use_fresh_ingredient_attribute) {
-                        $targetTour = $ingredient->is_fresh ? $currentShoppingTour->id : 0;
+                        $targetTour = $ingredient->is_fresh ? $currentShoppingTour->id : $currentStockUpTour->id;
                     }
 
                     if (! isset($list[$targetTour][$key])) {

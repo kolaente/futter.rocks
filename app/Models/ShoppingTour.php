@@ -8,12 +8,14 @@ class ShoppingTour extends Model
 {
     protected $fillable = [
         'date',
+        'is_stock_up',
     ];
 
     protected function casts(): array
     {
         return [
             'date' => 'date',
+            'is_stock_up' => 'boolean',
         ];
     }
 

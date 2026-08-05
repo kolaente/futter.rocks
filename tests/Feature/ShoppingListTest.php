@@ -166,6 +166,74 @@ describe('Shopping list', function () {
             ->and($pieces['unit'])->toBe(Unit::Pieces);
     });
 
+    it('buys shelf-stable ingredients on a stock-up tour for the rest of the event', function () {
+        $user = User::factory()->withCurrentTeam()->create();
+        actingAs($user);
+
+        $event = Event::factory()->create([
+            'team_id' => $user->currentTeam->id,
+            'created_by_id' => $user->id,
+            'date_from' => now()->startOfDay(),
+            'date_to' => now()->startOfDay()->addDays(3),
+            'use_fresh_ingredient_attribute' => true,
+        ]);
+
+        $regularTour = $event->shoppingTours()->create(['date' => $event->date_from]);
+        $stockUpTour = $event->shoppingTours()->create([
+            'date' => $event->date_from->addDay(),
+            'is_stock_up' => true,
+        ]);
+
+        $group = ParticipantGroup::factory()->create([
+            'team_id' => $user->currentTeam->id,
+            'food_factor' => 1,
+        ]);
+        $event->participantGroups()->attach($group, ['quantity' => 1]);
+
+        $recipe = Recipe::factory()->create([
+            'team_id' => $user->currentTeam->id,
+            'servings' => 1,
+        ]);
+
+        $fresh = Ingredient::factory()->createQuietly();
+        $fresh->category = IngredientCategory::FRUIT_VEGETABLES;
+        $fresh->saveQuietly();
+        $shelfStable = Ingredient::factory()->createQuietly();
+        $shelfStable->category = IngredientCategory::CANNED_GOODS;
+        $shelfStable->saveQuietly();
+
+        $recipe->ingredients()->attach($fresh->id, ['quantity' => 1, 'unit' => Unit::Pieces]);
+        $recipe->ingredients()->attach($shelfStable->id, ['quantity' => 1, 'unit' => Unit::Pieces]);
+
+        foreach (range(0, 3) as $dayOffset) {
+            $meal = new Meal([
+                'title' => 'Lunch',
+                'date' => $event->date_from->addDays($dayOffset),
+            ]);
+            $meal->event_id = $event->id;
+            $meal->save();
+            $meal->recipes()->attach($recipe);
+        }
+
+        $list = $event->fresh()->getShoppingList();
+
+        $shelfStableQuantity = fn (int $tourId) => collect($list[$tourId][IngredientCategory::CANNED_GOODS->value] ?? [])
+            ->firstWhere('ingredient.id', $shelfStable->id)['quantity'] ?? 0.0;
+
+        // Days 1+2 before-event, days 3+4 on the stock-up tour, nothing on the regular tour
+        expect($shelfStableQuantity(0))->toBe(2.0)
+            ->and($shelfStableQuantity($stockUpTour->id))->toBe(2.0)
+            ->and($shelfStableQuantity($regularTour->id))->toBe(0.0);
+
+        $freshQuantity = fn (int $tourId) => collect($list[$tourId][IngredientCategory::FRUIT_VEGETABLES->value] ?? [])
+            ->firstWhere('ingredient.id', $fresh->id)['quantity'] ?? 0.0;
+
+        // Fresh ingredients still follow the regular tour schedule
+        expect($freshQuantity(0))->toBe(1.0)
+            ->and($freshQuantity($regularTour->id))->toBe(1.0)
+            ->and($freshQuantity($stockUpTour->id))->toBe(2.0);
+    });
+
     describe('Freshness', function () {
 
         beforeEach(function () {
