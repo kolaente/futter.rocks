@@ -11,6 +11,7 @@
         "filament/actions": "^3.3",
         "filament/forms": "^3.3",
         "filament/tables": "^3.3",
+        "laravel/ai": "^1.0",
         "laravel/framework": "^12.0",
         "laravel/jetstream": "^5.3",
         "laravel/octane": "^2.9",
@@ -22,7 +23,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "goodmagma/laravel-translations": "^1.1",
-        "laravel/boost": "^2.4",
+        "laravel/boost": "dev-main as 2.10.0",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.22",
         "mockery/mockery": "^1.6",
