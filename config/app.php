@@ -123,18 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Groq API Configuration
-    |--------------------------------------------------------------------------
-    |
-    | This is the API key for the Groq AI service, used for ingredient
-    | categorization and other AI-related features in the application.
-    |
-    */
-
-    'groq_api_key' => env('GROQ_API_KEY'),
-
     'pdf-service' => env('PDF_SERVICE_URL', 'http://pdf-service'),
 
     'pdf-service-auth' => env('PDF_SERVICE_AUTH'),
