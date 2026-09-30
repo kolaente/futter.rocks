@@ -4,25 +4,16 @@ use App\Jobs\AddIngredientCategory;
 use App\Models\Enums\IngredientCategory;
 use App\Models\Ingredient;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Http;
+use Laravel\Ai\Classification;
+use Laravel\Ai\Classification\Choice;
+use Laravel\Ai\Prompts\ClassificationPrompt;
+use Laravel\Ai\Responses\Data\ChoiceAnswer;
 
 uses(Tests\TestCase::class, RefreshDatabase::class);
 
-it('assigns category returned by the service', function () {
-    config(['app.google_api_key' => 'test']);
-
-    Http::fake([
-        'https://generativelanguage.googleapis.com/*' => Http::response([
-            'candidates' => [
-                [
-                    'content' => [
-                        'parts' => [
-                            ['text' => 'DAIRY_EGGS'],
-                        ],
-                    ],
-                ],
-            ],
-        ]),
+it('assigns category returned by the classifier', function () {
+    Classification::fake(fn () => [
+        'category' => new ChoiceAnswer('DAIRY_EGGS', ['DAIRY_EGGS' => 0.9, 'OTHER' => 0.1], 0.9),
     ]);
 
     $ingredient = Ingredient::factory()->createQuietly(['title' => 'milk']);
@@ -39,8 +30,12 @@ it('assigns category returned by the service', function () {
 
     expect($ingredient->category)->toBe(IngredientCategory::DAIRY_EGGS);
 
-    Http::assertSent(function ($request) {
-        return str_contains($request->url(), 'models/gemini-3.6-flash:generateContent')
-            && $request['generationConfig']['thinkingConfig'] === ['thinkingLevel' => 'minimal'];
+    Classification::assertClassified(function (ClassificationPrompt $prompt) {
+        $question = $prompt->questions['category'];
+
+        return $prompt->state === 'milk'
+            && $prompt->provider->name() === 'typesafe'
+            && $question instanceof Choice
+            && array_keys($question->options) === array_column(IngredientCategory::cases(), 'name');
     });
 });
