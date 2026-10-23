@@ -5604,16 +5604,16 @@
         },
         {
             "name": "ryangjchandler/laravel-cloudflare-turnstile",
-            "version": "v3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile.git",
-                "reference": "7da8024659990dc0e0d99e1509263e3d98a9012c"
+                "reference": "37f4618ec650521705a4a45cd62f980b235a3f41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ryangjchandler/laravel-cloudflare-turnstile/zipball/7da8024659990dc0e0d99e1509263e3d98a9012c",
-                "reference": "7da8024659990dc0e0d99e1509263e3d98a9012c",
+                "url": "https://api.github.com/repos/ryangjchandler/laravel-cloudflare-turnstile/zipball/37f4618ec650521705a4a45cd62f980b235a3f41",
+                "reference": "37f4618ec650521705a4a45cd62f980b235a3f41",
                 "shasum": ""
             },
             "require": {
@@ -5672,9 +5672,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile/issues",
-                "source": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile/tree/v3.0.3"
+                "source": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile/tree/v3.0.4"
             },
-            "time": "2026-03-19T10:40:28+00:00"
+            "time": "2026-09-14T19:03:13+00:00"
         },
         {
             "name": "spatie/color",
@@ -5796,16 +5796,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.93.0",
+            "version": "1.93.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "0d097bce95b2bf6802fb1d83e1e753b0f5a948e7"
+                "reference": "7aeef26bd8d4909bec744dbf47aee7d1395588c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/0d097bce95b2bf6802fb1d83e1e753b0f5a948e7",
-                "reference": "0d097bce95b2bf6802fb1d83e1e753b0f5a948e7",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/7aeef26bd8d4909bec744dbf47aee7d1395588c1",
+                "reference": "7aeef26bd8d4909bec744dbf47aee7d1395588c1",
                 "shasum": ""
             },
             "require": {
@@ -5845,7 +5845,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.93.0"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.93.3"
             },
             "funding": [
                 {
@@ -5853,7 +5853,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-21T12:49:54+00:00"
+            "time": "2026-09-28T07:16:50+00:00"
         },
         {
             "name": "spomky-labs/cbor-php",
