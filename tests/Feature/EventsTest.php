@@ -14,6 +14,49 @@ use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
 
+it('warns about existing calculations when editing an event in progress', function (int $startOffset, int $endOffset, bool $showsWarning) {
+    $this->travelTo(Carbon::parse('2026-06-15 12:00:00'));
+    $this->withoutVite();
+
+    $user = User::factory()->withCurrentTeam()->create();
+    $event = Event::factory()->create([
+        'team_id' => $user->currentTeam->id,
+        'created_by_id' => $user->id,
+        'date_from' => today()->addDays($startOffset),
+        'date_to' => today()->addDays($endOffset),
+    ]);
+
+    $response = $this->actingAs($user)
+        ->get(route('events.edit', $event))
+        ->assertSuccessful();
+
+    $warning = __('This event is in progress. Changes may make existing calculations inaccurate.');
+
+    if ($showsWarning) {
+        $response->assertSeeText($warning);
+    } else {
+        $response->assertDontSeeText($warning);
+    }
+})->with([
+    'starts today' => [0, 1, true],
+    'ongoing' => [-1, 1, true],
+    'ends today' => [-1, 0, true],
+    'single day' => [0, 0, true],
+    'upcoming' => [1, 2, false],
+    'finished' => [-2, -1, false],
+]);
+
+it('does not show the in-progress warning when creating an event', function () {
+    $this->withoutVite();
+
+    $user = User::factory()->withCurrentTeam()->create();
+
+    $this->actingAs($user)
+        ->get(route('events.create'))
+        ->assertSuccessful()
+        ->assertDontSeeText(__('This event is in progress. Changes may make existing calculations inaccurate.'));
+});
+
 it('can duplicate an event with all associated data', function () {
     $user = User::factory()->withCurrentTeam()->create();
     actingAs($user);

@@ -9,6 +9,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class CreateEdit extends Component implements HasForms
@@ -85,9 +86,14 @@ class CreateEdit extends Component implements HasForms
         $this->redirect(route('events.view', ['event' => $this->event]), true);
     }
 
-    public function render()
+    public function render(): View
     {
-        return view('livewire.events.create-edit')
+        $today = today();
+        $isEventInProgress = $this->event !== null
+            && $this->event->date_from <= $today
+            && $today <= $this->event->date_to;
+
+        return view('livewire.events.create-edit', ['isEventInProgress' => $isEventInProgress])
             ->title($this->event === null
                 ? __('Create Event')
                 : __('Edit :item', ['item' => $this->event->title]));
