@@ -28,10 +28,10 @@ services:
             - POSTGRES_DB=futter_rocks
 
     redis:
-        image: redis
+        image: redis:8.10.3
 
     mailpit:
-        image: axllent/mailpit
+        image: axllent/mailpit:v1.34.0
         ports:
             - 127.0.0.1:8025:8025
             - 127.0.0.1:1025:1025
