@@ -5,6 +5,19 @@
   scripts.aa.exec = "docker compose exec web php artisan $@";
   scripts.atf.exec = "aa test --filter $@";
 
+  tasks."factory:setup".exec = ''
+    set -euo pipefail
+    cd "$DEVENV_ROOT"
+
+    docker compose build
+    docker compose pull --ignore-buildable
+    docker builder prune -f
+
+    composer install --no-interaction --prefer-dist --no-progress
+    pnpm install --frozen-lockfile
+    pnpm build
+  '';
+
   processes = {
     containers.exec = "docker compose up";
     queues.exec = "sleep 5s && aa queue:listen --tries=1";
