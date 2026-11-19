@@ -22,6 +22,12 @@ jobs:
       - uses: actions/checkout@v7
       - name: Prepare The Environment
         run: cp .env.example .env
+      - name: Set up PHP
+        uses: shivammathur/setup-php@d52fc211a0436f8839a587b3b5b8efddab4744ea # v2
+        with:
+          php-version: '8.3'
+          extensions: intl, pdo_sqlite, zip
+          coverage: none
       - name: Install Composer Dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: setup pnpm
@@ -41,6 +47,12 @@ jobs:
       - uses: actions/checkout@v7
       - name: Prepare The Environment
         run: cp .env.example .env
+      - name: Set up PHP
+        uses: shivammathur/setup-php@d52fc211a0436f8839a587b3b5b8efddab4744ea # v2
+        with:
+          php-version: '8.3'
+          extensions: intl, zip
+          coverage: none
       - name: Install Composer Dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Generate Application Key
